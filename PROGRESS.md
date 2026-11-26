@@ -5,7 +5,8 @@
 |---|---|---|
 | 1. Setup, ekstraksi, eksplorasi metadata | ✅ Selesai | 2026-11-26 |
 | 2. Preprocessing audio & dataset eksperimen | ✅ Selesai | 2026-11-26 |
-| 3. Ekstraksi fitur | ⏳ Belum | |
+| 3. Ekstraksi fitur & visualisasi | ✅ Selesai | 2026-11-26 |
+| 4. Klasifikasi | ⏳ Belum | |
 
 ---
 
@@ -186,3 +187,92 @@ Segmentasi hanya disimpan sebagai **metadata** (`n_segmen`, `segments.csv`); wav
    fitur durasi saja sebagai baseline.
 4. Reduksi noise stasioner hanya sedikit mengubah spektrogram (noise latar umumnya sudah rendah setelah trim).
 5. Normalisasi peak per-rekaman → informasi kenyaringan absolut hilang (disengaja; gain mikrofon tidak seragam).
+
+
+---
+
+## Tahap 3 — Ekstraksi fitur & visualisasi representasi suara
+
+### File yang dihasilkan
+- `config.yaml` — bagian baru `features` (n_fft 512 = 32 ms, hop 160 = 10 ms, Hann; n_mfcc 13, n_gfcc 13 /
+  40 filter gammatone, rolloff 0,85, contrast 5 pita dari 200 Hz, pyin 65–1000 Hz frame 1024; n_mels 64,
+  n_mfcc_2d 40, top_db 80, dtype float16).
+- `src/features.py` — `extract_tabular()`, `extract_2d()`, `stft_mag()`, `logmel()`, `gfcc_matrix()` (spafe 0.3.3),
+  `pitch_pyin()`, `extract_file()` (cache .npz), `clean_tabular()`, `mann_whitney_table()` + `fdr_bh()`,
+  `class_mean_2d()`, `feature_group()`.
+- `src/plots.py` — `WARNA_KELAS` (COVID-19 oranye `#d1661f`, healthy biru `#2a6fb0`, aman buta warna),
+  `plot_waveform_pair`, `plot_fft_frame`, `plot_tf_grid`, `plot_class_mean_logmel`, `plot_feature_violins`, `plot_projection`.
+- `scripts/03_extract_features.py` — ProcessPool (11 worker), tqdm, resume via cache `data/features/cache/<uuid>.npz`,
+  `--limit` (keluaran uji ke `data/features/uji_limit/`, sudah dihapus), `--overwrite`, `--experiments`.
+- `data/features/`: `tabular_{A,B}.parquet`; `logmel_{A,B}_{train,val,test}.npy`, `mfcc2d_*`, `labels_*` (int8),
+  `uuids_*` (urutan baris = urutan array). Total ±1,3 GB + cache ±1,3 GB (boleh dihapus; hanya untuk resume).
+- `notebooks/03_fitur_dan_visualisasi.ipynb` (dieksekusi). `reports/figures/03_*.png` (7):
+  waveform, spektrum FFT frame, representasi waktu–frekuensi (STFT/log-mel/MFCC/GFCC), rata-rata log-mel per kelas
+  + selisih, violin fitur kunci, distribusi AUC fitur, proyeksi PCA & t-SNE.
+- `reports/tables/03_uji_fitur.csv` (15 teratas A), `03_uji_fitur_semua_A.csv` (315 fitur), `03_uji_fitur_per_kelompok.csv`,
+  `03_uji_fitur_B.csv` (15 teratas B).
+- Log: `reports/logs/features_run.log`, `features_summary.json`, `features_nan_report.csv`, `nb03_exec.log`.
+- `requirements.txt`: `pyarrow>=15,<18` (pyarrow 26 butuh NumPy 2 → diturunkan ke 17.0.0).
+
+### Fitur tabular: 315 kolom fitur (+4 meta: uuid, split, label, label_name)
+| Kelompok | Kolom | Isi |
+|---|---|---|
+| waktu | 9 | durasi_s; rms & zcr × (mean, std, min, max) |
+| spektral | 40 | centroid, bandwidth, rolloff, flatness × 4 stat; contrast 6 pita × 4 stat |
+| pitch | 6 | f0 × 4 stat (frame voiced saja), voiced_ratio, voiced_prob_mean |
+| MFCC | 78 | 13 koef. × (mean, std, min, max, skew, kurt) |
+| MFCC delta / delta-delta | 52 + 52 | 13 koef. × 4 stat |
+| GFCC | 78 | 13 koef. × 6 stat |
+Nama kolom: `<fitur>_<kk>_<stat>`, mis. `mfcc_03_mean`, `mfcc_d_00_min`, `contrast_05_std`.
+
+### Fitur 2D (input CNN; 10 s, pad nol di akhir/potong; float16)
+| Eksperimen | train | val | test |
+|---|---|---|---|
+| A log-mel | (2009, 64, 1001) | (1622, 64, 1001) | (1624, 64, 1001) |
+| A MFCC-2D | (2009, 40, 1001) | (1622, 40, 1001) | (1624, 40, 1001) |
+| B log-mel / MFCC-2D | (707, 64/40, 1001) | (152, …) | (152, …) |
+Log-mel: dB, ref = 1,0, dipotong 80 dB di bawah puncak (padding = puncak − 80 dB). **Belum distandardisasi** —
+normalisasi (mean/std per pita) harus di-*fit* pada train saja di Tahap 4.
+
+### Proses & NaN/inf
+- 5.864 uuid (A ∪ B), **0 error**, 5.279 s (±88 menit; bottleneck `librosa.pyin` default resolution 0,1 semitone,
+  CPU 6 core fisik 100%). Uji `--limit 50`: 68 s, 0 error.
+- **inf: 0.** Array 2D: semua finite. **NaN hanya di f0_mean/std/min/max** untuk rekaman tanpa frame voiced:
+  739/5.255 (A, 14%) dan 144/1.011 (B) → **diisi 0** (aturan deterministik per rekaman, tanpa statistik dataset →
+  bebas leakage; informasi "tidak ada pitch" tetap tercatat di `voiced_ratio = 0`). Tidak ada NaN lain.
+
+### Temuan EDA fitur (split TRAIN saja)
+**Eksperimen A (self-reported, 502 COVID vs 1.507 healthy)** — overlap kelas sangat besar:
+- Hanya **39/315 fitur** signifikan (Mann-Whitney, p_FDR < 0,05); **tidak ada** efek sedang (|r| ≥ 0,28),
+  hanya 10 fitur dengan efek kecil (|r| ≥ 0,11).
+- Fitur terkuat: `contrast_05_std` (AUC 0,584, r = +0,17), `contrast_05_max` (0,574), `rms_min` (0,439),
+  `durasi_s` (0,561, r = +0,12), `contrast_03_min`, `mfcc_d_00_min`, `mfcc_08_min`. Kelompok spektral paling
+  informatif (18/40 signifikan); pitch tidak ada yang signifikan.
+- Fitur "klasik" materi (ZCR, RMS mean, centroid, rolloff, voiced_ratio, f0, MFCC1–2 mean): AUC 0,48–0,52 → praktis
+  tidak membedakan.
+- PCA: 2 PC = 26,6% varians (10 PC 48%, 50 PC 76%); PCA & t-SNE menunjukkan kedua kelas **bercampur total**;
+  silhouette (label sebagai klaster) ≈ 0 (−0,006 ruang penuh; +0,003 t-SNE).
+- Rata-rata log-mel: selisih COVID − healthy hanya 0,4–1,6 dB per pita (0–4 s), dan pola selisih di 1–5 s
+  terutama efek **durasi/padding** (COVID sedikit lebih panjang), bukan perbedaan timbre.
+- Ekspektasi realistis Tahap 4: AUC model gabungan kemungkinan ≈ 0,60–0,65 untuk A.
+
+**Eksperimen B (label ahli, 329 vs 378)** — perbedaan jauh lebih jelas: **178/315 fitur** signifikan; |r| ≈ 0,27–0,33
+(efek sedang) untuk fitur dinamika MFCC (delta/delta-delta koef. 8–12, max/min) dan **`durasi_s` paling kuat
+(AUC 0,667, r = +0,33)**. Mendukung R4 (label self-reported kurang andal), tetapi **durasi = potensi shortcut** →
+di Tahap 4 laporkan baseline "durasi saja" dan model tanpa fitur durasi.
+
+### Keputusan
+- Statistik Mann-Whitney, pemilihan "fitur paling berbeda", rata-rata per kelas, dan PCA/t-SNE dihitung hanya pada
+  **train** (val/test tidak disentuh) → aman dipakai untuk seleksi fitur di Tahap 4.
+- Ukuran efek: rank-biserial r = 2·AUC − 1 (= Cliff's δ); koreksi FDR Benjamini–Hochberg (diimplementasi sendiri,
+  statsmodels tidak terpasang).
+- Fitur dihitung dari wav penuh hasil trim (bukan per segmen batuk) sesuai keputusan Tahap 2.
+- Visual MFCC di grid waktu–frekuensi tidak menampilkan c0 (skala ≈ −400 menutupi koef. lain); fitur tabular tetap memuat c0.
+
+### Masalah / TODO untuk Tahap 4
+1. `durasi_s`, dan secara tidak langsung `rms_min`/padding pada array 2D, membawa informasi durasi → uji ablasi
+   (dengan vs tanpa durasi; untuk CNN pertimbangkan *random crop*/mask padding).
+2. `f0_*` saturasi di fmax 1000 Hz pada sebagian rekaman (terlihat di violin) — pitch batuk tidak andal; bobot rendah wajar.
+3. Scaling (StandardScaler) & normalisasi log-mel di-fit pada train saja.
+4. Tabular A hanya memuat train yang sudah di-*undersample* (2.009). Untuk ML klasik dengan semua healthy train
+   (`ratio: null`), perlu jalankan ulang Tahap 2 lalu script ini (resume hanya menghitung uuid baru).

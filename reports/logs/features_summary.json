@@ -1,0 +1,162 @@
+{
+  "waktu_ekstraksi_s": 5278.6,
+  "n_diproses": 5814,
+  "n_error": 0,
+  "parameter": {
+    "n_jobs": -2,
+    "n_fft": 512,
+    "hop_length": 160,
+    "window": "hann",
+    "n_mfcc": 13,
+    "n_gfcc": 13,
+    "gfcc_nfilts": 40,
+    "rolloff_percent": 0.85,
+    "contrast_n_bands": 5,
+    "contrast_fmin": 200,
+    "pyin": {
+      "fmin": 65,
+      "fmax": 1000,
+      "frame_length": 1024
+    },
+    "n_mels": 64,
+    "n_mfcc_2d": 40,
+    "fmin_mel": 0,
+    "fmax_mel": 8000,
+    "top_db": 80,
+    "dtype_2d": "float16"
+  },
+  "eksperimen": {
+    "A": {
+      "n_rekaman": 5255,
+      "split": {
+        "train": {
+          "n": 2009,
+          "n_covid": 502,
+          "shape_logmel": [
+            2009,
+            64,
+            1001
+          ],
+          "shape_mfcc2d": [
+            2009,
+            40,
+            1001
+          ],
+          "n_2d_tidak_finite": 0
+        },
+        "val": {
+          "n": 1622,
+          "n_covid": 108,
+          "shape_logmel": [
+            1622,
+            64,
+            1001
+          ],
+          "shape_mfcc2d": [
+            1622,
+            40,
+            1001
+          ],
+          "n_2d_tidak_finite": 0
+        },
+        "test": {
+          "n": 1624,
+          "n_covid": 108,
+          "shape_logmel": [
+            1624,
+            64,
+            1001
+          ],
+          "shape_mfcc2d": [
+            1624,
+            40,
+            1001
+          ],
+          "n_2d_tidak_finite": 0
+        }
+      },
+      "n_fitur_tabular": 315,
+      "shape_tabular": [
+        5255,
+        319
+      ],
+      "n_kolom_ada_nan_inf": 4,
+      "n_rekaman_tanpa_voiced": 739,
+      "fitur_per_kelompok": {
+        "MFCC": 78,
+        "GFCC": 78,
+        "MFCC delta": 52,
+        "MFCC delta-delta": 52,
+        "spektral": 40,
+        "waktu": 9,
+        "pitch": 6
+      }
+    },
+    "B": {
+      "n_rekaman": 1011,
+      "split": {
+        "train": {
+          "n": 707,
+          "n_covid": 329,
+          "shape_logmel": [
+            707,
+            64,
+            1001
+          ],
+          "shape_mfcc2d": [
+            707,
+            40,
+            1001
+          ],
+          "n_2d_tidak_finite": 0
+        },
+        "val": {
+          "n": 152,
+          "n_covid": 71,
+          "shape_logmel": [
+            152,
+            64,
+            1001
+          ],
+          "shape_mfcc2d": [
+            152,
+            40,
+            1001
+          ],
+          "n_2d_tidak_finite": 0
+        },
+        "test": {
+          "n": 152,
+          "n_covid": 70,
+          "shape_logmel": [
+            152,
+            64,
+            1001
+          ],
+          "shape_mfcc2d": [
+            152,
+            40,
+            1001
+          ],
+          "n_2d_tidak_finite": 0
+        }
+      },
+      "n_fitur_tabular": 315,
+      "shape_tabular": [
+        1011,
+        319
+      ],
+      "n_kolom_ada_nan_inf": 4,
+      "n_rekaman_tanpa_voiced": 144,
+      "fitur_per_kelompok": {
+        "MFCC": 78,
+        "GFCC": 78,
+        "MFCC delta": 52,
+        "MFCC delta-delta": 52,
+        "spektral": 40,
+        "waktu": 9,
+        "pitch": 6
+      }
+    }
+  }
+}

@@ -63,3 +63,28 @@ preprocessing:
   # Wav di data/processed TIDAK di-pad; pad/potong ke max_duration_s dilakukan saat memuat input CNN
   # (normalize(..., target_duration_s=...)), agar fitur ML klasik tidak terdistorsi oleh nol-padding.
   pad_on_save: false
+
+features:                     # Tahap 3 — ekstraksi fitur
+  n_jobs: -2
+  # Parameter frame bersama (STFT/MFCC/GFCC/ZCR/RMS) @16 kHz
+  n_fft: 512                  # 32 ms → resolusi frekuensi 16000/512 = 31,25 Hz per bin
+  hop_length: 160             # 10 ms
+  window: "hann"
+  # Fitur tabular (vektor statistik per rekaman, untuk ML klasik)
+  n_mfcc: 13                  # + delta + delta-delta
+  n_gfcc: 13
+  gfcc_nfilts: 40             # jumlah filter gammatone (ERB)
+  rolloff_percent: 0.85
+  contrast_n_bands: 5         # fmin 200 Hz × 2^5 = 6,4 kHz < Nyquist 8 kHz → 6 baris kontras
+  contrast_fmin: 200
+  pyin:                       # estimasi f0 (pitch) probabilistik — bagian periodik/bersuara batuk
+    fmin: 65                  # Hz (≈C2)
+    fmax: 1000                # Hz
+    frame_length: 1024        # 64 ms (pyin butuh ≥2 periode fmin)
+  # Fitur 2D (input CNN) — sinyal di-pad/dipotong ke audio.max_duration_s
+  n_mels: 64
+  n_mfcc_2d: 40
+  fmin_mel: 0
+  fmax_mel: 8000
+  top_db: 80                  # log-mel dipotong 80 dB di bawah puncak
+  dtype_2d: "float16"         # hemat ruang (presisi ±0,05 dB cukup untuk log-mel)

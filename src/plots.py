@@ -127,3 +127,148 @@ def plot_spectrogram_compare(examples: dict, sr: int = 16000, n_fft: int = 512, 
             axes[r, c].set_xlabel("Waktu (s)"); axes[r, c].set_ylabel("Frekuensi (Hz)")
     fig.colorbar(img, ax=axes, format="%+2.0f dB", shrink=0.8)
     return fig
+
+
+# ===========================================================================
+# Tahap 3 — visualisasi representasi suara & fitur
+# ===========================================================================
+import numpy as np  # noqa: E402
+
+# Warna kelas (tervalidasi aman buta warna: ΔE CVD ≈ 22); dipakai konsisten di semua grafik Tahap 3+
+WARNA_KELAS = {"COVID-19": "#d1661f", "healthy": "#2a6fb0"}
+URUTAN_KELAS = ["healthy", "COVID-19"]
+
+
+def plot_waveform_pair(examples: dict, sr: int = 16000):
+    """Waveform (domain waktu) berdampingan. examples: {nama_kelas: y}."""
+    fig, axes = plt.subplots(1, len(examples), figsize=(6 * len(examples), 3.2), sharey=True)
+    for ax, (k, y) in zip(np.atleast_1d(axes), examples.items()):
+        t = np.arange(len(y)) / sr
+        ax.plot(t, y, lw=0.5, color=WARNA_KELAS.get(k, "#555555"))
+        ax.set(title=f"Waveform — {k} ({len(y) / sr:.2f} s)", xlabel="Waktu (s)", xlim=(0, t[-1]))
+    np.atleast_1d(axes)[0].set_ylabel("Amplitudo (ternormalisasi)")
+    fig.tight_layout()
+    return fig
+
+
+def plot_fft_frame(examples: dict, sr: int = 16000, n_fft: int = 512, hop: int = 160):
+    """Spektrum FFT (domain frekuensi) satu frame 32 ms pada puncak energi batuk, per kelas.
+
+    Baris atas: potongan waveform ±0,25 s di sekitar frame (frame diarsir). Baris bawah: |FFT| dB
+    frame tersebut setelah jendela Hann.
+    """
+    import librosa
+
+    fig, axes = plt.subplots(2, len(examples), figsize=(6 * len(examples), 6))
+    axes = np.asarray(axes).reshape(2, -1)
+    for j, (k, y) in enumerate(examples.items()):
+        c = WARNA_KELAS.get(k, "#555555")
+        rms = librosa.feature.rms(y=y, frame_length=n_fft, hop_length=hop, center=False)[0]
+        s0 = int(np.argmax(rms)) * hop
+        frame = y[s0:s0 + n_fft]
+        a, b = max(0, s0 - sr // 4), min(len(y), s0 + n_fft + sr // 4)
+        ax = axes[0, j]
+        ax.plot(np.arange(a, b) / sr, y[a:b], lw=0.6, color=c)
+        ax.axvspan(s0 / sr, (s0 + n_fft) / sr, color="#888888", alpha=0.3, label="frame 32 ms")
+        ax.set(title=f"{k}: segmen di sekitar puncak energi", xlabel="Waktu (s)", ylabel="Amplitudo")
+        ax.legend(loc="upper right", fontsize=8)
+        X = np.fft.rfft(frame * np.hanning(len(frame)), n=n_fft)
+        f = np.fft.rfftfreq(n_fft, 1 / sr)
+        mag_db = 20 * np.log10(np.abs(X) + 1e-10)
+        ax = axes[1, j]
+        ax.plot(f, mag_db, lw=1, color=c)
+        ax.set(title=f"{k}: spektrum FFT frame (resolusi {sr / n_fft:.2f} Hz)", xlabel="Frekuensi (Hz)",
+               ylabel="Magnitudo (dB)", xlim=(0, sr / 2))
+    fig.tight_layout()
+    return fig
+
+
+def plot_tf_grid(reps: dict, sr: int = 16000, hop: int = 160):
+    """Grid representasi waktu-frekuensi: baris = representasi, kolom = kelas.
+
+    reps: {nama_kelas: {"Spectrogram STFT (dB)": M, "Log-mel (dB)": M, "MFCC": M, "GFCC": M}}
+    Skala warna disamakan per baris agar kedua kelas dapat dibandingkan.
+    """
+    import librosa.display
+
+    kelas = list(reps)
+    rows = list(reps[kelas[0]])
+    fig, axes = plt.subplots(len(rows), len(kelas), figsize=(6.2 * len(kelas), 3.0 * len(rows)), squeeze=False,
+                             layout="constrained")
+    for i, r in enumerate(rows):
+        vmin = min(np.percentile(reps[k][r], 1) for k in kelas)
+        vmax = max(np.percentile(reps[k][r], 99) for k in kelas)
+        for j, k in enumerate(kelas):
+            M, ax = reps[k][r], axes[i, j]
+            kw = dict(sr=sr, hop_length=hop, x_axis="time", ax=ax, vmin=vmin, vmax=vmax, cmap="magma")
+            if r.startswith("Spectrogram"):
+                img = librosa.display.specshow(M, y_axis="linear", **kw)
+                ax.set_ylabel("Frekuensi (Hz)")
+            elif r.startswith("Log-mel"):
+                img = librosa.display.specshow(M, y_axis="mel", fmax=sr / 2, **kw)
+                ax.set_ylabel("Frekuensi mel (Hz)")
+            else:
+                img = librosa.display.specshow(M, **kw)
+                ax.set_ylabel("Indeks koefisien")
+                ax.set_yticks(np.arange(M.shape[0]) + 0.5, labels=[str(v) for v in range(1, M.shape[0] + 1)]
+                              if r.startswith("MFCC") else [str(v) for v in range(M.shape[0])], fontsize=6)
+            ax.set_title(f"{r} — {k}")
+            ax.set_xlabel("Waktu (s)")
+        fig.colorbar(img, ax=axes[i, :].tolist(), shrink=0.9, pad=0.01)
+    return fig
+
+
+def plot_class_mean_logmel(mean_covid: np.ndarray, mean_healthy: np.ndarray, sr: int = 16000,
+                           hop: int = 160, fmax: float = 8000):
+    """Heatmap rata-rata log-mel per kelas + selisih (COVID-19 − healthy) dengan skala divergen."""
+    import librosa.display
+
+    fig, axes = plt.subplots(1, 3, figsize=(17, 4))
+    vmin = min(mean_covid.min(), mean_healthy.min())
+    vmax = max(mean_covid.max(), mean_healthy.max())
+    kw = dict(sr=sr, hop_length=hop, x_axis="time", y_axis="mel", fmax=fmax)
+    for ax, M, t in ((axes[0], mean_covid, "Rata-rata log-mel — COVID-19"),
+                     (axes[1], mean_healthy, "Rata-rata log-mel — healthy")):
+        img = librosa.display.specshow(M, ax=ax, vmin=vmin, vmax=vmax, cmap="magma", **kw)
+        ax.set(title=t, xlabel="Waktu (s)", ylabel="Frekuensi mel (Hz)")
+    fig.colorbar(img, ax=axes[:2].tolist(), format="%+.0f dB", shrink=0.9, pad=0.01)
+    D = mean_covid - mean_healthy
+    lim = float(np.percentile(np.abs(D), 99))
+    img = librosa.display.specshow(D, ax=axes[2], vmin=-lim, vmax=lim, cmap="RdBu_r", **kw)
+    axes[2].set(title="Selisih (COVID-19 − healthy)", xlabel="Waktu (s)", ylabel="Frekuensi mel (Hz)")
+    fig.colorbar(img, ax=axes[2], format="%+.1f dB", pad=0.01)
+    return fig
+
+
+def plot_feature_violins(df: pd.DataFrame, feats: list[str], label_col: str = "label_name",
+                         uji: pd.DataFrame | None = None, ncols: int = 4):
+    """Violin + boxplot per kelas untuk fitur kunci; judul memuat p (FDR) & rank-biserial r bila ada."""
+    nrows = int(np.ceil(len(feats) / ncols))
+    fig, axes = plt.subplots(nrows, ncols, figsize=(4 * ncols, 3.4 * nrows), squeeze=False)
+    info = uji.set_index("fitur") if uji is not None else None
+    for ax, f in zip(axes.flat, feats):
+        sns.violinplot(data=df, x=label_col, y=f, order=URUTAN_KELAS, hue=label_col, hue_order=URUTAN_KELAS,
+                       palette=WARNA_KELAS, inner="box", cut=0, linewidth=0.8, ax=ax, legend=False)
+        t = f
+        if info is not None and f in info.index:
+            r = info.loc[f]
+            t += f"\nr = {r.rank_biserial_r:+.2f}, p_FDR = {r.p_fdr:.1e}"
+        ax.set(title=t, xlabel="", ylabel="nilai fitur")
+    for ax in axes.flat[len(feats):]:
+        ax.axis("off")
+    fig.tight_layout()
+    return fig
+
+
+def plot_projection(Zs: dict, labels: np.ndarray, names=("healthy", "COVID-19")):
+    """Scatter proyeksi 2D (mis. {"PCA": Z, "t-SNE": Z}) diwarnai per kelas; COVID-19 digambar di atas."""
+    fig, axes = plt.subplots(1, len(Zs), figsize=(6.5 * len(Zs), 5.5), squeeze=False)
+    for ax, (t, Z) in zip(axes[0], Zs.items()):
+        for lab, nm in enumerate(names):
+            m = labels == lab
+            ax.scatter(Z[m, 0], Z[m, 1], s=9, alpha=0.55 if lab == 0 else 0.8, color=WARNA_KELAS[nm],
+                       edgecolors="white", linewidths=0.3, label=f"{nm} (n={m.sum()})")
+        ax.set(title=t, xlabel="Komponen 1", ylabel="Komponen 2")
+        ax.legend(loc="best", fontsize=9, markerscale=2)
+    fig.tight_layout()
+    return fig
