@@ -583,3 +583,42 @@ di Tahap 4 laporkan baseline "durasi saja" dan model tanpa fitur durasi.
 4. Angka literatur yang di Tahap 6 bertanda [TODO: cek manual] dipakai di Tabel 1 & 19: R2 (label & akurasi
    batuk saja 93,12%), R3 (jumlah data), R4 (RF 0,83 vs 0,79). R0 tidak ada PDF-nya (hanya fakta dari data kita + R1).
 5. Tahap 7b: konversi ke .docx (sampul, TOC, daftar gambar/tabel, render tabel dari CSV).
+
+
+---
+
+## Tahap 7b — Konversi ke dokumen akhir (Word + PDF)
+
+### Yang dikerjakan
+- `scripts/07b_buat_docx.py` (jalankan: `python scripts/07b_buat_docx.py`; opsi `--no-pdf`, `--no-word`):
+  1. Membuat `reports/final/reference.docx` dari reference bawaan pandoc → Times New Roman 12, spasi 1,5,
+     margin 3-3-3-3 cm, A4, Heading 1 rata tengah + ganti halaman; gaya tambahan `Keterangan Gambar`,
+     `Keterangan Tabel`, `Isi Tabel`, `Daftar Pustaka` (hanging indent), `Sampul *`, `Judul Depan`.
+  2. Menggabungkan `draft/00…07*.md` + sampul + Daftar Isi/Gambar/Tabel (field TOC) → `reports/final/_gabungan.md`
+     → pandoc 3.9 (`pypandoc_binary`; pandoc sistem tidak terpasang). Rumus LaTeX → persamaan Word (OMML).
+  3. Pasca-proses python-docx: caption gambar (di bawah) & tabel (di atas, *keep with next*), gambar lebar ≤ 15 cm
+     (tinggi ≤ 20 cm), tabel bergaris + header abu-abu berulang + lebar 100% + 10 pt, 3 seksi
+     (sampul tanpa nomor; abstrak–daftar tabel romawi i–x; Bab I–lampiran arab mulai 1).
+  4. MS Word via COM (pywin32): perbarui semua field/TOC lalu ekspor PDF (dengan *bookmark* heading).
+
+### Hasil
+- `reports/final/Laporan_COUGHVID_Kelompok.docx` (±6,2 MB) dan `.pdf` (±3,1 MB) — **64 halaman**
+  (10 halaman depan + 54 isi).
+- 23/23 gambar muncul; 23 tabel (Tabel 1–19 + L1–L4) sebagai tabel Word; 38 entri pustaka; daftar isi 80 entri,
+  daftar gambar 23, daftar tabel 23. Placeholder tersisa hanya `[NAMA ANGGOTA]` dan `[NIM]` (sampul & Tabel L4).
+
+### Keputusan / catatan teknis
+- Tabel dirender dari tabel Markdown di draf (isinya sudah diambil dari CSV `reports/tables/` di Tahap 7a,
+  3 desimal, koma desimal) — tidak dibaca ulang dari CSV agar subset kolom & format di draf tetap.
+- Switch `\t "Gaya,1"` pada field daftar gambar/tabel harus memakai pemisah daftar locale; locale Indonesia = `;`.
+  Script membaca `word.International(wdListSeparator)` dan menyesuaikan kode field otomatis.
+- Judul di `00_abstrak.md` tidak dipakai (sudah di sampul); kalimat "Gaya IEEE; …" di daftar pustaka dihapus.
+- Nama universitas/logo tidak dicantumkan di sampul (tidak ada di instruksi).
+- Bila draf diubah: edit `draft/_kunci/*.md` → `python scripts/07_sitasi.py` → `python scripts/07b_buat_docx.py`.
+
+### TODO / cek manual oleh pengguna
+1. Isi `[NAMA ANGGOTA]` dan `[NIM]` di sampul (3 baris) dan Tabel L4 (Lampiran E); sesuaikan jumlah anggota.
+   Lebih aman diisi di draf (`_kunci/07_lampiran.md`, dan `sampul()` di `scripts/07b_buat_docx.py`) lalu build ulang.
+2. Tambahkan nama universitas/logo di sampul bila diwajibkan.
+3. Butir TODO Tahap 7a masih berlaku (verifikasi entri pustaka non-R0–R4, angka literatur bertanda cek manual).
+4. Jika dokumen diedit manual di Word: klik kanan daftar isi/gambar/tabel → *Update Field* → *Update entire table*.
