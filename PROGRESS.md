@@ -7,7 +7,7 @@
 | 2. Preprocessing audio & dataset eksperimen | ✅ Selesai | 2026-11-26 |
 | 3. Ekstraksi fitur & visualisasi | ✅ Selesai | 2026-11-26 |
 | 4. Klasifikasi ML klasik (fitur tabular) | ✅ Selesai | 2026-11-26 |
-| 5. CNN ringan | ⏳ Belum | |
+| 5. CNN ringan (fitur 2D, Eksperimen A) | ✅ Selesai | 2026-11-26 |
 
 ---
 
@@ -383,3 +383,87 @@ di Tahap 4 laporkan baseline "durasi saja" dan model tanpa fitur durasi.
 - Opsional: ML klasik dengan semua healthy train (`healthy_to_covid_ratio: null`) belum dicoba.
 - Repeated CV 5×5 di train memakai hyperparameter hasil tuning pada data yang sama → sedikit optimistis (bukan
   nested CV); angka test adalah estimasi tak bias.
+
+
+---
+
+## Tahap 5 — CNN ringan pada fitur 2D (Eksperimen A)
+
+### File yang dihasilkan
+- `src/models_cnn.py` — `get_device()`/`default_batch_size()` (CUDA 64, CPU 32), `load_split()` (memmap + rata-rata waktu),
+  `content_length()` (deteksi padding), `BandNormalizer` (mean/std per pita, fit di train), `SpecDataset` (augmentasi
+  train: random crop di area suara, random time shift, SpecAugment), `mixup_batch()` (opsional), `LightCNN`
+  (4–5 blok, kernel `3x3`/`1x12`), `CRNN` (opsional, belum dijalankan), `count_params()`, `layer_table()`,
+  `predict_proba()`, `grad_cam()`.
+- `src/evaluate.py` — tambah `paired_bootstrap_auc_diff()` (selisih AUC dua model pada test yang sama).
+- `src/plots.py` — `plot_training_curves`, `plot_gradcam_grid`, `plot_arch_diagram`, `WARNA_SEED`; warna
+  `CNN (log-mel)` / `CNN (MFCC 2D)` di `WARNA_MODEL`.
+- `scripts/05_train_cnn.py` — tqdm, log ke file, resume (checkpoint `finished` dilewati; `*.last.pt` per epoch untuk
+  lanjut run terputus), `--limit N` (keluaran ke `reports/logs/uji_limit/`, sudah dihapus), `--epochs`, `--seeds`,
+  `--kernel`, `--n-blocks`, `--arch CRNN`, `--mixup`, `--no-specaugment`, `--tag`, `--experiment B`.
+- `models/cnn_{logmel,mfcc2d}_A.pt` (seed 42) + `_seed7.pt`, `_seed2024.pt` (state dict, config, statistik normalisasi,
+  ambang, riwayat, metrik val/test, prediksi); `models/preds_cnn_A.parquet` (skor val/test 6 run, kolom `cnn_<fitur>_s<seed>`).
+- `reports/logs/cnn_{logmel,mfcc2d}_history.csv` (per epoch × seed), `train_cnn_A.log`, `train_cnn_A_summary.json`,
+  `train_cnn_console.txt`, `nb05_exec.log`.
+- `reports/tables/`: `05_cnn_per_seed.csv` (val & test per seed), `05_cnn_ringkasan.csv`, `05_overfitting.csv`,
+  `05_uji_selisih_auc.csv`, `05_gradcam_padding.csv`, `05_arsitektur_lightcnn.csv`, `05_jumlah_parameter.csv`,
+  `05_perbandingan_model_A.csv`; `hasil_semua_model.csv` + 2 baris (`CNN (log-mel)`, `CNN (MFCC 2D)`, seed 42 +
+  kolom `cnn_seed_auc_mean/std`).
+- `notebooks/05_cnn.ipynb` (dieksekusi). `reports/figures/05_*.png` (9): arsitektur, augmentasi, kurva training
+  (log-mel, MFCC), perbandingan AUC, ROC/PR A, confusion A, Grad-CAM, profil frekuensi Grad-CAM.
+
+### Protokol (keputusan)
+- **Input:** fitur 2D Tahap 3, dirata-rata tiap 2 frame → resolusi 20 ms (64×500 log-mel, 40×500 MFCC). Alasan:
+  CPU saja (input penuh 64×1001 ±1,2 s/batch); batuk ±200–500 ms masih terwakili.
+- **Normalisasi** per pita (mean/std) di-fit pada train saja.
+- **Augmentasi train saja:** random crop 256 frame (5,12 s) dengan offset acak di area berisi suara (panjang isi dideteksi
+  dari frame padding yang identik dengan frame terakhir; cocok dengan `durasi_s`, r = 0,99999), shift ±20 frame,
+  SpecAugment 2 freq mask (≤ 8 pita log-mel / ≤ 5 MFCC) + 2 time mask (≤ 25 frame). Mixup tersedia, tidak dipakai.
+  Augmentasi level waveform (R2) tidak dikerjakan. Val/test: rekaman penuh (GAP → panjang bebas).
+- **Model:** LightCNN 4 blok 3×3, 16-32-64-128, BN, MaxPool 2×2, dropout 0,10→0,20, GAP, dropout 0,30, FC→1;
+  **97.521 parameter** (varian 1×12: 129.825; 5 blok: 245.233; CRNN: 245.489 — disediakan, tidak dilatih).
+- **Imbalance: `pos_weight` = 3,0** (bukan WeightedRandomSampler): train sudah di-undersample 3:1; sampler akan
+  mengulang ±500 rekaman COVID ±3×/epoch (risiko hafalan); pos_weight deterministik dan setara class_weight balanced ML.
+- AdamW lr 1e-3, wd 1e-2; ReduceLROnPlateau (AUC val, faktor 0,5, patience 4); maks 100 epoch; early stopping AUC val
+  patience 10; batch 32 (CPU, 6 thread). Ambang Youden di val; test sekali. Seed 42, 7, 2024.
+- Baris utama `hasil_semua_model.csv` = seed 42 (ditetapkan sebelum melihat hasil), mean ± std di kolom tambahan.
+- Uji `--limit 200 --epochs 2` (2 seed, kedua fitur) + uji resume dijalankan sebelum run penuh.
+
+### Hasil TEST Eksperimen A (n = 1.624, prevalensi 0,067)
+| Fitur | seed | epoch terbaik/total | AUC val | **AUC test [CI 95%]** | PR-AUC | Sens | Spes | menit |
+|---|---|---|---|---|---|---|---|---|
+| log-mel | 42 | 10/20 | 0,566 | 0,567 [0,511–0,619] | 0,081 | 0,370 | 0,708 | 8,6 |
+| log-mel | 7 | 37/47 | 0,560 | 0,579 [0,525–0,631] | – | – | – | 20,3 |
+| log-mel | 2024 | 9/19 | 0,567 | 0,570 [0,511–0,625] | – | – | – | 8,1 |
+| MFCC 2D | 42 | 25/35 | 0,580 | 0,544 [0,487–0,601] | 0,086 | 0,463 | 0,596 | 9,2 |
+| MFCC 2D | 7 | 36/46 | 0,584 | 0,591 [0,539–0,641] | – | – | – | 10,9 |
+| MFCC 2D | 2024 | 43/53 | 0,595 | 0,601 [0,548–0,652] | – | – | – | 14,1 |
+(Metrik lengkap per seed di `05_cnn_per_seed.csv`.)
+
+**Mean ± std (3 seed):** log-mel AUC test **0,572 ± 0,006** (val 0,565 ± 0,004); MFCC 2D **0,579 ± 0,030**
+(val 0,586 ± 0,007). PR-AUC 0,082 / 0,088. Ensemble rata-rata 3 seed (tambahan): log-mel 0,576, MFCC 0,591.
+**Lama training:** total 73,3 menit untuk 6 run (CPU), 8–20 menit/run, ±25 s/epoch (log-mel), ±15 s/epoch (MFCC).
+
+### Perbandingan dengan ML terbaik (SVM RBF, AUC test 0,576)
+- Selisih AUC test (seed 42, bootstrap berpasangan 2000×): CNN log-mel − SVM = −0,009 [−0,058; 0,038], p = 0,72;
+  CNN MFCC − SVM = −0,032 [−0,101; 0,040], p = 0,40; log-mel − MFCC = +0,023, p = 0,53 → **tidak ada perbedaan bermakna**.
+- CNN **tidak melampaui** ML klasik; semua model A berada di AUC ≈ 0,54–0,60. Precision ≈ 0,08 → tidak layak skrining.
+
+### Overfitting
+- log-mel: ringan — selisih AUC train(teraugmentasi) − val pada checkpoint 0,02–0,06; val mendatar ±0,56 sejak ±epoch 10.
+- MFCC 2D: lebih jelas — AUC train naik terus ke 0,71–0,72, val mendatar ±0,58 (selisih 0,07–0,12); early stopping menahan.
+- Val loss sangat fluktuatif (hanya 108 positif, pos_weight) → AUC val lebih stabil sebagai kriteria.
+- Variasi antar-seed MFCC besar (test 0,544–0,601) → seed 42 kebetulan terendah; laporkan mean ± std, bukan satu seed.
+
+### Grad-CAM (CNN log-mel seed 42)
+- Perhatian pada segmen batuk, pita ±0,2–1 kHz (puncak ±0,5 kHz) dan > 5,5 kHz; profil frekuensi **hampir identik** untuk
+  COVID-19 dan healthy.
+- Massa CAM di area padding ±4% vs luas padding ±57% → **tidak ada shortcut padding/durasi**.
+- Skor probabilitas log-mel sangat sempit (90% test di 0,34–0,52) → keyakinan rendah; ambang Youden 0,36–0,47.
+
+### Catatan / TODO
+- CRNN dan varian kernel 1×12 sudah diimplementasi tetapi **belum dilatih** (opsional; perintah:
+  `python scripts/05_train_cnn.py --features logmel --kernel 1x12 --tag _k1x12 --seeds 42` atau `--arch CRNN`).
+- CNN untuk Eksperimen B didukung (`--experiment B`) tetapi tidak dijalankan (prompt tahap 5 hanya A).
+- Augmentasi level waveform (noise, pitch shift, time stretch ala R2) tidak dikerjakan.
+- Kalibrasi probabilitas CNN rendah (pos_weight + undersampling) → hanya pakai dengan ambang dari val.

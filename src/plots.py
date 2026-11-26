@@ -281,10 +281,11 @@ def plot_projection(Zs: dict, labels: np.ndarray, names=("healthy", "COVID-19"))
 WARNA_MODEL = {
     "Logistic Regression": "#257de0", "SVM (RBF)": "#f47230", "k-NN": "#00b894",
     "Random Forest": "#f2a600", "XGBoost": "#ee7fac", "CNN": "#008a17",
-    "Dummy (stratified)": "#8c8c8c",
+    "Dummy (stratified)": "#8c8c8c", "CNN (log-mel)": "#008a17", "CNN (MFCC 2D)": "#7b4fd0",
 }
 GARIS_MODEL = {"Logistic Regression": "-", "SVM (RBF)": "--", "k-NN": "-.", "Random Forest": "-",
-               "XGBoost": "--", "CNN": "-", "Dummy (stratified)": ":"}
+               "XGBoost": "--", "CNN": "-", "Dummy (stratified)": ":",
+               "CNN (log-mel)": "-", "CNN (MFCC 2D)": "-."}
 
 
 def plot_roc_pr_all(y_true, scores: dict, title: str = "", prevalence: float | None = None):
@@ -359,4 +360,79 @@ def plot_ablation(abl: pd.DataFrame, title: str = ""):
     ax.set_xlabel("ROC-AUC")
     ax.set_title(title)
     ax.legend(fontsize=8, loc="upper center", bbox_to_anchor=(0.5, -0.12), ncol=3, frameon=False)
+    return fig
+
+
+# ---------------------------------------------------------------------------
+# Tahap 5 — CNN
+# ---------------------------------------------------------------------------
+WARNA_SEED = {42: "#257de0", 7: "#f47230", 2024: "#00b894"}
+
+
+def plot_training_curves(hist: pd.DataFrame, title: str = ""):
+    """Kurva loss & AUC per epoch (train vs val) untuk tiap seed; titik = epoch terbaik (AUC val maks).
+
+    Garis utuh = val, putus-putus = train (AUC train dihitung on-the-fly pada potongan teraugmentasi).
+    """
+    fig, axes = plt.subplots(1, 2, figsize=(12, 4.3))
+    for seed, h in hist.groupby("seed"):
+        c = WARNA_SEED.get(seed, "#555")
+        axes[0].plot(h.epoch, h.train_loss, ls="--", color=c, lw=1.3, label=f"train (seed {seed})")
+        axes[0].plot(h.epoch, h.val_loss, ls="-", color=c, lw=1.8, label=f"val (seed {seed})")
+        axes[1].plot(h.epoch, h.train_auc, ls="--", color=c, lw=1.3, label=f"train (seed {seed})")
+        axes[1].plot(h.epoch, h.val_auc, ls="-", color=c, lw=1.8, label=f"val (seed {seed})")
+        b = h.loc[h.val_auc.idxmax()]
+        axes[1].scatter(b.epoch, b.val_auc, color=c, s=45, zorder=3, edgecolor="white", linewidth=1)
+    axes[0].set(xlabel="Epoch", ylabel="BCE loss (pos_weight)", title="Loss")
+    axes[1].axhline(0.5, color="#bbb", lw=1)
+    axes[1].set(xlabel="Epoch", ylabel="ROC-AUC", title="ROC-AUC (titik = checkpoint terbaik)")
+    axes[1].legend(fontsize=7, ncol=2, loc="lower right")
+    fig.suptitle(title)
+    fig.tight_layout()
+    return fig
+
+
+def plot_gradcam_grid(items: list[dict], hop_s: float = 0.02, n_mels: int = 64, cols: int = 2):
+    """Grid Grad-CAM. items: dict(spec (F,T), cam (F,T), title). Spektrogram abu-abu + overlay CAM."""
+    rows = int(np.ceil(len(items) / cols))
+    fig, axes = plt.subplots(rows, cols, figsize=(6.2 * cols, 3.0 * rows), squeeze=False,
+                             constrained_layout=True)
+    for ax, it in zip(axes.flat, items):
+        F, T = it["spec"].shape
+        ext = [0, T * hop_s, 0, F]
+        ax.imshow(it["spec"], origin="lower", aspect="auto", cmap="gray_r", extent=ext)
+        im = ax.imshow(it["cam"], origin="lower", aspect="auto", cmap="inferno", alpha=0.45, extent=ext,
+                       vmin=0, vmax=1)
+        if it.get("length_s"):
+            ax.axvline(it["length_s"], color="#00b894", lw=1.2, ls="--")
+        ax.set_title(it["title"], fontsize=9)
+        ax.set_xlabel("Waktu (s)")
+        ax.set_ylabel("Indeks pita mel")
+        ax.grid(False)
+    for ax in list(axes.flat)[len(items):]:
+        ax.axis("off")
+    fig.colorbar(im, ax=axes, shrink=0.6, label="Grad-CAM (0–1)")
+    return fig
+
+
+def plot_arch_diagram(blocks: list[tuple[str, str]], title: str = ""):
+    """Diagram blok arsitektur horizontal. blocks: [(nama, keterangan bentuk/parameter), ...]."""
+    from matplotlib.patches import FancyBboxPatch
+
+    n = len(blocks)
+    fig, ax = plt.subplots(figsize=(1.75 * n, 2.4))
+    warna = ["#dfe9f6", "#cfe0f4", "#bcd3ef", "#a8c6ea", "#94b9e5", "#80ace0", "#fde3cf", "#f9c9a6"]
+    for i, (nama, ket) in enumerate(blocks):
+        x = i * 1.75
+        ax.add_patch(FancyBboxPatch((x, 0), 1.45, 1.6, boxstyle="round,pad=0.03",
+                                    fc=warna[min(i, len(warna) - 1)], ec="#456", lw=1))
+        ax.text(x + 0.725, 1.15, nama, ha="center", va="center", fontsize=8.5, weight="bold")
+        ax.text(x + 0.725, 0.55, ket, ha="center", va="center", fontsize=7.2, linespacing=1.3)
+        if i < n - 1:
+            ax.annotate("", xy=(x + 1.72, 0.8), xytext=(x + 1.5, 0.8),
+                        arrowprops=dict(arrowstyle="->", color="#456", lw=1.2))
+    ax.set_xlim(-0.1, n * 1.75)
+    ax.set_ylim(-0.15, 1.8)
+    ax.axis("off")
+    ax.set_title(title, fontsize=10)
     return fig

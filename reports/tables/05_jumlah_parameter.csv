@@ -1,0 +1,5 @@
+model,parameter
+"LightCNN 4 blok, 3×3 (dipakai)",97521
+"LightCNN 4 blok, 1×12 (ala R3)",129825
+"LightCNN 5 blok, 3×3",245233
+"CRNN (3 blok CNN + BiGRU 64), log-mel",245489

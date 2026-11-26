@@ -94,6 +94,29 @@ def bootstrap_ci(y_true, y_score, metric=roc_auc_score, n_boot: int = 1000, alph
     return float(lo), float(hi)
 
 
+def paired_bootstrap_auc_diff(y_true, score_a, score_b, n_boot: int = 2000, seed: int | None = None) -> dict:
+    """Selisih ROC-AUC (A − B) dua model pada set uji yang SAMA, dengan bootstrap berpasangan.
+
+    Rekaman yang sama di-resample untuk kedua model → korelasi antar-model ikut diperhitungkan.
+    Return: diff, CI 95% persentil, dan p dua sisi (proporsi bootstrap dengan tanda berlawanan × 2).
+    """
+    seed = load_config().seed if seed is None else seed
+    rng = np.random.default_rng(seed)
+    y = np.asarray(y_true).astype(int)
+    a, b = np.asarray(score_a, float), np.asarray(score_b, float)
+    diff = roc_auc_score(y, a) - roc_auc_score(y, b)
+    d = []
+    for _ in range(n_boot):
+        idx = rng.integers(0, len(y), len(y))
+        if y[idx].min() == y[idx].max():
+            continue
+        d.append(roc_auc_score(y[idx], a[idx]) - roc_auc_score(y[idx], b[idx]))
+    d = np.asarray(d)
+    p = min(1.0, 2 * min((d <= 0).mean(), (d >= 0).mean()))
+    lo, hi = np.percentile(d, [2.5, 97.5])
+    return {"diff": float(diff), "ci_low": float(lo), "ci_high": float(hi), "p": float(p)}
+
+
 def compute_metrics(y_true, y_score, threshold: float | None = None, n_boot: int = 1000,
                     seed: int | None = None) -> dict:
     """Semua metrik untuk satu model pada satu set data.
