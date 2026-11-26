@@ -1,0 +1,62 @@
+=== Eksperimen A: 315 fitur | train 2009 (pos 502) | val 1622 (pos 108) | test 1624 (pos 108)
+model A:   0%|          | 0/6 [00:00<?, ?it/s][dummy/none] CV AUC 0.497±0.016 | val AUC 0.476 | 4s | {}
+[dummy] FINAL (none) test AUC 0.516 [0.472–0.563] | PR-AUC 0.069 | sens 1.000 spes 0.000 F1 0.125
+model A:  17%|#6        | 1/6 [00:08<00:41,  8.32s/it][logreg/balanced] CV AUC 0.579±0.019 | val AUC 0.561 | 1s | {'clf__C': 0.0008263688714158015, 'select__k': 'all'}
+[logreg/smote] CV AUC 0.574±0.010 | val AUC 0.554 | 2s | {'clf__C': 0.0008263688714158015, 'select__k': 'all'}
+[logreg] FINAL (balanced) test AUC 0.569 [0.514–0.623] | PR-AUC 0.087 | sens 0.481 spes 0.600 F1 0.136
+model A:  33%|###3      | 2/6 [00:14<00:27,  6.82s/it][svm/balanced] CV AUC 0.583±0.022 | val AUC 0.574 | 34s | {'clf__C': 2.801635158716261, 'clf__gamma': 0.00026210878782654407, 'select__k': 'all'}
+[svm/smote] CV AUC 0.579±0.035 | val AUC 0.551 | 75s | {'clf__C': 17.12337597316399, 'clf__gamma': 0.0008200518402245837, 'select__k': 20}
+[svm] FINAL (balanced) test AUC 0.576 [0.523–0.629] | PR-AUC 0.088 | sens 0.556 spes 0.553 F1 0.142
+model A:  50%|#####     | 3/6 [02:23<03:08, 62.89s/it][knn/none] CV AUC 0.570±0.026 | val AUC 0.542 | 1s | {'clf__n_neighbors': 111, 'clf__p': 2, 'clf__weights': 'uniform', 'select__k': 20}
+[knn/smote] CV AUC 0.563±0.036 | val AUC 0.558 | 2s | {'clf__n_neighbors': 79, 'clf__p': 1, 'clf__weights': 'distance', 'select__k': 20}
+[knn] FINAL (none) test AUC 0.580 [0.525–0.636] | PR-AUC 0.088 | sens 0.509 spes 0.613 F1 0.147
+model A:  67%|######6   | 4/6 [02:28<01:20, 40.01s/it][rf/balanced] CV AUC 0.586±0.033 | val AUC 0.527 | 48s | {'select__k': 100, 'clf__min_samples_leaf': 2, 'clf__max_features': 0.1, 'clf__max_depth': 5}
+[rf/smote] CV AUC 0.585±0.030 | val AUC 0.552 | 83s | {'select__k': 20, 'clf__min_samples_leaf': 2, 'clf__max_features': 0.3, 'clf__max_depth': 5}
+[rf] FINAL (balanced) test AUC 0.570 [0.513–0.628] | PR-AUC 0.091 | sens 0.407 spes 0.705 F1 0.147
+model A:  83%|########3 | 5/6 [04:49<01:16, 76.30s/it][xgb/balanced] CV AUC 0.583±0.033 | val AUC 0.546 | 27s | {'clf__colsample_bytree': 0.5, 'clf__learning_rate': 0.019721610970574007, 'clf__max_depth': 4, 'clf__min_child_weight': 1, 'clf__n_estimators': 500, 'clf__subsample': 0.6, 'select__k': 100}
+[xgb/smote] CV AUC 0.577±0.023 | val AUC 0.559 | 33s | {'clf__colsample_bytree': 0.8, 'clf__learning_rate': 0.01351182947645082, 'clf__max_depth': 4, 'clf__min_child_weight': 1, 'clf__n_estimators': 300, 'clf__subsample': 0.6, 'select__k': 'all'}
+[xgb] FINAL (balanced) test AUC 0.572 [0.513–0.629] | PR-AUC 0.097 | sens 0.630 spes 0.433 F1 0.131
+model A: 100%|##########| 6/6 [06:02<00:00, 75.27s/it]model A: 100%|##########| 6/6 [06:02<00:00, 60.43s/it]
+Model terbaik (AUC val): svm (balanced), val AUC 0.574
+Top-5 permutation importance (svm): ['contrast_05_max', 'mfcc_06_mean', 'mfcc_11_mean', 'contrast_05_mean', 'mfcc_d_00_min']
+ablasi A:   0%|          | 0/8 [00:00<?, ?it/s][ablasi] (i) waktu (RMS, ZCR)         n=  8 CV 0.532 | val 0.519 | test 0.485
+ablasi A:  12%|#2        | 1/8 [00:06<00:46,  6.61s/it][ablasi] (ii) spektral                n= 40 CV 0.586 | val 0.536 | test 0.542
+ablasi A:  25%|##5       | 2/8 [00:15<00:47,  7.85s/it][ablasi] (iii) MFCC (+Δ, ΔΔ)          n=182 CV 0.581 | val 0.571 | test 0.568
+ablasi A:  38%|###7      | 3/8 [00:29<00:54, 10.85s/it][ablasi] (iv) GFCC                    n= 78 CV 0.562 | val 0.540 | test 0.495
+ablasi A:  50%|#####     | 4/8 [00:39<00:42, 10.59s/it][ablasi] (v) MFCC + GFCC              n=260 CV 0.576 | val 0.540 | test 0.493
+ablasi A:  62%|######2   | 5/8 [00:56<00:38, 12.81s/it][ablasi] (vi) semua                   n=315 CV 0.583 | val 0.574 | test 0.576
+ablasi A:  75%|#######5  | 6/8 [01:19<00:32, 16.16s/it][ablasi] (vii) durasi saja            n=  1 CV 0.562 | val 0.495 | test 0.518
+ablasi A:  88%|########7 | 7/8 [01:25<00:12, 12.80s/it][ablasi] (viii) semua tanpa durasi    n=314 CV 0.582 | val 0.575 | test 0.576
+ablasi A: 100%|##########| 8/8 [01:47<00:00, 15.77s/it]ablasi A: 100%|##########| 8/8 [01:47<00:00, 13.42s/it]
+Eksperimen A selesai dalam 842 s
+=== Eksperimen B: 315 fitur | train 707 (pos 329) | val 152 (pos 71) | test 152 (pos 70)
+model B:   0%|          | 0/6 [00:00<?, ?it/s][dummy/none] CV AUC 0.503±0.045 | val AUC 0.428 | 0s | {}
+[dummy] FINAL (none) test AUC 0.487 [0.417–0.567] | PR-AUC 0.454 | sens 1.000 spes 0.000 F1 0.631
+model B:  17%|#6        | 1/6 [00:01<00:06,  1.25s/it][logreg/balanced] CV AUC 0.768±0.032 | val AUC 0.712 | 1s | {'clf__C': 0.004661686413912772, 'select__k': 'all'}
+[logreg/smote] CV AUC 0.767±0.032 | val AUC 0.710 | 1s | {'clf__C': 0.004661686413912772, 'select__k': 'all'}
+[logreg] FINAL (balanced) test AUC 0.812 [0.730–0.877] | PR-AUC 0.749 | sens 0.771 spes 0.817 F1 0.777
+model B:  33%|###3      | 2/6 [00:05<00:11,  2.76s/it][svm/balanced] CV AUC 0.767±0.033 | val AUC 0.711 | 7s | {'clf__C': 2.801635158716261, 'clf__gamma': 0.00026210878782654407, 'select__k': 'all'}
+[svm/smote] CV AUC 0.768±0.033 | val AUC 0.718 | 8s | {'clf__C': 2.801635158716261, 'clf__gamma': 0.00026210878782654407, 'select__k': 'all'}
+[svm] FINAL (smote) test AUC 0.826 [0.745–0.888] | PR-AUC 0.786 | sens 0.743 spes 0.805 F1 0.754
+model B:  50%|#####     | 3/6 [00:23<00:29,  9.73s/it][knn/none] CV AUC 0.726±0.036 | val AUC 0.648 | 1s | {'clf__n_neighbors': 104, 'clf__p': 2, 'clf__weights': 'distance', 'select__k': 100}
+[knn/smote] CV AUC 0.725±0.035 | val AUC 0.662 | 1s | {'clf__n_neighbors': 104, 'clf__p': 2, 'clf__weights': 'distance', 'select__k': 100}
+[knn] FINAL (none) test AUC 0.776 [0.689–0.848] | PR-AUC 0.675 | sens 0.629 spes 0.756 F1 0.657
+model B:  67%|######6   | 4/6 [00:26<00:14,  7.31s/it][rf/balanced] CV AUC 0.746±0.041 | val AUC 0.686 | 52s | {'select__k': 'all', 'clf__min_samples_leaf': 1, 'clf__max_features': 0.1, 'clf__max_depth': 10}
+[rf/smote] CV AUC 0.749±0.040 | val AUC 0.685 | 56s | {'select__k': 'all', 'clf__min_samples_leaf': 1, 'clf__max_features': 0.1, 'clf__max_depth': 10}
+[rf] FINAL (smote) test AUC 0.817 [0.741–0.879] | PR-AUC 0.771 | sens 0.800 spes 0.732 F1 0.757
+model B:  83%|########3 | 5/6 [02:27<00:48, 48.32s/it][xgb/balanced] CV AUC 0.754±0.040 | val AUC 0.713 | 55s | {'clf__colsample_bytree': 0.8, 'clf__learning_rate': 0.01351182947645082, 'clf__max_depth': 4, 'clf__min_child_weight': 1, 'clf__n_estimators': 300, 'clf__subsample': 0.6, 'select__k': 'all'}
+[xgb/smote] CV AUC 0.754±0.044 | val AUC 0.699 | 54s | {'clf__colsample_bytree': 0.5, 'clf__learning_rate': 0.028180680291847244, 'clf__max_depth': 2, 'clf__min_child_weight': 5, 'clf__n_estimators': 500, 'clf__subsample': 1.0, 'select__k': 'all'}
+[xgb] FINAL (balanced) test AUC 0.807 [0.726–0.871] | PR-AUC 0.754 | sens 0.614 spes 0.817 F1 0.672
+model B: 100%|##########| 6/6 [04:44<00:00, 78.45s/it]model B: 100%|##########| 6/6 [04:44<00:00, 47.44s/it]
+Model terbaik (AUC val): svm (smote), val AUC 0.718
+Top-5 permutation importance (svm): ['mfcc_06_skew', 'mfcc_08_mean', 'mfcc_06_kurt', 'mfcc_00_kurt', 'mfcc_dd_00_std']
+ablasi B:   0%|          | 0/8 [00:00<?, ?it/s][ablasi] (i) waktu (RMS, ZCR)         n=  8 CV 0.607 | val 0.562 | test 0.680
+ablasi B:  12%|#2        | 1/8 [00:03<00:21,  3.06s/it][ablasi] (ii) spektral                n= 40 CV 0.646 | val 0.596 | test 0.667
+ablasi B:  25%|##5       | 2/8 [00:06<00:20,  3.45s/it][ablasi] (iii) MFCC (+Δ, ΔΔ)          n=182 CV 0.745 | val 0.676 | test 0.813
+ablasi B:  38%|###7      | 3/8 [00:12<00:21,  4.28s/it][ablasi] (iv) GFCC                    n= 78 CV 0.686 | val 0.679 | test 0.764
+ablasi B:  50%|#####     | 4/8 [00:16<00:16,  4.20s/it][ablasi] (v) MFCC + GFCC              n=260 CV 0.750 | val 0.702 | test 0.819
+ablasi B:  62%|######2   | 5/8 [00:21<00:14,  4.67s/it][ablasi] (vi) semua                   n=315 CV 0.768 | val 0.718 | test 0.826
+ablasi B:  75%|#######5  | 6/8 [00:27<00:10,  5.15s/it][ablasi] (vii) durasi saja            n=  1 CV 0.669 | val 0.576 | test 0.671
+ablasi B:  88%|########7 | 7/8 [00:30<00:04,  4.38s/it][ablasi] (viii) semua tanpa durasi    n=314 CV 0.767 | val 0.716 | test 0.823
+ablasi B: 100%|##########| 8/8 [00:36<00:00,  4.93s/it]ablasi B: 100%|##########| 8/8 [00:36<00:00,  4.58s/it]
+Eksperimen B selesai dalam 335 s

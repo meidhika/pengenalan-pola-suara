@@ -272,3 +272,91 @@ def plot_projection(Zs: dict, labels: np.ndarray, names=("healthy", "COVID-19"))
         ax.legend(loc="best", fontsize=9, markerscale=2)
     fig.tight_layout()
     return fig
+
+
+# ---------------------------------------------------------------------------
+# Tahap 4 — evaluasi model
+# ---------------------------------------------------------------------------
+# Warna model: urutan kategori tetap (tidak diputar ulang) + gaya garis sebagai penanda kedua
+WARNA_MODEL = {
+    "Logistic Regression": "#257de0", "SVM (RBF)": "#f47230", "k-NN": "#00b894",
+    "Random Forest": "#f2a600", "XGBoost": "#ee7fac", "CNN": "#008a17",
+    "Dummy (stratified)": "#8c8c8c",
+}
+GARIS_MODEL = {"Logistic Regression": "-", "SVM (RBF)": "--", "k-NN": "-.", "Random Forest": "-",
+               "XGBoost": "--", "CNN": "-", "Dummy (stratified)": ":"}
+
+
+def plot_roc_pr_all(y_true, scores: dict, title: str = "", prevalence: float | None = None):
+    """Kurva ROC dan PR semua model dalam satu figur (dua panel). scores: {nama: skor}."""
+    from src.evaluate import curves
+    from sklearn.metrics import average_precision_score, roc_auc_score
+
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5.2))
+    for name, s in scores.items():
+        c = curves(y_true, s)
+        kw = dict(color=WARNA_MODEL.get(name, "#333"), ls=GARIS_MODEL.get(name, "-"), lw=2)
+        axes[0].plot(c["fpr"], c["tpr"], label=f"{name} (AUC {roc_auc_score(y_true, s):.3f})", **kw)
+        axes[1].plot(c["recall"], c["precision"], label=f"{name} (AP {average_precision_score(y_true, s):.3f})",
+                     **kw)
+    axes[0].plot([0, 1], [0, 1], color="#bbb", lw=1)
+    axes[0].set(xlabel="False positive rate (1 − spesifisitas)", ylabel="True positive rate (sensitivitas)",
+                title="Kurva ROC", xlim=(0, 1), ylim=(0, 1.01))
+    prev = float(np.mean(y_true)) if prevalence is None else prevalence
+    axes[1].axhline(prev, color="#bbb", lw=1)
+    axes[1].text(0.99, prev, f"prevalensi = {prev:.3f}", ha="right", va="bottom", fontsize=8, color="#666")
+    axes[1].set(xlabel="Recall (sensitivitas)", ylabel="Precision", title="Kurva Precision–Recall",
+                xlim=(0, 1), ylim=(0, 1.01))
+    for ax in axes:
+        ax.legend(fontsize=8, loc="lower right" if ax is axes[0] else "upper right", frameon=True)
+    fig.suptitle(title)
+    fig.tight_layout()
+    return fig
+
+
+def plot_confusion(cm: np.ndarray, title: str = "", labels=("healthy", "COVID-19"), ax=None):
+    """Confusion matrix dengan jumlah & persentase per baris (kelas sebenarnya)."""
+    ax = ax or plt.subplots(figsize=(4.6, 4))[1]
+    pct = cm / cm.sum(axis=1, keepdims=True)
+    ax.imshow(pct, cmap="Blues", vmin=0, vmax=1)
+    for i in range(2):
+        for j in range(2):
+            ax.text(j, i, f"{cm[i, j]}\n({pct[i, j]:.1%})", ha="center", va="center",
+                    color="white" if pct[i, j] > 0.6 else "#222", fontsize=11)
+    ax.set_xticks([0, 1], [f"pred. {l}" for l in labels])
+    ax.set_yticks([0, 1], [f"aktual {l}" for l in labels])
+    ax.grid(False)
+    ax.set_title(title, fontsize=10)
+    return ax
+
+
+def plot_importance_top(imp: pd.DataFrame, title: str = "", top: int = 20, ax=None, color="#257de0"):
+    """Bar horizontal top-N importance (kolom: fitur, importance, [std])."""
+    d = imp.nlargest(top, "importance").iloc[::-1]
+    ax = ax or plt.subplots(figsize=(6, 7))[1]
+    xerr = d["std"] if "std" in d and d["std"].notna().any() else None
+    ax.barh(d["fitur"], d["importance"], xerr=xerr, color=color, height=0.7,
+            error_kw={"ecolor": "#666", "lw": 1})
+    ax.set_title(title, fontsize=10)
+    ax.tick_params(axis="y", labelsize=8)
+    return ax
+
+
+def plot_ablation(abl: pd.DataFrame, title: str = ""):
+    """Bar chart AUC test (dengan CI 95%) per subset fitur + AUC val & CV sebagai titik."""
+    d = abl.reset_index(drop=True)
+    y = np.arange(len(d))[::-1]
+    fig, ax = plt.subplots(figsize=(8, 0.5 * len(d) + 1.5))
+    err = np.vstack([d["test_auc"] - d["test_auc_ci_low"], d["test_auc_ci_high"] - d["test_auc"]])
+    ax.barh(y, d["test_auc"] - 0.5, left=0.5, xerr=err, color="#257de0", height=0.6,
+            error_kw={"ecolor": "#444", "lw": 1, "capsize": 3}, label="AUC test (CI 95%)")
+    ax.scatter(d["val_auc"], y, marker="D", s=40, color="#f47230", zorder=3, label="AUC val",
+               edgecolor="white", linewidth=1)
+    ax.scatter(d["cv_auc_mean"], y, marker="o", s=40, color="#00b894", zorder=3, label="AUC CV train",
+               edgecolor="white", linewidth=1)
+    ax.axvline(0.5, color="#999", lw=1)
+    ax.set_yticks(y, [f"{s} (n={n})" for s, n in zip(d["subset"], d["n_fitur"])])
+    ax.set_xlabel("ROC-AUC")
+    ax.set_title(title)
+    ax.legend(fontsize=8, loc="upper center", bbox_to_anchor=(0.5, -0.12), ncol=3, frameon=False)
+    return fig

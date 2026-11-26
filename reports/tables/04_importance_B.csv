@@ -1,0 +1,946 @@
+metode,fitur,importance,std,kelompok
+bawaan_rf,durasi_s,0.011511931005231806,,waktu
+bawaan_rf,rms_mean,0.0021279786461291593,,waktu
+bawaan_rf,rms_std,0.001856922440103974,,waktu
+bawaan_rf,rms_min,0.0028810541208846474,,waktu
+bawaan_rf,rms_max,0.0022581541680819985,,waktu
+bawaan_rf,zcr_mean,0.003209026935610342,,waktu
+bawaan_rf,zcr_std,0.0028938097247032933,,waktu
+bawaan_rf,zcr_min,0.0010286029476004874,,waktu
+bawaan_rf,zcr_max,0.0018598314959195853,,waktu
+bawaan_rf,centroid_mean,0.002704739378279582,,spektral
+bawaan_rf,centroid_std,0.0027231471777376536,,spektral
+bawaan_rf,centroid_min,0.0012375906800879098,,spektral
+bawaan_rf,centroid_max,0.0035160398433388656,,spektral
+bawaan_rf,bandwidth_mean,0.002028912811638173,,spektral
+bawaan_rf,bandwidth_std,0.0023907188919351286,,spektral
+bawaan_rf,bandwidth_min,0.0007776402795095605,,spektral
+bawaan_rf,bandwidth_max,0.004889575145253647,,spektral
+bawaan_rf,rolloff_mean,0.002759977703354004,,spektral
+bawaan_rf,rolloff_std,0.002614510135553269,,spektral
+bawaan_rf,rolloff_min,0.0010569897177871396,,spektral
+bawaan_rf,rolloff_max,0.0018136541285653307,,spektral
+bawaan_rf,flatness_mean,0.003758811602709459,,spektral
+bawaan_rf,flatness_std,0.0020576170826937367,,spektral
+bawaan_rf,flatness_min,0.0014506651049202373,,spektral
+bawaan_rf,flatness_max,0.0021300690695446197,,spektral
+bawaan_rf,contrast_00_mean,0.0020205248779970207,,spektral
+bawaan_rf,contrast_00_std,0.002958112266511594,,spektral
+bawaan_rf,contrast_00_min,0.0017434492513175425,,spektral
+bawaan_rf,contrast_00_max,0.001988072592138602,,spektral
+bawaan_rf,contrast_01_mean,0.009226156383812863,,spektral
+bawaan_rf,contrast_01_std,0.0047203014117131875,,spektral
+bawaan_rf,contrast_01_min,0.0034372170861826415,,spektral
+bawaan_rf,contrast_01_max,0.004265780993771697,,spektral
+bawaan_rf,contrast_02_mean,0.001576513459622163,,spektral
+bawaan_rf,contrast_02_std,0.002617605768605234,,spektral
+bawaan_rf,contrast_02_min,0.002905483912148708,,spektral
+bawaan_rf,contrast_02_max,0.001859151566526581,,spektral
+bawaan_rf,contrast_03_mean,0.0020762314311497526,,spektral
+bawaan_rf,contrast_03_std,0.003146644882521666,,spektral
+bawaan_rf,contrast_03_min,0.001792765978145018,,spektral
+bawaan_rf,contrast_03_max,0.0036365900770718575,,spektral
+bawaan_rf,contrast_04_mean,0.0022641129358586067,,spektral
+bawaan_rf,contrast_04_std,0.002169776293827786,,spektral
+bawaan_rf,contrast_04_min,0.0023045043581584805,,spektral
+bawaan_rf,contrast_04_max,0.0028464018014540144,,spektral
+bawaan_rf,contrast_05_mean,0.0019679348710632686,,spektral
+bawaan_rf,contrast_05_std,0.002995853420383531,,spektral
+bawaan_rf,contrast_05_min,0.0017960560107167318,,spektral
+bawaan_rf,contrast_05_max,0.0021817532480297983,,spektral
+bawaan_rf,f0_mean,0.009345100859453594,,pitch
+bawaan_rf,f0_std,0.00243981440031461,,pitch
+bawaan_rf,f0_min,0.0018194925124031273,,pitch
+bawaan_rf,f0_max,0.013049562074994345,,pitch
+bawaan_rf,voiced_ratio,0.012490301585149324,,pitch
+bawaan_rf,voiced_prob_mean,0.005314891585442518,,pitch
+bawaan_rf,mfcc_00_mean,0.0014034659976766089,,MFCC
+bawaan_rf,mfcc_00_std,0.004958737662895766,,MFCC
+bawaan_rf,mfcc_00_min,0.0027100301015791158,,MFCC
+bawaan_rf,mfcc_00_max,0.0033768444111642757,,MFCC
+bawaan_rf,mfcc_00_skew,0.0023265440237847106,,MFCC
+bawaan_rf,mfcc_00_kurt,0.004128793924149937,,MFCC
+bawaan_rf,mfcc_01_mean,0.005026580685754072,,MFCC
+bawaan_rf,mfcc_01_std,0.002680662420290371,,MFCC
+bawaan_rf,mfcc_01_min,0.0035448921007979984,,MFCC
+bawaan_rf,mfcc_01_max,0.002207982869997126,,MFCC
+bawaan_rf,mfcc_01_skew,0.0034105221262896294,,MFCC
+bawaan_rf,mfcc_01_kurt,0.001516394215873956,,MFCC
+bawaan_rf,mfcc_02_mean,0.002936669719839227,,MFCC
+bawaan_rf,mfcc_02_std,0.002552853640940758,,MFCC
+bawaan_rf,mfcc_02_min,0.0013839701997979742,,MFCC
+bawaan_rf,mfcc_02_max,0.001354446149091896,,MFCC
+bawaan_rf,mfcc_02_skew,0.002835681913014791,,MFCC
+bawaan_rf,mfcc_02_kurt,0.0020630152307306287,,MFCC
+bawaan_rf,mfcc_03_mean,0.0020522749035006968,,MFCC
+bawaan_rf,mfcc_03_std,0.003261873600028059,,MFCC
+bawaan_rf,mfcc_03_min,0.002557236412025834,,MFCC
+bawaan_rf,mfcc_03_max,0.0036569130693623855,,MFCC
+bawaan_rf,mfcc_03_skew,0.002181746790094145,,MFCC
+bawaan_rf,mfcc_03_kurt,0.004500201353381631,,MFCC
+bawaan_rf,mfcc_04_mean,0.001829503771502612,,MFCC
+bawaan_rf,mfcc_04_std,0.001727158686754221,,MFCC
+bawaan_rf,mfcc_04_min,0.0025838252848727422,,MFCC
+bawaan_rf,mfcc_04_max,0.005085208765061228,,MFCC
+bawaan_rf,mfcc_04_skew,0.002524512495794802,,MFCC
+bawaan_rf,mfcc_04_kurt,0.001787412296849395,,MFCC
+bawaan_rf,mfcc_05_mean,0.0025819592649311083,,MFCC
+bawaan_rf,mfcc_05_std,0.0018598562961058122,,MFCC
+bawaan_rf,mfcc_05_min,0.0036964762573626687,,MFCC
+bawaan_rf,mfcc_05_max,0.002027032961146574,,MFCC
+bawaan_rf,mfcc_05_skew,0.002543922945604421,,MFCC
+bawaan_rf,mfcc_05_kurt,0.00206943191642716,,MFCC
+bawaan_rf,mfcc_06_mean,0.0023259667678837714,,MFCC
+bawaan_rf,mfcc_06_std,0.0021520085539499583,,MFCC
+bawaan_rf,mfcc_06_min,0.0030857483745771143,,MFCC
+bawaan_rf,mfcc_06_max,0.0015717725696413106,,MFCC
+bawaan_rf,mfcc_06_skew,0.00299175652245755,,MFCC
+bawaan_rf,mfcc_06_kurt,0.0011572410801530765,,MFCC
+bawaan_rf,mfcc_07_mean,0.0035533885577678716,,MFCC
+bawaan_rf,mfcc_07_std,0.002653767462430815,,MFCC
+bawaan_rf,mfcc_07_min,0.0028927264333091333,,MFCC
+bawaan_rf,mfcc_07_max,0.002694881211610311,,MFCC
+bawaan_rf,mfcc_07_skew,0.0016862756347426678,,MFCC
+bawaan_rf,mfcc_07_kurt,0.0014121818939659156,,MFCC
+bawaan_rf,mfcc_08_mean,0.0035425500390780674,,MFCC
+bawaan_rf,mfcc_08_std,0.002351408579551598,,MFCC
+bawaan_rf,mfcc_08_min,0.0037800586706958892,,MFCC
+bawaan_rf,mfcc_08_max,0.002146832923180658,,MFCC
+bawaan_rf,mfcc_08_skew,0.003650565918530336,,MFCC
+bawaan_rf,mfcc_08_kurt,0.00245530517389535,,MFCC
+bawaan_rf,mfcc_09_mean,0.0031279963612282856,,MFCC
+bawaan_rf,mfcc_09_std,0.005015341570228126,,MFCC
+bawaan_rf,mfcc_09_min,0.002748982739277299,,MFCC
+bawaan_rf,mfcc_09_max,0.0031985407576825726,,MFCC
+bawaan_rf,mfcc_09_skew,0.002028318577960006,,MFCC
+bawaan_rf,mfcc_09_kurt,0.002659104248501466,,MFCC
+bawaan_rf,mfcc_10_mean,0.002446287203380787,,MFCC
+bawaan_rf,mfcc_10_std,0.0018308628528819748,,MFCC
+bawaan_rf,mfcc_10_min,0.0050474154326655436,,MFCC
+bawaan_rf,mfcc_10_max,0.0016370170439064184,,MFCC
+bawaan_rf,mfcc_10_skew,0.0020945843638795953,,MFCC
+bawaan_rf,mfcc_10_kurt,0.002136773235656286,,MFCC
+bawaan_rf,mfcc_11_mean,0.002515584354204611,,MFCC
+bawaan_rf,mfcc_11_std,0.0033934320580824373,,MFCC
+bawaan_rf,mfcc_11_min,0.0035097755425741316,,MFCC
+bawaan_rf,mfcc_11_max,0.007640536205338237,,MFCC
+bawaan_rf,mfcc_11_skew,0.0033590865868702384,,MFCC
+bawaan_rf,mfcc_11_kurt,0.0023757545579535565,,MFCC
+bawaan_rf,mfcc_12_mean,0.002232901870506168,,MFCC
+bawaan_rf,mfcc_12_std,0.0018115819759337009,,MFCC
+bawaan_rf,mfcc_12_min,0.001675566034364786,,MFCC
+bawaan_rf,mfcc_12_max,0.004223186247376086,,MFCC
+bawaan_rf,mfcc_12_skew,0.002191554365667037,,MFCC
+bawaan_rf,mfcc_12_kurt,0.002517479877062752,,MFCC
+bawaan_rf,mfcc_d_00_mean,0.005023035605929374,,MFCC delta
+bawaan_rf,mfcc_d_00_std,0.0050323126116854355,,MFCC delta
+bawaan_rf,mfcc_d_00_min,0.0021093455720433666,,MFCC delta
+bawaan_rf,mfcc_d_00_max,0.013242362239604613,,MFCC delta
+bawaan_rf,mfcc_d_01_mean,0.00469289294693268,,MFCC delta
+bawaan_rf,mfcc_d_01_std,0.002200652135377602,,MFCC delta
+bawaan_rf,mfcc_d_01_min,0.0019847294428093913,,MFCC delta
+bawaan_rf,mfcc_d_01_max,0.0028141218076920623,,MFCC delta
+bawaan_rf,mfcc_d_02_mean,0.0024978302788217516,,MFCC delta
+bawaan_rf,mfcc_d_02_std,0.0015651459335722354,,MFCC delta
+bawaan_rf,mfcc_d_02_min,0.002040184873211856,,MFCC delta
+bawaan_rf,mfcc_d_02_max,0.0024166290648583695,,MFCC delta
+bawaan_rf,mfcc_d_03_mean,0.0018452771756784958,,MFCC delta
+bawaan_rf,mfcc_d_03_std,0.00326078368366952,,MFCC delta
+bawaan_rf,mfcc_d_03_min,0.0019573711994593725,,MFCC delta
+bawaan_rf,mfcc_d_03_max,0.002900857674072719,,MFCC delta
+bawaan_rf,mfcc_d_04_mean,0.0043626690725077,,MFCC delta
+bawaan_rf,mfcc_d_04_std,0.002070928993025139,,MFCC delta
+bawaan_rf,mfcc_d_04_min,0.0020335554938517774,,MFCC delta
+bawaan_rf,mfcc_d_04_max,0.0024747697967376758,,MFCC delta
+bawaan_rf,mfcc_d_05_mean,0.0031407532666230514,,MFCC delta
+bawaan_rf,mfcc_d_05_std,0.0017642910792066743,,MFCC delta
+bawaan_rf,mfcc_d_05_min,0.0024842472346193185,,MFCC delta
+bawaan_rf,mfcc_d_05_max,0.0033927816146894626,,MFCC delta
+bawaan_rf,mfcc_d_06_mean,0.002877855854518468,,MFCC delta
+bawaan_rf,mfcc_d_06_std,0.001936279582551883,,MFCC delta
+bawaan_rf,mfcc_d_06_min,0.0041864137382616115,,MFCC delta
+bawaan_rf,mfcc_d_06_max,0.0024004987602114607,,MFCC delta
+bawaan_rf,mfcc_d_07_mean,0.0020873400749199834,,MFCC delta
+bawaan_rf,mfcc_d_07_std,0.0016947931959909186,,MFCC delta
+bawaan_rf,mfcc_d_07_min,0.0022654882316798125,,MFCC delta
+bawaan_rf,mfcc_d_07_max,0.002695927416478128,,MFCC delta
+bawaan_rf,mfcc_d_08_mean,0.0031840705224906057,,MFCC delta
+bawaan_rf,mfcc_d_08_std,0.0016109165139572914,,MFCC delta
+bawaan_rf,mfcc_d_08_min,0.004323065599843228,,MFCC delta
+bawaan_rf,mfcc_d_08_max,0.005251428112380741,,MFCC delta
+bawaan_rf,mfcc_d_09_mean,0.0019551306572553363,,MFCC delta
+bawaan_rf,mfcc_d_09_std,0.0017829841609537675,,MFCC delta
+bawaan_rf,mfcc_d_09_min,0.005143585319449011,,MFCC delta
+bawaan_rf,mfcc_d_09_max,0.010155391999724504,,MFCC delta
+bawaan_rf,mfcc_d_10_mean,0.0017578561544896092,,MFCC delta
+bawaan_rf,mfcc_d_10_std,0.0019210406362181272,,MFCC delta
+bawaan_rf,mfcc_d_10_min,0.002100422313703631,,MFCC delta
+bawaan_rf,mfcc_d_10_max,0.0035733301049337405,,MFCC delta
+bawaan_rf,mfcc_d_11_mean,0.002353209910558907,,MFCC delta
+bawaan_rf,mfcc_d_11_std,0.003952022650657935,,MFCC delta
+bawaan_rf,mfcc_d_11_min,0.014423417700491669,,MFCC delta
+bawaan_rf,mfcc_d_11_max,0.007840158762795557,,MFCC delta
+bawaan_rf,mfcc_d_12_mean,0.002366068913488307,,MFCC delta
+bawaan_rf,mfcc_d_12_std,0.0016608106534491325,,MFCC delta
+bawaan_rf,mfcc_d_12_min,0.004406994736197199,,MFCC delta
+bawaan_rf,mfcc_d_12_max,0.002596745022747671,,MFCC delta
+bawaan_rf,mfcc_dd_00_mean,0.002546621209091057,,MFCC delta-delta
+bawaan_rf,mfcc_dd_00_std,0.007622479228350712,,MFCC delta-delta
+bawaan_rf,mfcc_dd_00_min,0.00929597011370831,,MFCC delta-delta
+bawaan_rf,mfcc_dd_00_max,0.007140312840478315,,MFCC delta-delta
+bawaan_rf,mfcc_dd_01_mean,0.0023691985667720693,,MFCC delta-delta
+bawaan_rf,mfcc_dd_01_std,0.0034533669141188204,,MFCC delta-delta
+bawaan_rf,mfcc_dd_01_min,0.0022407459192395045,,MFCC delta-delta
+bawaan_rf,mfcc_dd_01_max,0.0028510862145613657,,MFCC delta-delta
+bawaan_rf,mfcc_dd_02_mean,0.002027467316234825,,MFCC delta-delta
+bawaan_rf,mfcc_dd_02_std,0.0020124401120976926,,MFCC delta-delta
+bawaan_rf,mfcc_dd_02_min,0.004213207155726062,,MFCC delta-delta
+bawaan_rf,mfcc_dd_02_max,0.0026400952882513636,,MFCC delta-delta
+bawaan_rf,mfcc_dd_03_mean,0.0033503948263938735,,MFCC delta-delta
+bawaan_rf,mfcc_dd_03_std,0.003488996707687084,,MFCC delta-delta
+bawaan_rf,mfcc_dd_03_min,0.002093052485754702,,MFCC delta-delta
+bawaan_rf,mfcc_dd_03_max,0.0022468113389157375,,MFCC delta-delta
+bawaan_rf,mfcc_dd_04_mean,0.0037393843230563856,,MFCC delta-delta
+bawaan_rf,mfcc_dd_04_std,0.0016993035856681423,,MFCC delta-delta
+bawaan_rf,mfcc_dd_04_min,0.0023535614759856824,,MFCC delta-delta
+bawaan_rf,mfcc_dd_04_max,0.00177653782021114,,MFCC delta-delta
+bawaan_rf,mfcc_dd_05_mean,0.0036178153775238454,,MFCC delta-delta
+bawaan_rf,mfcc_dd_05_std,0.0017884221168004593,,MFCC delta-delta
+bawaan_rf,mfcc_dd_05_min,0.0019025643586365304,,MFCC delta-delta
+bawaan_rf,mfcc_dd_05_max,0.009070569563298487,,MFCC delta-delta
+bawaan_rf,mfcc_dd_06_mean,0.00210895460230418,,MFCC delta-delta
+bawaan_rf,mfcc_dd_06_std,0.0019246761810845084,,MFCC delta-delta
+bawaan_rf,mfcc_dd_06_min,0.011487349899847937,,MFCC delta-delta
+bawaan_rf,mfcc_dd_06_max,0.0051063959763074825,,MFCC delta-delta
+bawaan_rf,mfcc_dd_07_mean,0.0019893061580457897,,MFCC delta-delta
+bawaan_rf,mfcc_dd_07_std,0.00236360144436153,,MFCC delta-delta
+bawaan_rf,mfcc_dd_07_min,0.0025195866748261766,,MFCC delta-delta
+bawaan_rf,mfcc_dd_07_max,0.006929483436023213,,MFCC delta-delta
+bawaan_rf,mfcc_dd_08_mean,0.002235536475060932,,MFCC delta-delta
+bawaan_rf,mfcc_dd_08_std,0.003148396074887375,,MFCC delta-delta
+bawaan_rf,mfcc_dd_08_min,0.0037205104157196443,,MFCC delta-delta
+bawaan_rf,mfcc_dd_08_max,0.005813791294213114,,MFCC delta-delta
+bawaan_rf,mfcc_dd_09_mean,0.0030057699283710135,,MFCC delta-delta
+bawaan_rf,mfcc_dd_09_std,0.001670129191251651,,MFCC delta-delta
+bawaan_rf,mfcc_dd_09_min,0.0069720776642756424,,MFCC delta-delta
+bawaan_rf,mfcc_dd_09_max,0.009580335054600582,,MFCC delta-delta
+bawaan_rf,mfcc_dd_10_mean,0.002269374119305236,,MFCC delta-delta
+bawaan_rf,mfcc_dd_10_std,0.0030966347820712715,,MFCC delta-delta
+bawaan_rf,mfcc_dd_10_min,0.004158064646055424,,MFCC delta-delta
+bawaan_rf,mfcc_dd_10_max,0.0024158843784480672,,MFCC delta-delta
+bawaan_rf,mfcc_dd_11_mean,0.0021899458306635883,,MFCC delta-delta
+bawaan_rf,mfcc_dd_11_std,0.0016196485928169839,,MFCC delta-delta
+bawaan_rf,mfcc_dd_11_min,0.009824346647744928,,MFCC delta-delta
+bawaan_rf,mfcc_dd_11_max,0.005529067072493045,,MFCC delta-delta
+bawaan_rf,mfcc_dd_12_mean,0.004037109657412951,,MFCC delta-delta
+bawaan_rf,mfcc_dd_12_std,0.0021864033023496813,,MFCC delta-delta
+bawaan_rf,mfcc_dd_12_min,0.0033981858428012825,,MFCC delta-delta
+bawaan_rf,mfcc_dd_12_max,0.004928892463694259,,MFCC delta-delta
+bawaan_rf,gfcc_00_mean,0.0013660820874889365,,GFCC
+bawaan_rf,gfcc_00_std,0.0029056086769365347,,GFCC
+bawaan_rf,gfcc_00_min,0.003361292518245548,,GFCC
+bawaan_rf,gfcc_00_max,0.0024488104475443783,,GFCC
+bawaan_rf,gfcc_00_skew,0.002651327934170837,,GFCC
+bawaan_rf,gfcc_00_kurt,0.0019182956659702362,,GFCC
+bawaan_rf,gfcc_01_mean,0.0022099749992187247,,GFCC
+bawaan_rf,gfcc_01_std,0.002471960463474911,,GFCC
+bawaan_rf,gfcc_01_min,0.002615094635100284,,GFCC
+bawaan_rf,gfcc_01_max,0.0019152428151759933,,GFCC
+bawaan_rf,gfcc_01_skew,0.0028269891978116557,,GFCC
+bawaan_rf,gfcc_01_kurt,0.002796383163798459,,GFCC
+bawaan_rf,gfcc_02_mean,0.0015125431388811692,,GFCC
+bawaan_rf,gfcc_02_std,0.002060503605861685,,GFCC
+bawaan_rf,gfcc_02_min,0.0021756172296423823,,GFCC
+bawaan_rf,gfcc_02_max,0.002401763418363107,,GFCC
+bawaan_rf,gfcc_02_skew,0.003139472308035127,,GFCC
+bawaan_rf,gfcc_02_kurt,0.001486372418878331,,GFCC
+bawaan_rf,gfcc_03_mean,0.00200449644982187,,GFCC
+bawaan_rf,gfcc_03_std,0.0024155045590773107,,GFCC
+bawaan_rf,gfcc_03_min,0.002218608451113219,,GFCC
+bawaan_rf,gfcc_03_max,0.003578562338528574,,GFCC
+bawaan_rf,gfcc_03_skew,0.0022848975198046613,,GFCC
+bawaan_rf,gfcc_03_kurt,0.0025414010631194463,,GFCC
+bawaan_rf,gfcc_04_mean,0.0018633971256411164,,GFCC
+bawaan_rf,gfcc_04_std,0.0028859227612618786,,GFCC
+bawaan_rf,gfcc_04_min,0.002912754240159572,,GFCC
+bawaan_rf,gfcc_04_max,0.003385118907582518,,GFCC
+bawaan_rf,gfcc_04_skew,0.002194952095969462,,GFCC
+bawaan_rf,gfcc_04_kurt,0.001718824103908565,,GFCC
+bawaan_rf,gfcc_05_mean,0.0014959870420078233,,GFCC
+bawaan_rf,gfcc_05_std,0.0015427016388946024,,GFCC
+bawaan_rf,gfcc_05_min,0.003857766356930269,,GFCC
+bawaan_rf,gfcc_05_max,0.0018761708228096567,,GFCC
+bawaan_rf,gfcc_05_skew,0.002457106907541675,,GFCC
+bawaan_rf,gfcc_05_kurt,0.002422130394209961,,GFCC
+bawaan_rf,gfcc_06_mean,0.0012192731331345356,,GFCC
+bawaan_rf,gfcc_06_std,0.0018111949215757527,,GFCC
+bawaan_rf,gfcc_06_min,0.0025135099974783986,,GFCC
+bawaan_rf,gfcc_06_max,0.002482013481719922,,GFCC
+bawaan_rf,gfcc_06_skew,0.003544458842802935,,GFCC
+bawaan_rf,gfcc_06_kurt,0.0029119174125703234,,GFCC
+bawaan_rf,gfcc_07_mean,0.0013137646613437526,,GFCC
+bawaan_rf,gfcc_07_std,0.0024577616035001966,,GFCC
+bawaan_rf,gfcc_07_min,0.011971839400676995,,GFCC
+bawaan_rf,gfcc_07_max,0.00384885130283006,,GFCC
+bawaan_rf,gfcc_07_skew,0.0035094971020629305,,GFCC
+bawaan_rf,gfcc_07_kurt,0.0031653536743007785,,GFCC
+bawaan_rf,gfcc_08_mean,0.0023369541555320855,,GFCC
+bawaan_rf,gfcc_08_std,0.0018550398106419923,,GFCC
+bawaan_rf,gfcc_08_min,0.0026318482547331348,,GFCC
+bawaan_rf,gfcc_08_max,0.008050854698497237,,GFCC
+bawaan_rf,gfcc_08_skew,0.0025925974626513255,,GFCC
+bawaan_rf,gfcc_08_kurt,0.0016796195115613176,,GFCC
+bawaan_rf,gfcc_09_mean,0.0018464354892653698,,GFCC
+bawaan_rf,gfcc_09_std,0.0022454528044085994,,GFCC
+bawaan_rf,gfcc_09_min,0.0020283096645536663,,GFCC
+bawaan_rf,gfcc_09_max,0.005115942121475207,,GFCC
+bawaan_rf,gfcc_09_skew,0.0022821841478060747,,GFCC
+bawaan_rf,gfcc_09_kurt,0.0030813347298066234,,GFCC
+bawaan_rf,gfcc_10_mean,0.0034000484299121303,,GFCC
+bawaan_rf,gfcc_10_std,0.0036939067344835654,,GFCC
+bawaan_rf,gfcc_10_min,0.006158906014971295,,GFCC
+bawaan_rf,gfcc_10_max,0.0026849404176661883,,GFCC
+bawaan_rf,gfcc_10_skew,0.002187880312388712,,GFCC
+bawaan_rf,gfcc_10_kurt,0.001238907055151737,,GFCC
+bawaan_rf,gfcc_11_mean,0.001254689947261093,,GFCC
+bawaan_rf,gfcc_11_std,0.0019868453607886465,,GFCC
+bawaan_rf,gfcc_11_min,0.004681939377176211,,GFCC
+bawaan_rf,gfcc_11_max,0.003893258038289346,,GFCC
+bawaan_rf,gfcc_11_skew,0.0037049075012992104,,GFCC
+bawaan_rf,gfcc_11_kurt,0.0022871645126430968,,GFCC
+bawaan_rf,gfcc_12_mean,0.0022672013924845344,,GFCC
+bawaan_rf,gfcc_12_std,0.0021163598286106323,,GFCC
+bawaan_rf,gfcc_12_min,0.0017783823652531346,,GFCC
+bawaan_rf,gfcc_12_max,0.008530121177236786,,GFCC
+bawaan_rf,gfcc_12_skew,0.0048864517916895845,,GFCC
+bawaan_rf,gfcc_12_kurt,0.002290942063369545,,GFCC
+bawaan_xgb,durasi_s,0.006049277260899544,,waktu
+bawaan_xgb,rms_mean,0.0029472094029188156,,waktu
+bawaan_xgb,rms_std,0.0023658631835132837,,waktu
+bawaan_xgb,rms_min,0.002288718707859516,,waktu
+bawaan_xgb,rms_max,0.0026887175627052784,,waktu
+bawaan_xgb,zcr_mean,0.004716118331998587,,waktu
+bawaan_xgb,zcr_std,0.002071602735668421,,waktu
+bawaan_xgb,zcr_min,0.0010360670275986195,,waktu
+bawaan_xgb,zcr_max,0.002406899817287922,,waktu
+bawaan_xgb,centroid_mean,0.0024128220975399017,,spektral
+bawaan_xgb,centroid_std,0.0038388187531381845,,spektral
+bawaan_xgb,centroid_min,0.0026932659093290567,,spektral
+bawaan_xgb,centroid_max,0.0030565420165657997,,spektral
+bawaan_xgb,bandwidth_mean,0.0028704614378511906,,spektral
+bawaan_xgb,bandwidth_std,0.0014257767470553517,,spektral
+bawaan_xgb,bandwidth_min,0.003560330718755722,,spektral
+bawaan_xgb,bandwidth_max,0.004813592880964279,,spektral
+bawaan_xgb,rolloff_mean,0.003311548614874482,,spektral
+bawaan_xgb,rolloff_std,0.003692412283271551,,spektral
+bawaan_xgb,rolloff_min,0.0035369517281651497,,spektral
+bawaan_xgb,rolloff_max,0.005087298806756735,,spektral
+bawaan_xgb,flatness_mean,0.003899493021890521,,spektral
+bawaan_xgb,flatness_std,0.002621519612148404,,spektral
+bawaan_xgb,flatness_min,0.0035680136643350124,,spektral
+bawaan_xgb,flatness_max,0.0065872021950781345,,spektral
+bawaan_xgb,contrast_00_mean,0.002794367028400302,,spektral
+bawaan_xgb,contrast_00_std,0.0031761140562593937,,spektral
+bawaan_xgb,contrast_00_min,0.004287376068532467,,spektral
+bawaan_xgb,contrast_00_max,0.002239942317828536,,spektral
+bawaan_xgb,contrast_01_mean,0.004834990482777357,,spektral
+bawaan_xgb,contrast_01_std,0.004619401413947344,,spektral
+bawaan_xgb,contrast_01_min,0.0031765811145305634,,spektral
+bawaan_xgb,contrast_01_max,0.003235290991142392,,spektral
+bawaan_xgb,contrast_02_mean,0.002795548178255558,,spektral
+bawaan_xgb,contrast_02_std,0.003086778102442622,,spektral
+bawaan_xgb,contrast_02_min,0.0024605118669569492,,spektral
+bawaan_xgb,contrast_02_max,0.002055225195363164,,spektral
+bawaan_xgb,contrast_03_mean,0.0024657053872942924,,spektral
+bawaan_xgb,contrast_03_std,0.0018622003262862563,,spektral
+bawaan_xgb,contrast_03_min,0.002235929248854518,,spektral
+bawaan_xgb,contrast_03_max,0.002220749855041504,,spektral
+bawaan_xgb,contrast_04_mean,0.0034040361642837524,,spektral
+bawaan_xgb,contrast_04_std,0.0021545779891312122,,spektral
+bawaan_xgb,contrast_04_min,0.0036928984336555004,,spektral
+bawaan_xgb,contrast_04_max,0.0022654058411717415,,spektral
+bawaan_xgb,contrast_05_mean,0.0020165168680250645,,spektral
+bawaan_xgb,contrast_05_std,0.003145310329273343,,spektral
+bawaan_xgb,contrast_05_min,0.0030402361880987883,,spektral
+bawaan_xgb,contrast_05_max,0.001912688952870667,,spektral
+bawaan_xgb,f0_mean,0.004386112093925476,,pitch
+bawaan_xgb,f0_std,0.003781023668125272,,pitch
+bawaan_xgb,f0_min,0.0022072845604270697,,pitch
+bawaan_xgb,f0_max,0.0072884950786828995,,pitch
+bawaan_xgb,voiced_ratio,0.006145760416984558,,pitch
+bawaan_xgb,voiced_prob_mean,0.004955652169883251,,pitch
+bawaan_xgb,mfcc_00_mean,0.004522582981735468,,MFCC
+bawaan_xgb,mfcc_00_std,0.0047005293890833855,,MFCC
+bawaan_xgb,mfcc_00_min,0.0027640084736049175,,MFCC
+bawaan_xgb,mfcc_00_max,0.0021247738040983677,,MFCC
+bawaan_xgb,mfcc_00_skew,0.0038708511274307966,,MFCC
+bawaan_xgb,mfcc_00_kurt,0.0044796583242714405,,MFCC
+bawaan_xgb,mfcc_01_mean,0.004111683927476406,,MFCC
+bawaan_xgb,mfcc_01_std,0.002466354751959443,,MFCC
+bawaan_xgb,mfcc_01_min,0.0024913058150559664,,MFCC
+bawaan_xgb,mfcc_01_max,0.003532028291374445,,MFCC
+bawaan_xgb,mfcc_01_skew,0.0034838789142668247,,MFCC
+bawaan_xgb,mfcc_01_kurt,0.0031462598126381636,,MFCC
+bawaan_xgb,mfcc_02_mean,0.0031974632292985916,,MFCC
+bawaan_xgb,mfcc_02_std,0.0021388628520071507,,MFCC
+bawaan_xgb,mfcc_02_min,0.0020848603453487158,,MFCC
+bawaan_xgb,mfcc_02_max,0.0021840017288923264,,MFCC
+bawaan_xgb,mfcc_02_skew,0.0034132180735468864,,MFCC
+bawaan_xgb,mfcc_02_kurt,0.003055955981835723,,MFCC
+bawaan_xgb,mfcc_03_mean,0.0020805203821510077,,MFCC
+bawaan_xgb,mfcc_03_std,0.0039262352511286736,,MFCC
+bawaan_xgb,mfcc_03_min,0.0023026862181723118,,MFCC
+bawaan_xgb,mfcc_03_max,0.002838048618286848,,MFCC
+bawaan_xgb,mfcc_03_skew,0.0031254903879016638,,MFCC
+bawaan_xgb,mfcc_03_kurt,0.0035747122019529343,,MFCC
+bawaan_xgb,mfcc_04_mean,0.002842151327058673,,MFCC
+bawaan_xgb,mfcc_04_std,0.003541108686476946,,MFCC
+bawaan_xgb,mfcc_04_min,0.0018036359688267112,,MFCC
+bawaan_xgb,mfcc_04_max,0.004003281705081463,,MFCC
+bawaan_xgb,mfcc_04_skew,0.00259584141895175,,MFCC
+bawaan_xgb,mfcc_04_kurt,0.0029196073301136494,,MFCC
+bawaan_xgb,mfcc_05_mean,0.0022512965369969606,,MFCC
+bawaan_xgb,mfcc_05_std,0.0032521700486540794,,MFCC
+bawaan_xgb,mfcc_05_min,0.005495208781212568,,MFCC
+bawaan_xgb,mfcc_05_max,0.0024657174944877625,,MFCC
+bawaan_xgb,mfcc_05_skew,0.0030460888519883156,,MFCC
+bawaan_xgb,mfcc_05_kurt,0.0036850664764642715,,MFCC
+bawaan_xgb,mfcc_06_mean,0.0022144427057355642,,MFCC
+bawaan_xgb,mfcc_06_std,0.0031439769081771374,,MFCC
+bawaan_xgb,mfcc_06_min,0.003140752436593175,,MFCC
+bawaan_xgb,mfcc_06_max,0.0026253105606883764,,MFCC
+bawaan_xgb,mfcc_06_skew,0.002786766504868865,,MFCC
+bawaan_xgb,mfcc_06_kurt,0.0022353825625032187,,MFCC
+bawaan_xgb,mfcc_07_mean,0.002816299442201853,,MFCC
+bawaan_xgb,mfcc_07_std,0.002218114910647273,,MFCC
+bawaan_xgb,mfcc_07_min,0.0026189363561570644,,MFCC
+bawaan_xgb,mfcc_07_max,0.002665483159944415,,MFCC
+bawaan_xgb,mfcc_07_skew,0.001302559976466,,MFCC
+bawaan_xgb,mfcc_07_kurt,0.001828655949793756,,MFCC
+bawaan_xgb,mfcc_08_mean,0.003580820746719837,,MFCC
+bawaan_xgb,mfcc_08_std,0.0031158155761659145,,MFCC
+bawaan_xgb,mfcc_08_min,0.00316922040656209,,MFCC
+bawaan_xgb,mfcc_08_max,0.002115618670359254,,MFCC
+bawaan_xgb,mfcc_08_skew,0.0031579281203448772,,MFCC
+bawaan_xgb,mfcc_08_kurt,0.002929865149781108,,MFCC
+bawaan_xgb,mfcc_09_mean,0.002372128888964653,,MFCC
+bawaan_xgb,mfcc_09_std,0.004311614669859409,,MFCC
+bawaan_xgb,mfcc_09_min,0.004076805431395769,,MFCC
+bawaan_xgb,mfcc_09_max,0.002486520679667592,,MFCC
+bawaan_xgb,mfcc_09_skew,0.0020579954143613577,,MFCC
+bawaan_xgb,mfcc_09_kurt,0.003463472006842494,,MFCC
+bawaan_xgb,mfcc_10_mean,0.003516040276736021,,MFCC
+bawaan_xgb,mfcc_10_std,0.004152512177824974,,MFCC
+bawaan_xgb,mfcc_10_min,0.003432739060372114,,MFCC
+bawaan_xgb,mfcc_10_max,0.002600709907710552,,MFCC
+bawaan_xgb,mfcc_10_skew,0.003288349136710167,,MFCC
+bawaan_xgb,mfcc_10_kurt,0.0023082662373781204,,MFCC
+bawaan_xgb,mfcc_11_mean,0.0025010036770254374,,MFCC
+bawaan_xgb,mfcc_11_std,0.004138194024562836,,MFCC
+bawaan_xgb,mfcc_11_min,0.0020571949426084757,,MFCC
+bawaan_xgb,mfcc_11_max,0.006539317313581705,,MFCC
+bawaan_xgb,mfcc_11_skew,0.0027982881292700768,,MFCC
+bawaan_xgb,mfcc_11_kurt,0.003550149966031313,,MFCC
+bawaan_xgb,mfcc_12_mean,0.0022286621388047934,,MFCC
+bawaan_xgb,mfcc_12_std,0.0033103725872933865,,MFCC
+bawaan_xgb,mfcc_12_min,0.00360639626160264,,MFCC
+bawaan_xgb,mfcc_12_max,0.0028657661750912666,,MFCC
+bawaan_xgb,mfcc_12_skew,0.002798550995066762,,MFCC
+bawaan_xgb,mfcc_12_kurt,0.0019623327534645796,,MFCC
+bawaan_xgb,mfcc_d_00_mean,0.004160716198384762,,MFCC delta
+bawaan_xgb,mfcc_d_00_std,0.003848056308925152,,MFCC delta
+bawaan_xgb,mfcc_d_00_min,0.0022958999034017324,,MFCC delta
+bawaan_xgb,mfcc_d_00_max,0.004827111028134823,,MFCC delta
+bawaan_xgb,mfcc_d_01_mean,0.0030821526888757944,,MFCC delta
+bawaan_xgb,mfcc_d_01_std,0.0021896071266382933,,MFCC delta
+bawaan_xgb,mfcc_d_01_min,0.0017842003144323826,,MFCC delta
+bawaan_xgb,mfcc_d_01_max,0.002800748450681567,,MFCC delta
+bawaan_xgb,mfcc_d_02_mean,0.0020373081788420677,,MFCC delta
+bawaan_xgb,mfcc_d_02_std,0.0033259964548051357,,MFCC delta
+bawaan_xgb,mfcc_d_02_min,0.005054720677435398,,MFCC delta
+bawaan_xgb,mfcc_d_02_max,0.001872011460363865,,MFCC delta
+bawaan_xgb,mfcc_d_03_mean,0.001710518030449748,,MFCC delta
+bawaan_xgb,mfcc_d_03_std,0.0038583253044635057,,MFCC delta
+bawaan_xgb,mfcc_d_03_min,0.002232723170891404,,MFCC delta
+bawaan_xgb,mfcc_d_03_max,0.002651308896020055,,MFCC delta
+bawaan_xgb,mfcc_d_04_mean,0.004205306526273489,,MFCC delta
+bawaan_xgb,mfcc_d_04_std,0.001468584407120943,,MFCC delta
+bawaan_xgb,mfcc_d_04_min,0.002075180411338806,,MFCC delta
+bawaan_xgb,mfcc_d_04_max,0.0025269570760428905,,MFCC delta
+bawaan_xgb,mfcc_d_05_mean,0.002844930626451969,,MFCC delta
+bawaan_xgb,mfcc_d_05_std,0.0033369127195328474,,MFCC delta
+bawaan_xgb,mfcc_d_05_min,0.0031791338697075844,,MFCC delta
+bawaan_xgb,mfcc_d_05_max,0.0023272759281098843,,MFCC delta
+bawaan_xgb,mfcc_d_06_mean,0.003361879847943783,,MFCC delta
+bawaan_xgb,mfcc_d_06_std,0.0029406342655420303,,MFCC delta
+bawaan_xgb,mfcc_d_06_min,0.003438783111050725,,MFCC delta
+bawaan_xgb,mfcc_d_06_max,0.0031625949777662754,,MFCC delta
+bawaan_xgb,mfcc_d_07_mean,0.0029606781899929047,,MFCC delta
+bawaan_xgb,mfcc_d_07_std,0.0028529507108032703,,MFCC delta
+bawaan_xgb,mfcc_d_07_min,0.002383067039772868,,MFCC delta
+bawaan_xgb,mfcc_d_07_max,0.004189382307231426,,MFCC delta
+bawaan_xgb,mfcc_d_08_mean,0.0030686098616570234,,MFCC delta
+bawaan_xgb,mfcc_d_08_std,0.0018249504501000047,,MFCC delta
+bawaan_xgb,mfcc_d_08_min,0.0037493216805160046,,MFCC delta
+bawaan_xgb,mfcc_d_08_max,0.004295685328543186,,MFCC delta
+bawaan_xgb,mfcc_d_09_mean,0.002632036106660962,,MFCC delta
+bawaan_xgb,mfcc_d_09_std,0.003450076561421156,,MFCC delta
+bawaan_xgb,mfcc_d_09_min,0.0033444836735725403,,MFCC delta
+bawaan_xgb,mfcc_d_09_max,0.004561753012239933,,MFCC delta
+bawaan_xgb,mfcc_d_10_mean,0.0023477296344935894,,MFCC delta
+bawaan_xgb,mfcc_d_10_std,0.0016933465376496315,,MFCC delta
+bawaan_xgb,mfcc_d_10_min,0.000735750887542963,,MFCC delta
+bawaan_xgb,mfcc_d_10_max,0.0032234464306384325,,MFCC delta
+bawaan_xgb,mfcc_d_11_mean,0.0024250000715255737,,MFCC delta
+bawaan_xgb,mfcc_d_11_std,0.002814651234075427,,MFCC delta
+bawaan_xgb,mfcc_d_11_min,0.006348106078803539,,MFCC delta
+bawaan_xgb,mfcc_d_11_max,0.006053591147065163,,MFCC delta
+bawaan_xgb,mfcc_d_12_mean,0.0016195221105590463,,MFCC delta
+bawaan_xgb,mfcc_d_12_std,0.002374716103076935,,MFCC delta
+bawaan_xgb,mfcc_d_12_min,0.004188214428722858,,MFCC delta
+bawaan_xgb,mfcc_d_12_max,0.0033845901489257812,,MFCC delta
+bawaan_xgb,mfcc_dd_00_mean,0.0031350699719041586,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_00_std,0.005458482075482607,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_00_min,0.005403691902756691,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_00_max,0.0049340808764100075,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_01_mean,0.0027245923411101103,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_01_std,0.002469242550432682,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_01_min,0.002618438331410289,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_01_max,0.004108933731913567,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_02_mean,0.0022333660162985325,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_02_std,0.0038613248616456985,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_02_min,0.0030629094690084457,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_02_max,0.0033840499818325043,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_03_mean,0.004060273990035057,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_03_std,0.0036021629348397255,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_03_min,0.0025628043804317713,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_03_max,0.002106284024193883,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_04_mean,0.003652321407571435,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_04_std,0.004125525709241629,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_04_min,0.0036677089519798756,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_04_max,0.002437893534079194,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_05_mean,0.0039985026232898235,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_05_std,0.0021307228598743677,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_05_min,0.003338638925924897,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_05_max,0.0045994604006409645,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_06_mean,0.0023373719304800034,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_06_std,0.002651133807376027,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_06_min,0.005959731061011553,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_06_max,0.002998673589900136,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_07_mean,0.002944820560514927,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_07_std,0.0018678671913221478,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_07_min,0.0028306879103183746,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_07_max,0.0035753261763602495,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_08_mean,0.0026802564971148968,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_08_std,0.0027969172224402428,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_08_min,0.0021501516457647085,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_08_max,0.004043849650770426,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_09_mean,0.0028577386401593685,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_09_std,0.002241484122350812,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_09_min,0.003441659966483712,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_09_max,0.00642765499651432,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_10_mean,0.003133348887786269,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_10_std,0.003107211086899042,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_10_min,0.00422986363992095,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_10_max,0.002197706140577793,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_11_mean,0.0019966410472989082,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_11_std,0.0031065349467098713,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_11_min,0.006581525318324566,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_11_max,0.003301128977909684,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_12_mean,0.0032410083804279566,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_12_std,0.0030233135912567377,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_12_min,0.003682750044390559,,MFCC delta-delta
+bawaan_xgb,mfcc_dd_12_max,0.003979916218668222,,MFCC delta-delta
+bawaan_xgb,gfcc_00_mean,0.006832706276327372,,GFCC
+bawaan_xgb,gfcc_00_std,0.0013265929883345962,,GFCC
+bawaan_xgb,gfcc_00_min,0.005264877341687679,,GFCC
+bawaan_xgb,gfcc_00_max,0.0022643061820417643,,GFCC
+bawaan_xgb,gfcc_00_skew,0.00439823605120182,,GFCC
+bawaan_xgb,gfcc_00_kurt,0.0028000399470329285,,GFCC
+bawaan_xgb,gfcc_01_mean,0.0031063540372997522,,GFCC
+bawaan_xgb,gfcc_01_std,0.0031823385506868362,,GFCC
+bawaan_xgb,gfcc_01_min,0.003315261099487543,,GFCC
+bawaan_xgb,gfcc_01_max,0.002649680245667696,,GFCC
+bawaan_xgb,gfcc_01_skew,0.004646133165806532,,GFCC
+bawaan_xgb,gfcc_01_kurt,0.003728135721758008,,GFCC
+bawaan_xgb,gfcc_02_mean,0.0014732838608324528,,GFCC
+bawaan_xgb,gfcc_02_std,0.0020729214884340763,,GFCC
+bawaan_xgb,gfcc_02_min,0.002083161845803261,,GFCC
+bawaan_xgb,gfcc_02_max,0.0022009785752743483,,GFCC
+bawaan_xgb,gfcc_02_skew,0.0028520100750029087,,GFCC
+bawaan_xgb,gfcc_02_kurt,0.004373856820166111,,GFCC
+bawaan_xgb,gfcc_03_mean,0.0020633519161492586,,GFCC
+bawaan_xgb,gfcc_03_std,0.0021019605919718742,,GFCC
+bawaan_xgb,gfcc_03_min,0.0039572156965732574,,GFCC
+bawaan_xgb,gfcc_03_max,0.002822373528033495,,GFCC
+bawaan_xgb,gfcc_03_skew,0.0021804485004395247,,GFCC
+bawaan_xgb,gfcc_03_kurt,0.003520140191540122,,GFCC
+bawaan_xgb,gfcc_04_mean,0.003074534237384796,,GFCC
+bawaan_xgb,gfcc_04_std,0.0019771638326346874,,GFCC
+bawaan_xgb,gfcc_04_min,0.002268226118758321,,GFCC
+bawaan_xgb,gfcc_04_max,0.0038277311250567436,,GFCC
+bawaan_xgb,gfcc_04_skew,0.002653211122378707,,GFCC
+bawaan_xgb,gfcc_04_kurt,0.002977305557578802,,GFCC
+bawaan_xgb,gfcc_05_mean,0.0012999828904867172,,GFCC
+bawaan_xgb,gfcc_05_std,0.0023199371062219143,,GFCC
+bawaan_xgb,gfcc_05_min,0.002589934505522251,,GFCC
+bawaan_xgb,gfcc_05_max,0.002666868269443512,,GFCC
+bawaan_xgb,gfcc_05_skew,0.0032572182826697826,,GFCC
+bawaan_xgb,gfcc_05_kurt,0.0024596445728093386,,GFCC
+bawaan_xgb,gfcc_06_mean,0.0027081368025392294,,GFCC
+bawaan_xgb,gfcc_06_std,0.0026566972956061363,,GFCC
+bawaan_xgb,gfcc_06_min,0.0031866696663200855,,GFCC
+bawaan_xgb,gfcc_06_max,0.004262855276465416,,GFCC
+bawaan_xgb,gfcc_06_skew,0.003961097449064255,,GFCC
+bawaan_xgb,gfcc_06_kurt,0.0032117399387061596,,GFCC
+bawaan_xgb,gfcc_07_mean,0.0032255444675683975,,GFCC
+bawaan_xgb,gfcc_07_std,0.0025106656830757856,,GFCC
+bawaan_xgb,gfcc_07_min,0.005275875795632601,,GFCC
+bawaan_xgb,gfcc_07_max,0.003467351431027055,,GFCC
+bawaan_xgb,gfcc_07_skew,0.003046723548322916,,GFCC
+bawaan_xgb,gfcc_07_kurt,0.003685133298859,,GFCC
+bawaan_xgb,gfcc_08_mean,0.002348397159948945,,GFCC
+bawaan_xgb,gfcc_08_std,0.00237424299120903,,GFCC
+bawaan_xgb,gfcc_08_min,0.0028138323687016964,,GFCC
+bawaan_xgb,gfcc_08_max,0.004527006298303604,,GFCC
+bawaan_xgb,gfcc_08_skew,0.002255844185128808,,GFCC
+bawaan_xgb,gfcc_08_kurt,0.0024838484823703766,,GFCC
+bawaan_xgb,gfcc_09_mean,0.0028999510686844587,,GFCC
+bawaan_xgb,gfcc_09_std,0.004048698116093874,,GFCC
+bawaan_xgb,gfcc_09_min,0.002924507251009345,,GFCC
+bawaan_xgb,gfcc_09_max,0.0029168960172683,,GFCC
+bawaan_xgb,gfcc_09_skew,0.002804424846544862,,GFCC
+bawaan_xgb,gfcc_09_kurt,0.0030786204151809216,,GFCC
+bawaan_xgb,gfcc_10_mean,0.003776191035285592,,GFCC
+bawaan_xgb,gfcc_10_std,0.004247541539371014,,GFCC
+bawaan_xgb,gfcc_10_min,0.0047841910272836685,,GFCC
+bawaan_xgb,gfcc_10_max,0.0027066997718065977,,GFCC
+bawaan_xgb,gfcc_10_skew,0.0028130104765295982,,GFCC
+bawaan_xgb,gfcc_10_kurt,0.0019046056549996138,,GFCC
+bawaan_xgb,gfcc_11_mean,0.0026431879960000515,,GFCC
+bawaan_xgb,gfcc_11_std,0.003505197586491704,,GFCC
+bawaan_xgb,gfcc_11_min,0.003943589050322771,,GFCC
+bawaan_xgb,gfcc_11_max,0.0024115496780723333,,GFCC
+bawaan_xgb,gfcc_11_skew,0.0036018281243741512,,GFCC
+bawaan_xgb,gfcc_11_kurt,0.004154812078922987,,GFCC
+bawaan_xgb,gfcc_12_mean,0.0025622034445405006,,GFCC
+bawaan_xgb,gfcc_12_std,0.0025662786792963743,,GFCC
+bawaan_xgb,gfcc_12_min,0.002813313389196992,,GFCC
+bawaan_xgb,gfcc_12_max,0.005047112237662077,,GFCC
+bawaan_xgb,gfcc_12_skew,0.003634113585576415,,GFCC
+bawaan_xgb,gfcc_12_kurt,0.004341973457485437,,GFCC
+permutasi_svm_val,durasi_s,-0.003755868544600904,0.0042215937139262055,waktu
+permutasi_svm_val,rms_mean,0.00010432968179451274,0.00013910624239264202,waktu
+permutasi_svm_val,rms_std,0.001391062423926337,0.0011079486921978124,waktu
+permutasi_svm_val,rms_min,0.00015649452269175245,0.0010703330479229444,waktu
+permutasi_svm_val,rms_max,0.002173535037384844,0.0015922386650254166,waktu
+permutasi_svm_val,zcr_mean,-0.0002608242044861431,0.00017817685212939328,waktu
+permutasi_svm_val,zcr_std,0.0006433663710659898,0.0007460767850087113,waktu
+permutasi_svm_val,zcr_min,0.0011824030603373669,0.0014913428372381665,waktu
+permutasi_svm_val,zcr_max,0.00062597809076691,0.000805135587048543,waktu
+permutasi_svm_val,centroid_mean,0.0004173187271779066,0.0007093054444225793,spektral
+permutasi_svm_val,centroid_std,0.0003651538862807113,0.0011779196351549457,spektral
+permutasi_svm_val,centroid_min,0.0006955312119632073,0.0003888137676055957,spektral
+permutasi_svm_val,centroid_max,0.0017736045905060505,0.0005087372226856915,spektral
+permutasi_svm_val,bandwidth_mean,0.00045209528777607756,0.0002226786380605946,spektral
+permutasi_svm_val,bandwidth_std,0.0011650147800383315,0.0013648415547341738,spektral
+permutasi_svm_val,bandwidth_min,0.0012171796209355823,0.000571437201361694,spektral
+permutasi_svm_val,bandwidth_max,0.0009041905755521551,0.002146308346264582,spektral
+permutasi_svm_val,rolloff_mean,0.00036515388628068914,0.0003765676895793079,spektral
+permutasi_svm_val,rolloff_std,0.0022952529994784143,0.0018250240672442093,spektral
+permutasi_svm_val,rolloff_min,0.0012867327421318352,0.0009934172740104592,spektral
+permutasi_svm_val,rolloff_max,0.0015301686663189873,0.0016746999308411732,spektral
+permutasi_svm_val,flatness_mean,0.0007650843331594714,0.000303175026502566,spektral
+permutasi_svm_val,flatness_std,0.0009041905755521551,0.0005962937993212647,spektral
+permutasi_svm_val,flatness_min,0.0005738132498696258,0.001189668473872216,spektral
+permutasi_svm_val,flatness_max,0.0003651538862807557,0.0003845130305598521,spektral
+permutasi_svm_val,contrast_00_mean,0.0010432968179447388,0.0008553902887323283,spektral
+permutasi_svm_val,contrast_00_std,-0.0012345679012344957,0.0017960502779099006,spektral
+permutasi_svm_val,contrast_00_min,0.00102590853764567,0.0009506476739931806,spektral
+permutasi_svm_val,contrast_00_max,0.00046948356807516853,0.0006367530315980272,spektral
+permutasi_svm_val,contrast_01_mean,0.0012693444618327998,0.0027930255064503215,spektral
+permutasi_svm_val,contrast_01_std,0.0006085898104677967,0.0027507028376902412,spektral
+permutasi_svm_val,contrast_01_min,0.0002782124847852785,0.00027161362114092583,spektral
+permutasi_svm_val,contrast_01_max,0.0006955312119631852,0.0019856167516772946,spektral
+permutasi_svm_val,contrast_02_mean,0.00012171796209355933,0.0001747500542709619,spektral
+permutasi_svm_val,contrast_02_std,0.004434011476265043,0.0011408885204190183,spektral
+permutasi_svm_val,contrast_02_min,0.0008520257346549265,0.0009538228587656031,spektral
+permutasi_svm_val,contrast_02_max,0.0028690662493480066,0.001389431316360465,spektral
+permutasi_svm_val,contrast_03_mean,0.0014432272648235767,0.0006223449893296332,spektral
+permutasi_svm_val,contrast_03_std,0.0006433663710659676,0.0005556092960761694,spektral
+permutasi_svm_val,contrast_03_min,0.0008346374543558022,0.0007491100409854813,spektral
+permutasi_svm_val,contrast_03_max,0.0009215788558512461,0.0005501405675380661,spektral
+permutasi_svm_val,contrast_04_mean,-0.0012519561815335424,0.0013328998710997694,spektral
+permutasi_svm_val,contrast_04_std,0.0012693444618327777,0.0011613757245346316,spektral
+permutasi_svm_val,contrast_04_min,0.0006781429316641164,0.0010329575197551252,spektral
+permutasi_svm_val,contrast_04_max,0.0009737436967484526,0.0017956293713685411,spektral
+permutasi_svm_val,contrast_05_mean,0.0010432968179448054,0.0005870959143151906,spektral
+permutasi_svm_val,contrast_05_std,0.0005216484089723639,0.00021994628135409654,spektral
+permutasi_svm_val,contrast_05_min,0.0012693444618327998,0.0009268132826455584,spektral
+permutasi_svm_val,contrast_05_max,0.001686663189010662,0.000682586904065065,spektral
+permutasi_svm_val,f0_mean,8.694140149545504e-05,0.003164714784072562,pitch
+permutasi_svm_val,f0_std,-0.0007476960528603138,0.0021240053072770063,pitch
+permutasi_svm_val,f0_min,0.0013215093027300062,0.0017304615273343199,pitch
+permutasi_svm_val,f0_max,-0.0005042601286732063,0.002982939086569673,pitch
+permutasi_svm_val,voiced_ratio,0.004277516953573346,0.0032791549070040147,pitch
+permutasi_svm_val,voiced_prob_mean,0.0038775865066945415,0.00151796798895691,pitch
+permutasi_svm_val,mfcc_00_mean,0.0030255607720396814,0.0012806087733974495,MFCC
+permutasi_svm_val,mfcc_00_std,0.001877934272300541,0.002163146797438197,MFCC
+permutasi_svm_val,mfcc_00_min,0.0010085202573465902,0.0006307896764812566,MFCC
+permutasi_svm_val,mfcc_00_max,0.00045209528777611084,0.001406624824632686,MFCC
+permutasi_svm_val,mfcc_00_skew,0.004642670839853968,0.0012660053311958,MFCC
+permutasi_svm_val,mfcc_00_kurt,0.006451051990958146,0.002714410248632814,MFCC
+permutasi_svm_val,mfcc_01_mean,-0.0015127803860197741,0.0013470026365407283,MFCC
+permutasi_svm_val,mfcc_01_std,0.0014780038254217144,0.000647115077931815,MFCC
+permutasi_svm_val,mfcc_01_min,0.0023821944009737917,0.001088817402500666,MFCC
+permutasi_svm_val,mfcc_01_max,0.000539036689271477,0.0005894088421727584,MFCC
+permutasi_svm_val,mfcc_01_skew,-0.0005738132498695148,0.0016312579562330683,MFCC
+permutasi_svm_val,mfcc_01_kurt,0.003095113893236012,0.0008756514214581459,MFCC
+permutasi_svm_val,mfcc_02_mean,0.0011302382194401718,0.0008090690401065419,MFCC
+permutasi_svm_val,mfcc_02_std,0.001564945226917125,0.0006459459440447667,MFCC
+permutasi_svm_val,mfcc_02_min,0.0014084507042253836,0.00039229748470450836,MFCC
+permutasi_svm_val,mfcc_02_max,0.0015997217875152625,0.0009737436967483986,MFCC
+permutasi_svm_val,mfcc_02_skew,0.00467744740045214,0.0019984422488150233,MFCC
+permutasi_svm_val,mfcc_02_kurt,0.003199443575030503,0.000808882166552802,MFCC
+permutasi_svm_val,mfcc_03_mean,0.0006259780907668988,0.0006374648854051286,MFCC
+permutasi_svm_val,mfcc_03_std,-0.0006955312119630852,0.0015649452269170497,MFCC
+permutasi_svm_val,mfcc_03_min,0.001686663189010662,0.0014148761513780917,MFCC
+permutasi_svm_val,mfcc_03_max,0.0007824726134585847,0.0018892508579378398,MFCC
+permutasi_svm_val,mfcc_03_skew,0.0012693444618327887,0.0018435677670393424,MFCC
+permutasi_svm_val,mfcc_03_kurt,0.005894627021387655,0.0016208451693781913,MFCC
+permutasi_svm_val,mfcc_04_mean,0.0013041210224309374,0.0006424257764531694,MFCC
+permutasi_svm_val,mfcc_04_std,0.001199791340636447,0.001318416977031265,MFCC
+permutasi_svm_val,mfcc_04_min,0.0008346374543558022,0.0005262648565613576,MFCC
+permutasi_svm_val,mfcc_04_max,0.0005738132498696813,0.0003016753881568292,MFCC
+permutasi_svm_val,mfcc_04_skew,-0.0003477656059814871,0.0006412480930128737,MFCC
+permutasi_svm_val,mfcc_04_kurt,0.0029386193705443152,0.001183042162627315,MFCC
+permutasi_svm_val,mfcc_05_mean,0.002886454529647131,0.0007587349758049677,MFCC
+permutasi_svm_val,mfcc_05_std,0.0018083811511042213,0.0009625006088052836,MFCC
+permutasi_svm_val,mfcc_05_min,-1.7388280299024395e-05,0.0017637751358695348,MFCC
+permutasi_svm_val,mfcc_05_max,0.002521300643366442,0.0010294390621190105,MFCC
+permutasi_svm_val,mfcc_05_skew,0.0003651538862807113,0.0028225308741564145,MFCC
+permutasi_svm_val,mfcc_05_kurt,0.0005738132498696036,0.0004044410832763907,MFCC
+permutasi_svm_val,mfcc_06_mean,-0.0006781429316639831,0.0012355471343063944,MFCC
+permutasi_svm_val,mfcc_06_std,3.477656059820422e-05,0.0019390856351174587,MFCC
+permutasi_svm_val,mfcc_06_min,0.0024169709615719515,0.0019197322949448686,MFCC
+permutasi_svm_val,mfcc_06_max,0.0003651538862807002,0.00022604764388803704,MFCC
+permutasi_svm_val,mfcc_06_skew,0.00824204486176322,0.0025320106623915803,MFCC
+permutasi_svm_val,mfcc_06_kurt,0.007111806642323126,0.001919732294944862,MFCC
+permutasi_svm_val,mfcc_07_mean,0.0033559380977221777,0.001145648854809892,MFCC
+permutasi_svm_val,mfcc_07_std,0.0006259780907668655,0.0015062707583174022,MFCC
+permutasi_svm_val,mfcc_07_min,-0.0006085898104676967,0.0011461765604365724,MFCC
+permutasi_svm_val,mfcc_07_max,0.0016344983481134333,0.0012853221083342814,MFCC
+permutasi_svm_val,mfcc_07_skew,5.216484089730633e-05,0.0010259085376456113,MFCC
+permutasi_svm_val,mfcc_07_kurt,0.0024691358024691913,0.0003713120588430341,MFCC
+permutasi_svm_val,mfcc_08_mean,0.007616066770996388,0.002983293827337024,MFCC
+permutasi_svm_val,mfcc_08_std,3.4776560598215324e-05,6.955312119629187e-05,MFCC
+permutasi_svm_val,mfcc_08_min,0.0008520257346549043,0.001528685992284771,MFCC
+permutasi_svm_val,mfcc_08_max,0.0020865936358894664,0.0005039602415645712,MFCC
+permutasi_svm_val,mfcc_08_skew,0.002347417840375654,0.001202811587934017,MFCC
+permutasi_svm_val,mfcc_08_kurt,0.005059989567031886,0.00123064317713233,MFCC
+permutasi_svm_val,mfcc_09_mean,0.00017388280299083237,0.00026937808007006334,MFCC
+permutasi_svm_val,mfcc_09_std,0.0022778647191793342,0.0010270867275689532,MFCC
+permutasi_svm_val,mfcc_09_min,0.001199791340636447,0.001198278362303606,MFCC
+permutasi_svm_val,mfcc_09_max,-0.00048687184837411526,0.0012067015526272032,MFCC
+permutasi_svm_val,mfcc_09_skew,0.001425838984524508,0.0008148408634226845,MFCC
+permutasi_svm_val,mfcc_09_kurt,0.0025908537645627505,0.0005685196565561297,MFCC
+permutasi_svm_val,mfcc_10_mean,0.005216484089723561,0.002449218134120549,MFCC
+permutasi_svm_val,mfcc_10_std,0.0014780038254217254,0.0009996370962827032,MFCC
+permutasi_svm_val,mfcc_10_min,0.0020692053555903976,0.0023566733433649394,MFCC
+permutasi_svm_val,mfcc_10_max,0.0031298904538341055,0.0016495971101556472,MFCC
+permutasi_svm_val,mfcc_10_skew,0.002330029560076596,0.000669843863128437,MFCC
+permutasi_svm_val,mfcc_10_kurt,0.0002956007650844028,0.0006781429316640514,MFCC
+permutasi_svm_val,mfcc_11_mean,0.0012345679012346067,0.000809816103091284,MFCC
+permutasi_svm_val,mfcc_11_std,0.0010259085376456921,0.0003765676895793125,MFCC
+permutasi_svm_val,mfcc_11_min,0.0011476264997392406,0.0009842442495624781,MFCC
+permutasi_svm_val,mfcc_11_max,0.0005216484089723972,0.0034295049423258674,MFCC
+permutasi_svm_val,mfcc_11_skew,0.002869066249347996,0.001981424868243754,MFCC
+permutasi_svm_val,mfcc_11_kurt,-0.0003999304468787379,0.0011377038986580034,MFCC
+permutasi_svm_val,mfcc_12_mean,-0.000539036689271366,0.0017274011599430674,MFCC
+permutasi_svm_val,mfcc_12_std,0.0004173187271779066,0.0003225045555728064,MFCC
+permutasi_svm_val,mfcc_12_min,0.0021039819161885577,0.0007676487586382933,MFCC
+permutasi_svm_val,mfcc_12_max,0.00010432968179450164,0.0016352381075303388,MFCC
+permutasi_svm_val,mfcc_12_skew,0.003755868544600971,0.0010696266040152722,MFCC
+permutasi_svm_val,mfcc_12_kurt,-0.0012693444618326777,0.0012247325093333432,MFCC
+permutasi_svm_val,mfcc_d_00_mean,0.0016344983481134223,0.0006698438631284377,MFCC delta
+permutasi_svm_val,mfcc_d_00_std,0.0033037732568249045,0.0008375304871356398,MFCC delta
+permutasi_svm_val,mfcc_d_00_min,0.003460267779516657,0.004248188548407657,MFCC delta
+permutasi_svm_val,mfcc_d_00_max,0.002017040514693147,0.0031038932688832684,MFCC delta
+permutasi_svm_val,mfcc_d_01_mean,0.000347765605981587,0.0004534308749923386,MFCC delta
+permutasi_svm_val,mfcc_d_01_std,0.0007824726134585847,0.0006377019934234721,MFCC delta
+permutasi_svm_val,mfcc_d_01_min,0.0009563554164493726,0.0009404150431570464,MFCC delta
+permutasi_svm_val,mfcc_d_01_max,0.0008868022952530974,0.0008605002978027021,MFCC delta
+permutasi_svm_val,mfcc_d_02_mean,0.0007476960528604026,0.0005102208572812235,MFCC delta
+permutasi_svm_val,mfcc_d_02_std,0.001982263954094987,0.0010496531575577717,MFCC delta
+permutasi_svm_val,mfcc_d_02_min,0.0028690662493479845,0.0005727584452095211,MFCC delta
+permutasi_svm_val,mfcc_d_02_max,0.0015301686663189429,0.00037131205884304757,MFCC delta
+permutasi_svm_val,mfcc_d_03_mean,6.955312119638624e-05,0.0010351504827777376,MFCC delta
+permutasi_svm_val,mfcc_d_03_std,0.0003129890453835049,0.0009061946945431972,MFCC delta
+permutasi_svm_val,mfcc_d_03_min,0.0002782124847852785,0.0017804104658209325,MFCC delta
+permutasi_svm_val,mfcc_d_03_max,0.0015475569466180338,0.000824615246140107,MFCC delta
+permutasi_svm_val,mfcc_d_04_mean,0.000573813249869648,0.0012148174908508988,MFCC delta
+permutasi_svm_val,mfcc_d_04_std,0.00184315771170237,0.0013651738081301074,MFCC delta
+permutasi_svm_val,mfcc_d_04_min,0.0012867327421318465,0.0004742890522338873,MFCC delta
+permutasi_svm_val,mfcc_d_04_max,0.000295600765084425,0.0005501405675380418,MFCC delta
+permutasi_svm_val,mfcc_d_05_mean,0.000904190575552144,0.0007327876023545556,MFCC delta
+permutasi_svm_val,mfcc_d_05_std,0.0019127108328987007,0.0011375710126096915,MFCC delta
+permutasi_svm_val,mfcc_d_05_min,0.0012519561815336976,0.0003371712646437667,MFCC delta
+permutasi_svm_val,mfcc_d_05_max,-0.001877934272300419,0.0020408834291248215,MFCC delta
+permutasi_svm_val,mfcc_d_06_mean,0.0012345679012345956,0.0007018061579068115,MFCC delta
+permutasi_svm_val,mfcc_d_06_std,0.00121717962093556,0.0012097045474474739,MFCC delta
+permutasi_svm_val,mfcc_d_06_min,0.002173535037384833,0.0007346419813694568,MFCC delta
+permutasi_svm_val,mfcc_d_06_max,-0.0004868718483741263,0.001236403327047902,MFCC delta
+permutasi_svm_val,mfcc_d_07_mean,0.0012693444618328109,0.001031786033673894,MFCC delta
+permutasi_svm_val,mfcc_d_07_std,0.00020865936358898106,0.00030910083176199254,MFCC delta
+permutasi_svm_val,mfcc_d_07_min,0.00039993044687886004,0.0005663883663676883,MFCC delta
+permutasi_svm_val,mfcc_d_07_max,-6.95531211962419e-05,0.0024420476249780027,MFCC delta
+permutasi_svm_val,mfcc_d_08_mean,-0.0005912015301686169,0.003457776601420391,MFCC delta
+permutasi_svm_val,mfcc_d_08_std,0.001217179620935549,0.0005870959143152629,MFCC delta
+permutasi_svm_val,mfcc_d_08_min,0.00045209528777608867,0.0006374648854050941,MFCC delta
+permutasi_svm_val,mfcc_d_08_max,-0.00046948356807509085,0.0011922072485774315,MFCC delta
+permutasi_svm_val,mfcc_d_09_mean,0.0009389671361502483,0.000516990740647466,MFCC delta
+permutasi_svm_val,mfcc_d_09_std,0.0014432272648235767,0.0005556092960761771,MFCC delta
+permutasi_svm_val,mfcc_d_09_min,0.0013041210224309485,0.0015459931650422555,MFCC delta
+permutasi_svm_val,mfcc_d_09_max,-0.001443227264823399,0.0018647663948934332,MFCC delta
+permutasi_svm_val,mfcc_d_10_mean,0.001391062423926337,0.000460050653984438,MFCC delta
+permutasi_svm_val,mfcc_d_10_std,0.00062597809076691,0.0003129890453833902,MFCC delta
+permutasi_svm_val,mfcc_d_10_min,0.001373674143627257,0.0007476960528604062,MFCC delta
+permutasi_svm_val,mfcc_d_10_max,0.00043470700747701987,0.0004205663927124999,MFCC delta
+permutasi_svm_val,mfcc_d_11_mean,0.0006781429316641274,0.0014242477050756437,MFCC delta
+permutasi_svm_val,mfcc_d_11_std,0.002538688923665544,0.0011274258443712516,MFCC delta
+permutasi_svm_val,mfcc_d_11_min,-0.0011128499391409585,0.0021227949868936682,MFCC delta
+permutasi_svm_val,mfcc_d_11_max,0.0025560772039645795,0.0024194715788270994,MFCC delta
+permutasi_svm_val,mfcc_d_12_mean,0.001738828029907924,0.0010831098245450825,MFCC delta
+permutasi_svm_val,mfcc_d_12_std,0.0006955312119631852,0.0003110510140844981,MFCC delta
+permutasi_svm_val,mfcc_d_12_min,0.00015649452269173025,0.0014007012605214246,MFCC delta
+permutasi_svm_val,mfcc_d_12_max,0.0015301686663189873,0.0012558142990970144,MFCC delta
+permutasi_svm_val,mfcc_dd_00_mean,0.001199791340636469,0.0006664499355498721,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_00_std,0.006051121544079341,0.00223600033464492,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_00_min,0.005025213006433715,0.0025901534707131494,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_00_max,0.0017214397496087773,0.0017343883506047856,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_01_mean,-0.0006085898104676857,0.0019397871715589416,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_01_std,0.0003477656059816314,0.0005819231622563623,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_01_min,0.00022604764388804987,0.00029148069230114517,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_01_max,0.0009911319770475545,0.0015804215520625244,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_02_mean,3.477656059818202e-05,0.00018727751024636595,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_02_std,0.0019300991131977919,0.0008098161030912937,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_02_min,0.002347417840375632,0.0004205663927124907,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_02_max,0.003147278734133241,0.0007597305607704282,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_03_mean,0.00038254216657979123,0.001614022102016654,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_03_std,-0.0009389671361501595,0.0014510621488454147,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_03_min,0.002034428794992227,0.0006367530315979799,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_03_max,0.001391062423926337,0.0006221020281689312,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_04_mean,0.0017909928708051749,0.0014958974935839974,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_04_std,0.0017909928708051525,0.0009333150339293614,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_04_min,0.0002956007650843473,0.00015649452269171545,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_04_max,3.477656059823753e-05,0.0009580926665940735,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_05_mean,0.0017909928708051525,0.0016661021549240003,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_05_std,0.00024343592418712978,0.00015936622135128122,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_05_min,-6.95531211962419e-05,0.00020865936358896626,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_05_max,-0.0034428794992174662,0.003707253130582201,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_06_mean,-0.00017388280299071023,0.0008447197218911965,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_06_std,0.000625978090766921,8.518482847448368e-05,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_06_min,0.000382542166579769,0.0002671238305640271,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_06_max,0.0013388975830291305,0.001362624461725983,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_07_mean,0.002086593635889422,0.0015898632517005631,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_07_std,8.694140149546614e-05,0.0001603120232532252,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_07_min,0.0013910624239263036,0.0011375710126097,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_07_max,0.0011476264997392516,0.0013495814927443406,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_08_mean,0.0002782124847852896,0.0015321433331184826,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_08_std,0.0010954616588420118,0.0004669004201737863,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_08_min,0.00041731872717795106,0.0007303077725612445,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_08_max,0.0002782124847853229,0.000665314778984855,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_09_mean,0.00048687184837423734,0.000586065016392027,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_09_std,0.0016692749087115822,0.0004412650857398783,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_09_min,0.0010085202573466678,0.001726263070212627,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_09_max,-0.00015649452269161923,0.002967696060356761,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_10_mean,0.0014953921057208274,0.0016933721194838953,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_10_std,0.0020692053555903755,0.0005468330792389527,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_10_min,0.0004173187271779621,0.0006182016635239633,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_10_max,0.00012171796209359265,0.0001747500542709387,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_11_mean,0.0009215788558512239,0.0004402360946329861,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_11_std,0.0003129890453834605,0.00032808141652082985,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_11_min,1.7388280299135418e-05,0.0017343883506047485,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_11_max,0.0006259780907668877,0.0009842442495625184,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_12_mean,0.00038254216657974683,0.002974158477235289,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_12_std,0.001217179620935549,0.0003389599841700617,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_12_min,0.00013910624239269476,0.0010571159209578117,MFCC delta-delta
+permutasi_svm_val,mfcc_dd_12_max,-0.000399930446878749,0.0015397221566519073,MFCC delta-delta
+permutasi_svm_val,gfcc_00_mean,0.00205181707529134,0.0006725466738241581,GFCC
+permutasi_svm_val,gfcc_00_std,3.477656059818202e-05,0.00018727751024634533,GFCC
+permutasi_svm_val,gfcc_00_min,5.2164840897228616e-05,0.0002914806923011425,GFCC
+permutasi_svm_val,gfcc_00_max,0.0005216484089724082,0.0011971423737129918,GFCC
+permutasi_svm_val,gfcc_00_skew,0.00403408102938625,0.001296097732817508,GFCC
+permutasi_svm_val,gfcc_00_kurt,0.0032863849765259134,0.0006480488664087472,GFCC
+permutasi_svm_val,gfcc_01_mean,0.0025039123630673176,0.0012151907640171175,GFCC
+permutasi_svm_val,gfcc_01_std,-1.7388280299035498e-05,0.00026313242828065526,GFCC
+permutasi_svm_val,gfcc_01_min,0.0013215093027300507,0.00044126508573984506,GFCC
+permutasi_svm_val,gfcc_01_max,0.003042949052338795,0.0016646497391265814,GFCC
+permutasi_svm_val,gfcc_01_skew,0.002764736567553516,0.0013568430655468294,GFCC
+permutasi_svm_val,gfcc_01_kurt,0.002434359241871009,0.0009958491436812024,GFCC
+permutasi_svm_val,gfcc_02_mean,0.000695531211963174,0.0005714372013616907,GFCC
+permutasi_svm_val,gfcc_02_std,0.0012171796209355158,0.0005714372013616738,GFCC
+permutasi_svm_val,gfcc_02_min,0.00048687184837425956,0.00031873244270256244,GFCC
+permutasi_svm_val,gfcc_02_max,0.0008346374543558244,0.000548764870042045,GFCC
+permutasi_svm_val,gfcc_02_skew,0.0018779342723005189,0.0009612432593347577,GFCC
+permutasi_svm_val,gfcc_02_kurt,0.0014606155451226232,0.0013518199774353347,GFCC
+permutasi_svm_val,gfcc_03_mean,0.0015301686663189429,0.0008440035541305138,GFCC
+permutasi_svm_val,gfcc_03_std,0.002225699878282117,0.00111012969567116,GFCC
+permutasi_svm_val,gfcc_03_min,0.0011997913406364801,0.0014411307685615517,GFCC
+permutasi_svm_val,gfcc_03_max,0.00010432968179453494,0.00232665326846498,GFCC
+permutasi_svm_val,gfcc_03_skew,0.001165014780038287,0.0004333137122023192,GFCC
+permutasi_svm_val,gfcc_03_kurt,0.0006781429316641385,0.0007230263566785486,GFCC
+permutasi_svm_val,gfcc_04_mean,0.00043470700747700876,0.0005621015432183644,GFCC
+permutasi_svm_val,gfcc_04_std,0.000260824204486243,0.00028306069546338265,GFCC
+permutasi_svm_val,gfcc_04_min,0.0023995826812728827,0.0006113161478437215,GFCC
+permutasi_svm_val,gfcc_04_max,0.0015475569466180338,0.0009313692742717178,GFCC
+permutasi_svm_val,gfcc_04_skew,0.0010085202573466346,0.0013328998710997752,GFCC
+permutasi_svm_val,gfcc_04_kurt,0.0014258389845244746,0.0010012992557042613,GFCC
+permutasi_svm_val,gfcc_05_mean,0.0015649452269170805,0.0010803146977575722,GFCC
+permutasi_svm_val,gfcc_05_std,-0.00043470700747689773,0.0015381504097508702,GFCC
+permutasi_svm_val,gfcc_05_min,0.0009041905755521218,0.00033717126464377585,GFCC
+permutasi_svm_val,gfcc_05_max,0.0020865936358894777,0.0006955312119631353,GFCC
+permutasi_svm_val,gfcc_05_skew,0.00043470700747694213,0.00023650618168556494,GFCC
+permutasi_svm_val,gfcc_05_kurt,0.0006433663710659454,0.0003892023871604902,GFCC
+permutasi_svm_val,gfcc_06_mean,0.0013736741436272237,0.0008983196907035049,GFCC
+permutasi_svm_val,gfcc_06_std,0.0008346374543558355,0.0004967086370051977,GFCC
+permutasi_svm_val,gfcc_06_min,0.002643018605459968,0.0018692199131109823,GFCC
+permutasi_svm_val,gfcc_06_max,0.0021561467570857863,0.00265443361325145,GFCC
+permutasi_svm_val,gfcc_06_skew,0.0010259085376457145,0.0007793752332121307,GFCC
+permutasi_svm_val,gfcc_06_kurt,0.000852025734654871,0.0006931361998955235,GFCC
+permutasi_svm_val,gfcc_07_mean,6.955312119637514e-05,0.0001936276947602429,GFCC
+permutasi_svm_val,gfcc_07_std,1.7388280299113212e-05,0.00022604764388801913,GFCC
+permutasi_svm_val,gfcc_07_min,0.002225699878282095,0.0016473961790752203,GFCC
+permutasi_svm_val,gfcc_07_max,-0.0003999304468787601,0.0014816814740235018,GFCC
+permutasi_svm_val,gfcc_07_skew,-0.00015649452269168586,0.0005790584526289954,GFCC
+permutasi_svm_val,gfcc_07_kurt,-0.0012867327421317465,0.001718187352048076,GFCC
+permutasi_svm_val,gfcc_08_mean,0.0013215093027300173,0.0007093054444225729,GFCC
+permutasi_svm_val,gfcc_08_std,0.0010259085376456921,0.00029560076508435056,GFCC
+permutasi_svm_val,gfcc_08_min,-0.0002956007650843029,0.001855012515459865,GFCC
+permutasi_svm_val,gfcc_08_max,0.0009911319770475435,0.0018793022960770494,GFCC
+permutasi_svm_val,gfcc_08_skew,0.0016344983481134333,0.0012422584663183182,GFCC
+permutasi_svm_val,gfcc_08_kurt,-0.00012171796209351494,0.001888930754435359,GFCC
+permutasi_svm_val,gfcc_09_mean,-0.00013910624239261705,0.00021717955132666728,GFCC
+permutasi_svm_val,gfcc_09_std,0.0018257694314033012,0.0015537963346906646,GFCC
+permutasi_svm_val,gfcc_09_min,-0.0012693444618326554,0.0013266471612041375,GFCC
+permutasi_svm_val,gfcc_09_max,0.002643018605459979,0.0025470121263920123,GFCC
+permutasi_svm_val,gfcc_09_skew,0.001512780386019863,0.00042627893139039557,GFCC
+permutasi_svm_val,gfcc_09_kurt,0.0008694140149539398,0.00031105101408451677,GFCC
+permutasi_svm_val,gfcc_10_mean,0.003164667014432343,0.0020482774227267766,GFCC
+permutasi_svm_val,gfcc_10_std,0.002469135802469158,0.001082551376544872,GFCC
+permutasi_svm_val,gfcc_10_min,0.0053382020518171315,0.0023068815936791854,GFCC
+permutasi_svm_val,gfcc_10_max,0.0006781429316641385,0.00045642165704769163,GFCC
+permutasi_svm_val,gfcc_10_skew,0.004155798991479831,0.0018010934840495393,GFCC
+permutasi_svm_val,gfcc_10_kurt,-0.0002608242044861431,0.0011566801161232768,GFCC
+permutasi_svm_val,gfcc_11_mean,-0.00022604764388798327,0.0004669004201738107,GFCC
+permutasi_svm_val,gfcc_11_std,0.002364806120674701,0.0006832510069340311,GFCC
+permutasi_svm_val,gfcc_11_min,0.00045209528777608867,0.0026612591159393254,GFCC
+permutasi_svm_val,gfcc_11_max,0.00034776560598156483,0.0002693780800700776,GFCC
+permutasi_svm_val,gfcc_11_skew,0.003564597461311081,0.001217800472606008,GFCC
+permutasi_svm_val,gfcc_11_kurt,0.0019127108328986786,0.0014190370901132725,GFCC
+permutasi_svm_val,gfcc_12_mean,0.00012171796209361485,0.0008765142174320085,GFCC
+permutasi_svm_val,gfcc_12_std,5.216484089728413e-05,0.0015823335072161016,GFCC
+permutasi_svm_val,gfcc_12_min,0.0013388975830290971,0.0016441812067470674,GFCC
+permutasi_svm_val,gfcc_12_max,0.0019127108328986565,0.0021690093729108072,GFCC
+permutasi_svm_val,gfcc_12_skew,0.003234220135628585,0.0018633876994775126,GFCC
+permutasi_svm_val,gfcc_12_kurt,0.0011476264997392516,0.0014655752047091168,GFCC

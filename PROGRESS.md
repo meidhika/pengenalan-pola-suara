@@ -6,7 +6,8 @@
 | 1. Setup, ekstraksi, eksplorasi metadata | ✅ Selesai | 2026-11-26 |
 | 2. Preprocessing audio & dataset eksperimen | ✅ Selesai | 2026-11-26 |
 | 3. Ekstraksi fitur & visualisasi | ✅ Selesai | 2026-11-26 |
-| 4. Klasifikasi | ⏳ Belum | |
+| 4. Klasifikasi ML klasik (fitur tabular) | ✅ Selesai | 2026-11-26 |
+| 5. CNN ringan | ⏳ Belum | |
 
 ---
 
@@ -276,3 +277,109 @@ di Tahap 4 laporkan baseline "durasi saja" dan model tanpa fitur durasi.
 3. Scaling (StandardScaler) & normalisasi log-mel di-fit pada train saja.
 4. Tabular A hanya memuat train yang sudah di-*undersample* (2.009). Untuk ML klasik dengan semua healthy train
    (`ratio: null`), perlu jalankan ulang Tahap 2 lalu script ini (resume hanya menghitung uuid baru).
+
+
+---
+
+## Tahap 4 — Klasifikasi dengan ML klasik (fitur tabular, Eksperimen A & B)
+
+### File yang dihasilkan
+- `src/evaluate.py` — metrik bersama untuk SEMUA model (dipakai juga oleh CNN): `compute_metrics()` (accuracy,
+  balanced acc, precision, recall/sensitivitas, spesifisitas, F1, ROC-AUC, PR-AUC, TP/FP/TN/FN, CI 95% bootstrap
+  1000× untuk ROC-AUC & PR-AUC), `youden_threshold()`, `threshold_metrics()`, `bootstrap_ci()`, `curves()`,
+  `confusion()`, `save_results(model_name, experiment, metrics)` (upsert per model+eksperimen+split), `load_results()`.
+- `src/models_ml.py` — pipeline imblearn `StandardScaler → SelectKBest(f_classif) → [SMOTE] → clf`;
+  `make_pipeline()`, `param_space()`, `imbalance_variants()`, `feature_subsets()` (ablasi), `builtin_importance()`.
+- `src/plots.py` — `WARNA_MODEL`/`GARIS_MODEL`, `plot_roc_pr_all`, `plot_confusion`, `plot_importance_top`, `plot_ablation`.
+- `scripts/04_train_ml.py` — tqdm, log ke file, resume (model .joblib yang ada dimuat; `--overwrite` untuk latih
+  ulang), `--limit N` (keluaran ke `reports/logs/uji_limit/`, sudah dihapus), `--n-iter`, `--skip-ablation`.
+- `models/ml_<algo>_{A,B}.joblib` (dict: pipeline, threshold, fitur, ringkasan tuning, varian imbalance, prediksi
+  val/test); `models/preds_ml_{A,B}.parquet` (prediksi val/test semua model → kurva ROC/PR; bisa digabung dengan CNN).
+- `reports/tables/hasil_semua_model.csv` (12 baris: 6 model × A/B, split test), `04_imbalance_{A,B}.csv`,
+  `04_ablasi_fitur.csv` (A), `04_ablasi_fitur_B.csv`, `04_importance_{A,B}.csv`.
+- `notebooks/04_ml_klasik.ipynb` (dieksekusi). `reports/figures/04_{roc_pr,confusion,importance,ablasi}_{A,B}.png` (8).
+- Log: `reports/logs/train_ml_{A,B}.log`, `train_ml_{A,B}_summary.json`, `train_ml_console.txt`, `nb04_exec.log`.
+- Waktu: A 842 s, B 335 s (paling lama: SVM `probability=True` + SMOTE, dan RF).
+
+### Protokol (keputusan)
+- **Tuning di TRAIN saja** (opsi "train lalu val"): RandomizedSearchCV n_iter = 20, scoring ROC-AUC;
+  A: StratifiedKFold 5; B: RepeatedStratifiedKFold 5×3. Grid termasuk `select__k` ∈ {20, 50, 100, all}.
+- Imbalance: `balanced` (class_weight / scale_pos_weight XGBoost; k-NN: `none`) vs **SMOTE di dalam pipeline**
+  → dipilih per algoritma berdasarkan AUC CV train.
+- **VAL**: ambang Youden's J + pemilihan model terbaik antar-algoritma (AUC val). Model tidak dilatih ulang dengan val.
+- **TEST**: dievaluasi sekali per model final. Variabilitas: repeated stratified CV 5×5 di train (mean ± std).
+- Ablasi: algoritma terbaik + varian imbalance-nya, tuning ulang per subset (n_iter = 10). Tambahan subset
+  (vii) durasi saja dan (viii) semua tanpa durasi (cek *shortcut*). "MFCC" = statis + Δ + ΔΔ (182 kolom);
+  "waktu" = RMS & ZCR (8 kolom, tanpa durasi).
+- Importance: bawaan RF (MDI) & XGBoost (gain) pada fitur yang lolos SelectKBest + **permutation importance di VAL**
+  (ROC-AUC, 10 ulangan) untuk model terbaik.
+
+### Hasil TEST (ambang Youden dari val)
+**Eksperimen A** (n = 1.624, prevalensi 0,067)
+
+| Model | imbalance | CV 5×5 AUC | AUC val | **AUC test [CI 95%]** | PR-AUC | Sens | Spes | F1 |
+|---|---|---|---|---|---|---|---|---|
+| Dummy (stratified) | – | 0,491 ± 0,023 | 0,476 | 0,516 [0,472–0,563] | 0,069 | 1,000 | 0,000 | 0,125 |
+| Logistic Regression | balanced | 0,577 ± 0,033 | 0,561 | 0,569 [0,514–0,623] | 0,087 | 0,481 | 0,600 | 0,136 |
+| **SVM (RBF)** ★ | balanced | 0,580 ± 0,034 | **0,574** | 0,576 [0,523–0,629] | 0,088 | 0,556 | 0,553 | 0,142 |
+| k-NN | none | 0,564 ± 0,029 | 0,542 | 0,580 [0,525–0,636] | 0,088 | 0,509 | 0,613 | 0,147 |
+| Random Forest | balanced | 0,583 ± 0,033 | 0,527 | 0,570 [0,513–0,628] | 0,091 | 0,407 | 0,705 | 0,147 |
+| XGBoost | balanced | 0,576 ± 0,030 | 0,546 | 0,572 [0,513–0,629] | 0,097 | 0,630 | 0,433 | 0,131 |
+
+**Eksperimen B** (label ahli; n = 152, prevalensi 0,461)
+
+| Model | imbalance | CV 5×5 AUC | AUC val | **AUC test [CI 95%]** | PR-AUC | Sens | Spes | F1 |
+|---|---|---|---|---|---|---|---|---|
+| Dummy (stratified) | – | 0,487 ± 0,054 | 0,428 | 0,487 [0,417–0,567] | 0,454 | 1,000 | 0,000 | 0,631 |
+| Logistic Regression | balanced | 0,767 ± 0,035 | 0,712 | 0,812 [0,730–0,877] | 0,749 | 0,771 | 0,817 | 0,777 |
+| **SVM (RBF)** ★ | SMOTE | 0,766 ± 0,035 | **0,718** | **0,826 [0,745–0,888]** | 0,786 | 0,743 | 0,805 | 0,754 |
+| k-NN | none | 0,723 ± 0,033 | 0,648 | 0,776 [0,689–0,848] | 0,675 | 0,629 | 0,756 | 0,657 |
+| Random Forest | SMOTE | 0,748 ± 0,040 | 0,685 | 0,817 [0,741–0,879] | 0,771 | 0,800 | 0,732 | 0,757 |
+| XGBoost | balanced | 0,753 ± 0,045 | 0,713 | 0,807 [0,726–0,871] | 0,754 | 0,614 | 0,817 | 0,672 |
+
+★ = model terbaik menurut AUC val (dipakai untuk ablasi & permutation importance). A: SVM RBF (C ≈ 2,8,
+γ ≈ 2,6e-4, semua fitur, class_weight balanced, ambang 0,249). B: SVM RBF + SMOTE (parameter sama, ambang 0,557).
+
+### Ablasi fitur (SVM, AUC test; CV & val di CSV/figur)
+| Subset | n | A | B |
+|---|---|---|---|
+| (i) waktu (RMS, ZCR) | 8 | 0,485 | 0,680 |
+| (ii) spektral | 40 | 0,542 | 0,667 |
+| (iii) MFCC (+Δ, ΔΔ) | 182 | 0,568 | 0,813 |
+| (iv) GFCC | 78 | 0,495 | 0,764 |
+| (v) MFCC + GFCC | 260 | 0,493 | 0,819 |
+| (vi) semua | 315 | 0,576 | 0,826 |
+| (vii) durasi saja | 1 | 0,518 | 0,671 |
+| (viii) semua tanpa durasi | 314 | 0,576 | 0,823 |
+
+### Fitur terpenting
+- **A**: `contrast_05_max/std/mean` (kontras spektral pita ±3,2–6,4 kHz) peringkat 1 di RF, XGBoost, dan permutasi;
+  lalu MFCC koefisien tengah–tinggi (`mfcc_06_mean`, `mfcc_11_mean`, `mfcc_09_max`, `mfcc_d_00_min`).
+  Top-20 permutasi: 11 MFCC, 4 spektral. Konsisten dengan uji Mann-Whitney Tahap 3.
+- **B**: permutasi (SVM) didominasi statistik bentuk MFCC (`mfcc_06_skew`, `mfcc_08_mean`, `mfcc_06_kurt`, `mfcc_00_kurt`)
+  dan ΔΔ (`mfcc_dd_00_std`); RF/XGBoost menonjolkan dinamika MFCC (Δ/ΔΔ koef. 9–11), pitch (`f0_max`, `voiced_ratio`),
+  GFCC, dan `durasi_s`.
+
+### Catatan interpretasi (untuk laporan)
+1. **A hanya sedikit di atas acak** (AUC 0,57–0,58; batas bawah CI > 0,5, tetapi CI semua model tumpang-tindih) →
+   tidak ada algoritma yang terbukti unggul; precision ≈ 0,08 vs prevalensi 0,067 → **tidak layak** untuk skrining.
+2. **B jauh lebih baik** (AUC 0,78–0,83) dengan fitur & pipeline yang sama → kualitas label adalah faktor pembatas
+   utama (mendukung R4). Caveat: populasi B berbeda & seimbang, test kecil (CI ±0,07), AUC test > val/CV (variasi
+   sampel kecil), label ahli = penilaian akustik pulmonolog, bukan PCR.
+3. balanced vs SMOTE: selisih ≤ 0,01 AUC CV → tidak berpengaruh berarti pada AUC.
+4. **Miskalibrasi akibat undersampling train** terlihat jelas: SVM A pada ambang 0,5 memprediksi **semua** rekaman
+   sebagai healthy (sens 0); ambang Youden dari val (0,249) diperlukan (`04_confusion_A.png`, panel kanan).
+5. **Durasi bukan shortcut bagi model penuh** (tanpa durasi: A 0,576 → 0,576; B 0,826 → 0,823), tetapi di B durasi
+   saja sudah AUC 0,67 → sebut sebagai *confounder* potensial.
+6. MFCC ≈ GFCC (redundan; MFCC sedikit lebih baik); fitur domain waktu (RMS/ZCR) paling lemah.
+7. Dummy memberi sens 1 / spes 0 karena proba stratified bernilai 0/1 dan Youden di val memilih ambang 0 — wajar untuk
+   baseline acak; yang relevan AUC ≈ 0,5 dan PR-AUC ≈ prevalensi.
+
+### TODO / catatan untuk tahap CNN
+- Pakai `src/evaluate.py` (`compute_metrics`, `youden_threshold` di val, `save_results`) agar baris CNN masuk
+  `hasil_semua_model.csv` dengan kolom yang sama; prediksi CNN dapat digabung ke `preds_ml_{A,B}.parquet` untuk
+  kurva ROC bersama (warna `CNN` sudah ada di `WARNA_MODEL`).
+- Baseline yang harus dibandingkan dengan CNN: A AUC test ≈ 0,58; B ≈ 0,83 (SVM).
+- Opsional: ML klasik dengan semua healthy train (`healthy_to_covid_ratio: null`) belum dicoba.
+- Repeated CV 5×5 di train memakai hyperparameter hasil tuning pada data yang sama → sedikit optimistis (bukan
+  nested CV); angka test adalah estimasi tak bias.

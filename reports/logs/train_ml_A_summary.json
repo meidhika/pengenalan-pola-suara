@@ -1,0 +1,6 @@
+{
+  "eksperimen": "A",
+  "model_terbaik": "svm",
+  "imbalance": "balanced",
+  "val_auc": 0.5742636626058025
+}

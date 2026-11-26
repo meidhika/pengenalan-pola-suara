@@ -1,0 +1,6 @@
+{
+  "eksperimen": "B",
+  "model_terbaik": "svm",
+  "imbalance": "smote",
+  "val_auc": 0.7183098591549296
+}
