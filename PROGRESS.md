@@ -4,7 +4,8 @@
 | Tahap | Status | Tanggal |
 |---|---|---|
 | 1. Setup, ekstraksi, eksplorasi metadata | ✅ Selesai | 2026-11-26 |
-| 2. Preprocessing audio | ⏳ Belum | |
+| 2. Preprocessing audio & dataset eksperimen | ✅ Selesai | 2026-11-26 |
+| 3. Ekstraksi fitur | ⏳ Belum | |
 
 ---
 
@@ -79,3 +80,109 @@ didiagnosis COVID-19 oleh ahli (212 dinilai healthy_cough). Lihat `reports/table
 ### TODO / masalah terbuka
 - `README.md` belum dibuat (bisa di tahap akhir).
 - Tidak ada ID subjek → split per rekaman; catat sebagai keterbatasan (potensi rekaman ganda dari orang yang sama).
+
+
+---
+
+## Tahap 2 — Preprocessing audio & penetapan dataset eksperimen
+
+### File yang dihasilkan
+- `config.yaml` — bagian baru `data.healthy_to_covid_ratio`, `data.expert_apply_cough_threshold`,
+  `data.experiments`, `split`, `preprocessing` (semua parameter di bawah).
+- `src/data_utils.py` — `build_label_table()` (A/B/C), `make_splits()`, `undersample_train()`.
+- `src/preprocessing.py` — `convert_to_wav()`, `trim_silence()`, `segment_coughs()`, `reduce_noise()`,
+  `normalize()`, `preprocess_file()` (pipeline lengkap), `load_wav()`/`save_wav()`.
+- `src/plots.py` — `plot_preprocessing_steps()`, `plot_spectrogram_compare()`.
+- `scripts/02_preprocess.py` — joblib (n_jobs=-2), tqdm, resume (via `preprocess_meta.csv`), `--limit`,
+  `--retry-failed`, `--resplit` (jangan dipakai: split final).
+- `data/processed/splits_A.csv`, `splits_B.csv` — **SPLIT FINAL** (populasi penuh + kolom `split`, `dipakai`).
+- `data/processed/manifest_A.csv`, `manifest_B.csv` — kolom: uuid, path_wav (relatif root), label, label_name,
+  split, durasi_asli_s, durasi_trim_s, n_segmen, durasi_batuk_s, sr, cough_detected, status_self_reported
+  (+ diagnosis_vote, n_ahli, ada_konflik untuk B).
+- `data/processed/segments.csv` (batas tiap segmen batuk, detik relatif terhadap awal wav hasil trim),
+  `data/processed/preprocess_meta.csv` (status semua file).
+- `data/interim/*.wav` (5.881 file, 1,5 GB: hasil konversi), `data/processed/wav/*.wav` (5.864 file, 778 MB).
+- `notebooks/02_preprocessing.ipynb` (dieksekusi), `reports/figures/02_*.png` (6), `reports/tables/02_*.csv` (3).
+- Log: `reports/logs/preprocess_run.log`, `preprocess_errors.csv`, `preprocess_summary.json`, `label_stats_{A,B}.json`.
+
+### Parameter preprocessing (urutan: a → b → c → d → e)
+| Langkah | Parameter |
+|---|---|
+| a. Konversi (ffmpeg) | WAV mono, 16 kHz (Nyquist 8 kHz), PCM 16-bit (65.536 level) |
+| b. Trim (`librosa.effects.trim`) | top_db = 30, frame 512, hop 128 |
+| c. Segmentasi (adaptasi `segment_cough` COUGHVID, RMS per frame) | frame 25 ms, hop 10 ms, T_h = 2,0×RMS global, T_l = 0,5×RMS global, toleransi 30 ms, padding 0,2 s, min batuk 0,2 s |
+| d. Reduksi noise (`noisereduce`) | spectral gating stasioner, prop_decrease = 0,8 |
+| e. Normalisasi | peak → 0,99 (rentang −1..1); **tanpa padding saat disimpan** |
+| Buang | durasi setelah trim < 0,3 s, audio kosong/senyap/rusak |
+
+Segmentasi hanya disimpan sebagai **metadata** (`n_segmen`, `segments.csv`); wav hasil = sinyal penuh setelah trim
+(jeda antar-batuk tetap ada). Pad/potong ke 10 s dilakukan saat memuat input CNN:
+`normalize(y, target_duration_s=cfg.audio.max_duration_s)`.
+
+### Penetapan populasi
+- **A**: `status` ∈ {COVID-19, healthy}, `cough_detected ≥ 0,8` → 720 / 10.132.
+- **B** (majority vote `diagnosis_1..4`, seri dibuang, + `cough_detected ≥ 0,8`):
+  2.841 rekaman berlabel ahli; 130 dinilai >1 ahli, **124 di antaranya konflik** (kesepakatan antar ahli sangat
+  rendah); 88 konflik terselesaikan oleh vote, **36 seri dibuang**; 34 rekaman berisi konflik langsung
+  COVID-19 vs healthy_cough. Vote = COVID-19/healthy_cough: 1.223 → setelah filter cough_detected (−210): **470 / 543**.
+- **C** (`status_SSL`, ≥0,8): 285 / 8.046 — fungsi tersedia (`build_label_table(df, "C")`), belum diproses audionya
+  (jalankan `--experiments A B C` bila diperlukan).
+
+### Jumlah data akhir (manifest, setelah preprocessing)
+**Eksperimen A** (train di-*undersample* healthy:COVID = 3:1; val/test distribusi alami)
+
+| split | COVID-19 | healthy | total | (populasi penuh split: COVID / healthy) |
+|---|---|---|---|---|
+| train | 502 | 1.507 | 2.009 | 504 / 7.092 |
+| val | 108 | 1.514 | 1.622 | 108 / 1.520 |
+| test | 108 | 1.516 | 1.624 | 108 / 1.520 |
+| **total** | **718** | **4.537** | **5.255** | 720 / 10.132 |
+
+**Eksperimen B** (tanpa undersampling, sudah seimbang)
+
+| split | COVID-19 | healthy | total |
+|---|---|---|---|
+| train | 329 | 378 | 707 |
+| val | 71 | 81 | 152 |
+| test | 70 | 82 | 152 |
+| **total** | **470** | **541** | **1.011** |
+
+- File diproses: 5.881 uuid unik (gabungan A ∪ B; 402 uuid ada di keduanya). **Gagal/dibuang: 17** (semua
+  "terlalu pendek setelah trim < 0,3 s"; tidak ada file rusak). OK: 5.864.
+- Waktu proses: run penuh **258 s** untuk 5.831 file (+23 s uji 50 file) dengan 11 worker
+  (≈0,5 s/file per core; dominan reduksi noise & trim).
+
+### Ringkasan durasi (median, detik) — `reports/tables/02_ringkasan_durasi.csv`
+| | asli | setelah trim | total segmen batuk |
+|---|---|---|---|
+| A COVID-19 | 9,78 | 4,40 | 1,43 |
+| A healthy | 9,72 | 3,98 | 1,30 |
+| B COVID-19 | 9,78 | 4,92 | 1,75 |
+| B healthy | 9,60 | 3,17 | 0,99 |
+
+### Keputusan & dampak undersampling (`healthy_to_covid_ratio = 3`)
+- Undersampling **hanya pada train** setelah split → val/test tetap ≈1:14 (alami) sehingga ROC-AUC, PR-AUC,
+  sensitivitas & spesifisitas di test tetap mencerminkan kondisi skrining nyata.
+- Dampak: (1) komputasi turun ±3,5× (train 2.009 vs 7.596); (2) prior kelas di train (25% COVID) ≠ test (6,6%)
+  → probabilitas keluaran model **terlalu tinggi (miskalibrasi)**; ambang 0,5 akan memberi sensitivitas lebih
+  tinggi tetapi spesifisitas & *precision* lebih rendah. ROC-AUC relatif tidak terpengaruh prior; **PR-AUC/precision
+  di test akan rendah** karena prevalensi rendah — wajar, laporkan bersama baseline prevalensi (≈0,066).
+  Ambang keputusan sebaiknya dipilih di **val** (mis. Youden / sensitivitas target), bukan 0,5.
+  (3) 5.585 rekaman healthy train dibuang → variasi kelas healthy berkurang; untuk ML klasik bisa dibandingkan
+  dengan `ratio: null` + *class weight* (cukup jalankan ulang script; resume hanya memproses file baru,
+  split tidak berubah).
+- Split per `uuid` (tidak ada ID subjek). Split A dan B dibuat **independen** → 402 uuid ada di keduanya dengan
+  split yang bisa berbeda. **Jangan** melatih di A lalu menguji di test B (atau sebaliknya) tanpa membuang uuid
+  yang tumpang-tindih → leakage.
+
+### Masalah / catatan untuk Tahap 3
+1. **Segmentasi tidak sempurna**: 611/5.255 rekaman A (11,6%) dan 115/1.011 B tanpa segmen terdeteksi
+   (`n_segmen = 0`); pada rekaman padat batuk, ambang 2×RMS global bisa melewatkan batuk yang lebih pelan
+   (terlihat di `02_langkah_preprocessing_covid.png`). Karena itu fitur dihitung dari **wav penuh hasil trim**;
+   `segments.csv` hanya opsional (fitur per segmen).
+2. Sebagian rekaman asli > 10 s (maks 15,2 s) → saat input CNN dipotong ke 10 s.
+3. **Potensi shortcut durasi di B**: healthy_cough lebih pendek setelah trim (median 3,2 vs 4,9 s). Fitur
+   statistik harus berupa rata-rata/agregat ternormalisasi, bukan jumlah absolut; pertimbangkan melaporkan AUC
+   fitur durasi saja sebagai baseline.
+4. Reduksi noise stasioner hanya sedikit mengubah spektrogram (noise latar umumnya sudah rendah setelah trim).
+5. Normalisasi peak per-rekaman → informasi kenyaringan absolut hilang (disengaja; gain mikrofon tidak seragam).

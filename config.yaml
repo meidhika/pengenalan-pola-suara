@@ -22,3 +22,44 @@ audio:
 
 data:
   cough_detected_threshold: 0.8   # rekomendasi penulis dataset (Orlandic dkk., 2021)
+  # --- Tahap 2: penetapan populasi eksperimen ---
+  # Undersampling acak kelas healthy (seed 42) HANYA pada data train (val/test tetap distribusi alami).
+  # null = pakai semua data healthy.
+  healthy_to_covid_ratio: 3
+  # Eksperimen B (label ahli) juga difilter cough_detected >= threshold agar konsisten dengan A.
+  expert_apply_cough_threshold: true
+  # Eksperimen yang diproses audionya oleh scripts/02_preprocess.py (C = status_SSL, opsional).
+  experiments: ["A", "B"]
+
+split:
+  train: 0.70
+  val: 0.15
+  test: 0.15
+
+preprocessing:
+  n_jobs: -2                  # joblib: semua core kecuali satu
+  bit_depth: 16               # PCM 16-bit -> 2^16 = 65.536 level kuantisasi
+  min_duration_s: 0.3         # rekaman < 0,3 s setelah trim dibuang
+  trim:
+    top_db: 30                # ambang hening relatif terhadap frame paling keras (dB)
+    frame_length: 512         # 32 ms @16 kHz
+    hop_length: 128           # 8 ms
+  segmentation:               # adaptasi segment_cough (Orlandic dkk., repo COUGHVID)
+    frame_ms: 25
+    hop_ms: 10
+    th_high_mult: 2.0         # mulai segmen bila RMS frame > 2.0 x RMS global
+    th_low_mult: 0.5          # akhiri segmen bila RMS frame < 0.5 x RMS global ...
+    tolerance_ms: 30          # ... selama lebih dari 30 ms
+    padding_s: 0.2            # tambahan konteks sebelum/sesudah segmen
+    min_cough_s: 0.2          # segmen (tanpa padding) lebih pendek dari ini dibuang
+  noise_reduction:
+    enabled: true
+    stationary: true          # spectral gating stasioner (noisereduce)
+    prop_decrease: 0.8        # proporsi reduksi noise (1.0 = penuh)
+  normalization:
+    method: "peak"            # "peak" (ke -1..1) atau "rms"
+    peak_target: 0.99         # sedikit di bawah 1.0 agar aman dari clipping saat konversi int16
+    rms_target_db: -20
+  # Wav di data/processed TIDAK di-pad; pad/potong ke max_duration_s dilakukan saat memuat input CNN
+  # (normalize(..., target_duration_s=...)), agar fitur ML klasik tidak terdistorsi oleh nol-padding.
+  pad_on_save: false

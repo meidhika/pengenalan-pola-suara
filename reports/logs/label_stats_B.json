@@ -1,0 +1,13 @@
+{
+  "experiment": "B",
+  "berlabel_ahli": 2841,
+  "multi_ahli": 130,
+  "konflik_antar_ahli": 124,
+  "konflik_covid_vs_healthy": 34,
+  "dibuang_seri": 36,
+  "konflik_diselesaikan_vote": 88,
+  "vote_covid_atau_healthy": 1223,
+  "dibuang_cough_detected": 210,
+  "n_covid": 470,
+  "n_healthy": 543
+}

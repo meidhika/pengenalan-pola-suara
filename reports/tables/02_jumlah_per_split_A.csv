@@ -1,0 +1,7 @@
+,split (populasi penuh),split (populasi penuh),split (populasi penuh),"manifest (dipakai, lolos preprocessing)","manifest (dipakai, lolos preprocessing)","manifest (dipakai, lolos preprocessing)"
+label_name,COVID-19,healthy,total,COVID-19,healthy,total
+split,,,,,,
+train,504,7092,7596,502,1507,2009
+val,108,1520,1628,108,1514,1622
+test,108,1520,1628,108,1516,1624
+total,720,10132,10852,718,4537,5255

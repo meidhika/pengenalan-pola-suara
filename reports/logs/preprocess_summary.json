@@ -1,0 +1,57 @@
+{
+  "waktu_run_s": 258.1,
+  "n_diproses_run_ini": 5831,
+  "limit": null,
+  "n_ok_total": 5864,
+  "n_gagal_total": 17,
+  "manifest_A": {
+    "n": 5255,
+    "belum_diproses": 0,
+    "gagal": 17,
+    "per_split": {
+      "COVID-19": {
+        "test": 108,
+        "train": 502,
+        "val": 108,
+        "total": 718
+      },
+      "healthy": {
+        "test": 1516,
+        "train": 1507,
+        "val": 1514,
+        "total": 4537
+      },
+      "total": {
+        "test": 1624,
+        "train": 2009,
+        "val": 1622,
+        "total": 5255
+      }
+    }
+  },
+  "manifest_B": {
+    "n": 1011,
+    "belum_diproses": 0,
+    "gagal": 2,
+    "per_split": {
+      "COVID-19": {
+        "test": 70,
+        "train": 329,
+        "val": 71,
+        "total": 470
+      },
+      "healthy": {
+        "test": 82,
+        "train": 378,
+        "val": 81,
+        "total": 541
+      },
+      "total": {
+        "test": 152,
+        "train": 707,
+        "val": 152,
+        "total": 1011
+      }
+    }
+  }
+}
