@@ -1,0 +1,52 @@
+22:09:28 | [a] A: terbaik val = CNN (MFCC 2D); AUC test tertinggi = k-NN (0.580)
+22:09:28 | [a] B: terbaik val = SVM (RBF); AUC test tertinggi = SVM (RBF) (0.826)
+22:09:32 | [b] A k-NN − SVM (RBF): Δ=+0.004  DeLong p=0.867  bootstrap p=0.857
+22:09:36 | [b] A SVM (RBF) − CNN (log-mel): Δ=+0.009  DeLong p=0.696  bootstrap p=0.719
+22:09:40 | [b] A SVM (RBF) − CNN (MFCC 2D): Δ=+0.032  DeLong p=0.388  bootstrap p=0.402
+22:09:44 | [b] A SVM (RBF) − Dummy (stratified): Δ=+0.060  DeLong p=0.117  bootstrap p=0.118
+22:09:47 | [b] B SVM (RBF) − Random Forest: Δ=+0.009  DeLong p=0.616  bootstrap p=0.625
+22:09:50 | [b] B SVM (RBF) − Dummy (stratified): Δ=+0.339  DeLong p=0.000  bootstrap p=0.000
+22:09:51 | [c] 06_roc_gabungan_A.png
+22:09:51 | [d] kesepakatan label (n=572): setuju 0.503, kappa 0.000; dari yang mengaku COVID-19, 43.0% juga dinilai COVID-19 oleh ahli
+22:09:51 | [d] S1 n=102 (pos 51), S2 n=1554 (pos 79), S3 n=251 (ahli pos 106, self-reported pos 34)
+uji silang ML:   0%|          | 0/5 [00:00<?, ?it/s]uji silang ML:  20%|██        | 1/5 [00:05<00:21,  5.46s/it]uji silang ML:  40%|████      | 2/5 [00:11<00:17,  5.74s/it]uji silang ML:  60%|██████    | 3/5 [00:17<00:11,  5.90s/it]uji silang ML:  80%|████████  | 4/5 [00:22<00:05,  5.70s/it]uji silang ML: 100%|██████████| 5/5 [00:28<00:00,  5.62s/it]uji silang ML: 100%|██████████| 5/5 [00:28<00:00,  5.67s/it]
+22:10:24 | [d] inferensi CNN (log-mel) pada data B: 5 s
+22:10:28 | [d] inferensi CNN (MFCC 2D) pada data B: 4 s
+22:10:30 | [e] karakteristik error:
+         n  skor_median  durasi_trim_median_s  cough_detected_median  tanpa_segmen_persen  kondisi_napas_ya_persen  demam_ya_persen  laki_laki_persen
+jenis                                                                                                                                                
+TP      60        0.283                 4.724                  0.974                0.083                    0.417            0.317             0.500
+FN      48        0.219                 3.296                  0.959                0.188                    0.354            0.333             0.521
+FP     677        0.278                 5.000                  0.974                0.055                    0.127            0.087             0.693
+TN     839        0.215                 3.048                  0.976                0.168                    0.108            0.069             0.659
+22:10:30 | [e] korelasi skor vs durasi:
+           model    kelas  rho_spearman_skor_vs_durasi  auc_durasi_saja
+0      SVM (RBF)    semua                        0.407            0.518
+1      SVM (RBF)  healthy                        0.409            0.518
+2  CNN (log-mel)    semua                        0.606            0.518
+3  CNN (log-mel)  healthy                        0.608            0.518
+4  CNN (MFCC 2D)    semua                       -0.048            0.518
+5  CNN (MFCC 2D)  healthy                       -0.051            0.518
+D:\Meidhika\Lecturer\project-kuliah\PPKB\.venv\Lib\site-packages\sklearn\metrics\_classification.py:2480: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+22:10:52 | [e] selisih AUC antar-subgrup:
+                                    min    max  selisih
+model         variabel                                 
+CNN (MFCC 2D) Demam / nyeri otot  0.541  0.544    0.003
+              Gender              0.526  0.572    0.046
+              Kelompok umur       0.516  0.559    0.044
+              Kondisi pernapasan  0.530  0.563    0.033
+CNN (log-mel) Demam / nyeri otot  0.532  0.563    0.031
+              Gender              0.568  0.580    0.012
+              Kelompok umur       0.484  0.658    0.174
+              Kondisi pernapasan  0.546  0.585    0.038
+SVM (RBF)     Demam / nyeri otot  0.507  0.590    0.082
+              Gender              0.565  0.585    0.020
+              Kelompok umur       0.475  0.631    0.156
+              Kondisi pernapasan  0.529  0.586    0.057
+SVM (RBF) — B Demam / nyeri otot  0.826  0.838    0.012
+              Gender              0.803  0.861    0.059
+              Kelompok umur       0.714  0.872    0.158
+              Kondisi pernapasan  0.817  0.843    0.026
+22:10:52 | [f] 06_perbandingan_literatur.csv/md
+22:10:52 | Selesai dalam 83 s

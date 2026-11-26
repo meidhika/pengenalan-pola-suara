@@ -436,3 +436,94 @@ def plot_arch_diagram(blocks: list[tuple[str, str]], title: str = ""):
     ax.axis("off")
     ax.set_title(title, fontsize=10)
     return fig
+
+
+# ---------------------------------------------------------------------------
+# Tahap 6 — evaluasi akhir & analisis error
+# ---------------------------------------------------------------------------
+def plot_score_distributions(y_true, scores: dict, thresholds: dict, title: str = ""):
+    """Distribusi probabilitas prediksi per kelas (histogram ternormalisasi) + garis ambang (val)."""
+    import numpy as np
+
+    n = len(scores)
+    fig, axes = plt.subplots(1, n, figsize=(4.4 * n, 3.6), squeeze=False)
+    y = np.asarray(y_true)
+    for ax, (name, s) in zip(axes[0], scores.items()):
+        s = np.asarray(s)
+        bins = np.linspace(s.min(), s.max(), 31)
+        for k, lab in [(0, "healthy"), (1, "COVID-19")]:
+            ax.hist(s[y == k], bins=bins, density=True, alpha=0.55, color=WARNA_KELAS[lab],
+                    label=f"{lab} (n={int((y == k).sum())})")
+        if name in thresholds:
+            ax.axvline(thresholds[name], color="#333", ls="--", lw=1.2)
+            ax.text(thresholds[name], ax.get_ylim()[1] * 0.95, f" ambang {thresholds[name]:.2f}",
+                    fontsize=8, va="top")
+        ax.set(title=name, xlabel="Skor P(COVID-19)", ylabel="Kepadatan")
+        ax.legend(fontsize=8)
+    fig.suptitle(title)
+    fig.tight_layout()
+    return fig
+
+
+def plot_error_examples(items: list[dict], sr: int = 16000, hop: int = 160, cols: int = 3):
+    """Grid log-mel contoh FP/FN. items: dict(spec (F×T, dB), judul)."""
+    import librosa.display
+
+    rows = int(np.ceil(len(items) / cols))
+    fig, axes = plt.subplots(rows, cols, figsize=(4.8 * cols, 3.9 * rows), squeeze=False)
+    fig.subplots_adjust(hspace=0.85, wspace=0.3)
+    for ax, it in zip(axes.ravel(), items):
+        img = librosa.display.specshow(it["spec"], sr=sr, hop_length=hop, x_axis="time", y_axis="mel",
+                                       fmax=sr // 2, ax=ax, cmap="magma")
+        ax.set_title(it["judul"], fontsize=8.5)
+        ax.set_xlabel("Waktu (s)")
+        ax.xaxis.set_major_locator(plt.MaxNLocator(5))
+    for ax in axes.ravel()[len(items):]:
+        ax.axis("off")
+    fig.colorbar(img, ax=axes.ravel().tolist(), format="%+.0f dB", shrink=0.8)
+    return fig
+
+
+def plot_subgroup_forest(df: pd.DataFrame, model: str, title: str = ""):
+    """Forest plot AUC [CI 95%] per subgrup untuk satu model. df: kolom variabel, subgrup, roc_auc, ci, n, n_pos."""
+    d = df[(df["model"] == model) & df["roc_auc"].notna()].reset_index(drop=True)
+    fig, ax = plt.subplots(figsize=(7, 0.32 * len(d) + 1.2))
+    ypos = np.arange(len(d))[::-1]
+    ax.errorbar(d["roc_auc"], ypos, xerr=[d["roc_auc"] - d["roc_auc_ci_low"], d["roc_auc_ci_high"] - d["roc_auc"]],
+                fmt="o", color="#257de0", ecolor="#9bbbe3", capsize=2)
+    ax.set_yticks(ypos)
+    ax.set_yticklabels([f"{v}: {s}  (n={n}, pos={p})" for v, s, n, p in
+                        zip(d["variabel"], d["subgrup"], d["n"], d["n_pos"])], fontsize=8)
+    ax.axvline(0.5, color="#bbb", lw=1)
+    overall = df.attrs.get("overall", {}).get(model)
+    if overall is not None:
+        ax.axvline(overall, color="#f47230", ls="--", lw=1, label=f"keseluruhan = {overall:.3f}")
+        ax.legend(fontsize=8, loc="lower right")
+    ax.set(xlabel="ROC-AUC [CI 95%]", title=title or model, xlim=(0.2, 0.95))
+    fig.tight_layout()
+    return fig
+
+
+def plot_cross_label(df: pd.DataFrame, title: str = ""):
+    """Bar AUC [CI] uji silang: x = set evaluasi, warna = sumber label training."""
+    sets = list(dict.fromkeys(df["set_evaluasi"]))
+    srcs = list(dict.fromkeys(df["dilatih_dengan"]))
+    warna = ["#f47230", "#257de0", "#008a17", "#7b4fd0"]
+    fig, ax = plt.subplots(figsize=(8.5, 4.2))
+    w = 0.8 / len(srcs)
+    for j, src in enumerate(srcs):
+        d = df[df["dilatih_dengan"] == src].set_index("set_evaluasi").reindex(sets)
+        x = np.arange(len(sets)) + (j - (len(srcs) - 1) / 2) * w
+        ax.bar(x, d["roc_auc"], w, color=warna[j % 4], label=src)
+        ax.errorbar(x, d["roc_auc"], yerr=[d["roc_auc"] - d["ci_low"], d["ci_high"] - d["roc_auc"]],
+                    fmt="none", ecolor="#333", capsize=3, lw=1)
+        for xi, v in zip(x, d["roc_auc"]):
+            if pd.notna(v):
+                ax.text(xi, 0.31, f"{v:.2f}", ha="center", fontsize=8, color="white", fontweight="bold")
+    ax.axhline(0.5, color="#888", ls=":", lw=1)
+    ax.set_xticks(np.arange(len(sets)))
+    ax.set_xticklabels(sets, fontsize=8.5)
+    ax.set(ylim=(0.3, 1.05), ylabel="ROC-AUC [CI 95%]", title=title)
+    ax.legend(fontsize=8, title="Model dilatih dengan", title_fontsize=8, loc="upper right")
+    fig.tight_layout()
+    return fig

@@ -1,0 +1,358 @@
+{
+  "terbaik": {
+    "A": {
+      "terbaik_val": "CNN (MFCC 2D)",
+      "terbaik_test": "k-NN"
+    },
+    "B": {
+      "terbaik_val": "SVM (RBF)",
+      "terbaik_test": "SVM (RBF)"
+    }
+  },
+  "signifikansi": [
+    {
+      "eksperimen": "A",
+      "perbandingan": "dua teratas (AUC test)",
+      "model_1": "k-NN",
+      "model_2": "SVM (RBF)",
+      "auc_1": 0.5797,
+      "auc_2": 0.576,
+      "selisih": 0.0037,
+      "delong_se": 0.0222,
+      "delong_z": 0.1677,
+      "delong_p": 0.8668,
+      "delong_ci_low": -0.0398,
+      "delong_ci_high": 0.0473,
+      "boot_ci_low": -0.0396,
+      "boot_ci_high": 0.0506,
+      "boot_p": 0.857
+    },
+    {
+      "eksperimen": "A",
+      "perbandingan": "ML terbaik (val) vs CNN log-mel",
+      "model_1": "SVM (RBF)",
+      "model_2": "CNN (log-mel)",
+      "auc_1": 0.576,
+      "auc_2": 0.5668,
+      "selisih": 0.0091,
+      "delong_se": 0.0234,
+      "delong_z": 0.3913,
+      "delong_p": 0.6956,
+      "delong_ci_low": -0.0367,
+      "delong_ci_high": 0.055,
+      "boot_ci_low": -0.038,
+      "boot_ci_high": 0.0577,
+      "boot_p": 0.719
+    },
+    {
+      "eksperimen": "A",
+      "perbandingan": "ML terbaik (val) vs CNN MFCC 2D",
+      "model_1": "SVM (RBF)",
+      "model_2": "CNN (MFCC 2D)",
+      "auc_1": 0.576,
+      "auc_2": 0.5441,
+      "selisih": 0.0319,
+      "delong_se": 0.0369,
+      "delong_z": 0.8639,
+      "delong_p": 0.3877,
+      "delong_ci_low": -0.0405,
+      "delong_ci_high": 0.1043,
+      "boot_ci_low": -0.0403,
+      "boot_ci_high": 0.101,
+      "boot_p": 0.402
+    },
+    {
+      "eksperimen": "A",
+      "perbandingan": "ML terbaik vs baseline",
+      "model_1": "SVM (RBF)",
+      "model_2": "Dummy (stratified)",
+      "auc_1": 0.576,
+      "auc_2": 0.5155,
+      "selisih": 0.0605,
+      "delong_se": 0.0385,
+      "delong_z": 1.5689,
+      "delong_p": 0.1167,
+      "delong_ci_low": -0.0151,
+      "delong_ci_high": 0.136,
+      "boot_ci_low": -0.0155,
+      "boot_ci_high": 0.1347,
+      "boot_p": 0.118
+    },
+    {
+      "eksperimen": "B",
+      "perbandingan": "dua teratas (AUC test)",
+      "model_1": "SVM (RBF)",
+      "model_2": "Random Forest",
+      "auc_1": 0.8256,
+      "auc_2": 0.8166,
+      "selisih": 0.0091,
+      "delong_se": 0.0181,
+      "delong_z": 0.5018,
+      "delong_p": 0.6158,
+      "delong_ci_low": -0.0263,
+      "delong_ci_high": 0.0444,
+      "boot_ci_low": -0.0309,
+      "boot_ci_high": 0.0444,
+      "boot_p": 0.625
+    },
+    {
+      "eksperimen": "B",
+      "perbandingan": "ML terbaik vs baseline",
+      "model_1": "SVM (RBF)",
+      "model_2": "Dummy (stratified)",
+      "auc_1": 0.8256,
+      "auc_2": 0.4866,
+      "selisih": 0.339,
+      "delong_se": 0.0564,
+      "delong_z": 6.0139,
+      "delong_p": 0.0,
+      "delong_ci_low": 0.2285,
+      "delong_ci_high": 0.4495,
+      "boot_ci_low": 0.2289,
+      "boot_ci_high": 0.4466,
+      "boot_p": 0.0
+    }
+  ],
+  "uji_silang": {
+    "kappa": 0.0001477177605987423,
+    "kesepakatan": 0.5034965034965035,
+    "n_kesepakatan": 572,
+    "ppv_self_reported": 0.43014705882352944,
+    "n_s1": 102,
+    "n_s2": 1554,
+    "n_s3": 251,
+    "svm": [
+      {
+        "set_evaluasi": "S1: test B (label ahli)",
+        "dilatih_dengan": "label self-reported (A)",
+        "roc_auc": 0.673202614379085
+      },
+      {
+        "set_evaluasi": "S1: test B (label ahli)",
+        "dilatih_dengan": "label ahli (B)",
+        "roc_auc": 0.8958093041138024
+      },
+      {
+        "set_evaluasi": "S2: test A (label self-reported)",
+        "dilatih_dengan": "label self-reported (A)",
+        "roc_auc": 0.5849645998712723
+      },
+      {
+        "set_evaluasi": "S2: test A (label self-reported)",
+        "dilatih_dengan": "label ahli (B)",
+        "roc_auc": 0.5446384895945077
+      },
+      {
+        "set_evaluasi": "S3: rekaman B tak terlihat model A — label ahli",
+        "dilatih_dengan": "label self-reported (A)",
+        "roc_auc": 0.5738451528952504
+      },
+      {
+        "set_evaluasi": "S3: rekaman B tak terlihat model A — label self-reported",
+        "dilatih_dengan": "label self-reported (A)",
+        "roc_auc": 0.5412035782054757
+      }
+    ]
+  },
+  "error": {
+    "karakteristik": [
+      {
+        "jenis": "TP",
+        "n": 60,
+        "skor_median": 0.2832,
+        "durasi_trim_median_s": 4.724,
+        "cough_detected_median": 0.9738,
+        "tanpa_segmen_persen": 0.0833,
+        "kondisi_napas_ya_persen": 0.4167,
+        "demam_ya_persen": 0.3167,
+        "laki_laki_persen": 0.5
+      },
+      {
+        "jenis": "FN",
+        "n": 48,
+        "skor_median": 0.2192,
+        "durasi_trim_median_s": 3.296,
+        "cough_detected_median": 0.9593,
+        "tanpa_segmen_persen": 0.1875,
+        "kondisi_napas_ya_persen": 0.3542,
+        "demam_ya_persen": 0.3333,
+        "laki_laki_persen": 0.5208
+      },
+      {
+        "jenis": "FP",
+        "n": 677,
+        "skor_median": 0.2783,
+        "durasi_trim_median_s": 5.0,
+        "cough_detected_median": 0.974,
+        "tanpa_segmen_persen": 0.0547,
+        "kondisi_napas_ya_persen": 0.127,
+        "demam_ya_persen": 0.0871,
+        "laki_laki_persen": 0.6928
+      },
+      {
+        "jenis": "TN",
+        "n": 839,
+        "skor_median": 0.2152,
+        "durasi_trim_median_s": 3.048,
+        "cough_detected_median": 0.9756,
+        "tanpa_segmen_persen": 0.1681,
+        "kondisi_napas_ya_persen": 0.1085,
+        "demam_ya_persen": 0.0691,
+        "laki_laki_persen": 0.6591
+      }
+    ],
+    "korelasi_durasi": [
+      {
+        "model": "SVM (RBF)",
+        "kelas": "semua",
+        "rho_spearman_skor_vs_durasi": 0.4072,
+        "auc_durasi_saja": 0.518
+      },
+      {
+        "model": "SVM (RBF)",
+        "kelas": "healthy",
+        "rho_spearman_skor_vs_durasi": 0.4095,
+        "auc_durasi_saja": 0.518
+      },
+      {
+        "model": "CNN (log-mel)",
+        "kelas": "semua",
+        "rho_spearman_skor_vs_durasi": 0.6061,
+        "auc_durasi_saja": 0.518
+      },
+      {
+        "model": "CNN (log-mel)",
+        "kelas": "healthy",
+        "rho_spearman_skor_vs_durasi": 0.6076,
+        "auc_durasi_saja": 0.518
+      },
+      {
+        "model": "CNN (MFCC 2D)",
+        "kelas": "semua",
+        "rho_spearman_skor_vs_durasi": -0.0485,
+        "auc_durasi_saja": 0.518
+      },
+      {
+        "model": "CNN (MFCC 2D)",
+        "kelas": "healthy",
+        "rho_spearman_skor_vs_durasi": -0.0514,
+        "auc_durasi_saja": 0.518
+      }
+    ],
+    "selisih_subgrup": [
+      {
+        "model": "CNN (MFCC 2D)",
+        "variabel": "Demam / nyeri otot",
+        "min": 0.5411,
+        "max": 0.544,
+        "selisih": 0.0028
+      },
+      {
+        "model": "CNN (MFCC 2D)",
+        "variabel": "Gender",
+        "min": 0.526,
+        "max": 0.5717,
+        "selisih": 0.0457
+      },
+      {
+        "model": "CNN (MFCC 2D)",
+        "variabel": "Kelompok umur",
+        "min": 0.5156,
+        "max": 0.5595,
+        "selisih": 0.0439
+      },
+      {
+        "model": "CNN (MFCC 2D)",
+        "variabel": "Kondisi pernapasan",
+        "min": 0.5302,
+        "max": 0.5635,
+        "selisih": 0.0333
+      },
+      {
+        "model": "CNN (log-mel)",
+        "variabel": "Demam / nyeri otot",
+        "min": 0.5319,
+        "max": 0.563,
+        "selisih": 0.0311
+      },
+      {
+        "model": "CNN (log-mel)",
+        "variabel": "Gender",
+        "min": 0.5678,
+        "max": 0.5797,
+        "selisih": 0.012
+      },
+      {
+        "model": "CNN (log-mel)",
+        "variabel": "Kelompok umur",
+        "min": 0.4844,
+        "max": 0.6585,
+        "selisih": 0.174
+      },
+      {
+        "model": "CNN (log-mel)",
+        "variabel": "Kondisi pernapasan",
+        "min": 0.5465,
+        "max": 0.5846,
+        "selisih": 0.0381
+      },
+      {
+        "model": "SVM (RBF)",
+        "variabel": "Demam / nyeri otot",
+        "min": 0.5072,
+        "max": 0.5897,
+        "selisih": 0.0825
+      },
+      {
+        "model": "SVM (RBF)",
+        "variabel": "Gender",
+        "min": 0.5655,
+        "max": 0.5853,
+        "selisih": 0.0198
+      },
+      {
+        "model": "SVM (RBF)",
+        "variabel": "Kelompok umur",
+        "min": 0.475,
+        "max": 0.6306,
+        "selisih": 0.1556
+      },
+      {
+        "model": "SVM (RBF)",
+        "variabel": "Kondisi pernapasan",
+        "min": 0.5293,
+        "max": 0.5862,
+        "selisih": 0.0569
+      },
+      {
+        "model": "SVM (RBF) — B",
+        "variabel": "Demam / nyeri otot",
+        "min": 0.8262,
+        "max": 0.8384,
+        "selisih": 0.0122
+      },
+      {
+        "model": "SVM (RBF) — B",
+        "variabel": "Gender",
+        "min": 0.8026,
+        "max": 0.8615,
+        "selisih": 0.0588
+      },
+      {
+        "model": "SVM (RBF) — B",
+        "variabel": "Kelompok umur",
+        "min": 0.7143,
+        "max": 0.8722,
+        "selisih": 0.1579
+      },
+      {
+        "model": "SVM (RBF) — B",
+        "variabel": "Kondisi pernapasan",
+        "min": 0.8167,
+        "max": 0.8428,
+        "selisih": 0.0261
+      }
+    ]
+  },
+  "waktu_s": 83.3
+}

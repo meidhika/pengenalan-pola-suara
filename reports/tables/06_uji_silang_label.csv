@@ -1,0 +1,37 @@
+set_evaluasi,label_evaluasi,dilatih_dengan,model,n,n_pos,roc_auc,ci_low,ci_high
+S1: test B (label ahli),ahli,label self-reported (A),Logistic Regression,102,51,0.6820453671664745,0.5762838811995386,0.7843257653938768
+S1: test B (label ahli),ahli,label ahli (B),Logistic Regression,102,51,0.8742791234140715,0.797053484405458,0.9456109540121482
+S2: test A (label self-reported),self-reported,label self-reported (A),Logistic Regression,1554,79,0.57955803475649,0.5146937160326931,0.6445973878546112
+S2: test A (label self-reported),self-reported,label ahli (B),Logistic Regression,1554,79,0.5592018880068655,0.4997242976355804,0.6189753558580181
+S3: rekaman B tak terlihat model A — label ahli,ahli,label self-reported (A),Logistic Regression,251,106,0.5961613532856214,0.5283076629996847,0.6693575419666157
+S3: rekaman B tak terlihat model A — label self-reported,self-reported,label self-reported (A),Logistic Regression,251,34,0.5094876660341556,0.3909548083371802,0.61637147210113
+S1: test B (label ahli),ahli,label self-reported (A),SVM (RBF),102,51,0.673202614379085,0.5686189406318083,0.7792334307992203
+S1: test B (label ahli),ahli,label ahli (B),SVM (RBF),102,51,0.8958093041138024,0.8253737816764134,0.959772539211663
+S2: test A (label self-reported),self-reported,label self-reported (A),SVM (RBF),1554,79,0.5849645998712723,0.5230113638414203,0.6467580495724078
+S2: test A (label self-reported),self-reported,label ahli (B),SVM (RBF),1554,79,0.5446384895945077,0.48664806817966044,0.6039166882438947
+S3: rekaman B tak terlihat model A — label ahli,ahli,label self-reported (A),SVM (RBF),251,106,0.5738451528952504,0.5038030044429179,0.6477171507441338
+S3: rekaman B tak terlihat model A — label self-reported,self-reported,label self-reported (A),SVM (RBF),251,34,0.5412035782054757,0.4140182678245319,0.6464971344556537
+S1: test B (label ahli),ahli,label self-reported (A),k-NN,102,51,0.6111111111111112,0.49784789216334085,0.7210826324479751
+S1: test B (label ahli),ahli,label ahli (B),k-NN,102,51,0.839677047289504,0.7526807426210845,0.916830305929253
+S2: test A (label self-reported),self-reported,label self-reported (A),k-NN,1554,79,0.5758335121218623,0.5158452925346244,0.6384910275020427
+S2: test A (label self-reported),self-reported,label ahli (B),k-NN,1554,79,0.5742544518343704,0.5130115183637013,0.6375834534194551
+S3: rekaman B tak terlihat model A — label ahli,ahli,label self-reported (A),k-NN,251,106,0.5169486011711125,0.44176775402535073,0.5945288331374482
+S3: rekaman B tak terlihat model A — label self-reported,self-reported,label self-reported (A),k-NN,251,34,0.551030089455137,0.43749675844068364,0.660314152114355
+S1: test B (label ahli),ahli,label self-reported (A),Random Forest,102,51,0.7112648981161092,0.6074548953065388,0.8151766831551198
+S1: test B (label ahli),ahli,label ahli (B),Random Forest,102,51,0.887351018838908,0.8101416925465839,0.951787970901035
+S2: test A (label self-reported),self-reported,label self-reported (A),Random Forest,1554,79,0.5829478652649647,0.5214653407900124,0.6478693294275988
+S2: test A (label self-reported),self-reported,label ahli (B),Random Forest,1554,79,0.5607380390474147,0.500112845896552,0.6230011844787956
+S3: rekaman B tak terlihat model A — label ahli,ahli,label self-reported (A),Random Forest,251,106,0.6155497722836696,0.5502688091194181,0.6823798638347642
+S3: rekaman B tak terlihat model A — label self-reported,self-reported,label self-reported (A),Random Forest,251,34,0.49444293846570886,0.37528504901334975,0.5932937055080634
+S1: test B (label ahli),ahli,label self-reported (A),XGBoost,102,51,0.6720492118415994,0.5692274844720496,0.7684733756247597
+S1: test B (label ahli),ahli,label ahli (B),XGBoost,102,51,0.8742791234140715,0.7964154858299596,0.9442696484801747
+S2: test A (label self-reported),self-reported,label self-reported (A),XGBoost,1554,79,0.5710362583136666,0.5047386687611015,0.6385310425275116
+S2: test A (label self-reported),self-reported,label ahli (B),XGBoost,1554,79,0.5781849388543231,0.5181311482360922,0.6410768265951301
+S3: rekaman B tak terlihat model A — label ahli,ahli,label self-reported (A),XGBoost,251,106,0.5896551724137932,0.5235567201456987,0.6598117221978608
+S3: rekaman B tak terlihat model A — label self-reported,self-reported,label self-reported (A),XGBoost,251,34,0.531038221740309,0.420366568914956,0.6398606161320892
+S1: test B (label ahli),ahli,label self-reported (A),CNN (log-mel),102,51,0.6528258362168398,0.5411013645224172,0.7626965667311411
+S3: rekaman B tak terlihat model A — label ahli,ahli,label self-reported (A),CNN (log-mel),251,106,0.6517891997397528,0.5881903425457867,0.7190016920010014
+S3: rekaman B tak terlihat model A — label self-reported,self-reported,label self-reported (A),CNN (log-mel),251,34,0.48915695310382223,0.3759494134897361,0.5996549362959315
+S1: test B (label ahli),ahli,label self-reported (A),CNN (MFCC 2D),102,51,0.48942714340638216,0.37732452106484843,0.6119230769230769
+S3: rekaman B tak terlihat model A — label ahli,ahli,label self-reported (A),CNN (MFCC 2D),251,106,0.5181522446324007,0.4498190414487288,0.5898383198878144
+S3: rekaman B tak terlihat model A — label self-reported,self-reported,label self-reported (A),CNN (MFCC 2D),251,34,0.5158579560856601,0.4034139784946237,0.6352950126238835

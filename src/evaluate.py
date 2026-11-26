@@ -179,3 +179,80 @@ def load_results(experiment: str | None = None) -> pd.DataFrame:
     path = load_config().paths.tables / RESULTS_FILE
     df = pd.read_csv(path)
     return df if experiment is None else df[df["eksperimen"] == experiment].reset_index(drop=True)
+
+
+# ---------------------------------------------------------------------------
+# Uji DeLong (Tahap 6)
+# ---------------------------------------------------------------------------
+def _midrank(x: np.ndarray) -> np.ndarray:
+    """Peringkat tengah (rata-rata untuk nilai seri), 1-based."""
+    order = np.argsort(x, kind="mergesort")
+    xs = x[order]
+    n = len(x)
+    r = np.zeros(n)
+    i = 0
+    while i < n:
+        j = i
+        while j < n and xs[j] == xs[i]:
+            j += 1
+        r[i:j] = 0.5 * (i + j - 1) + 1
+        i = j
+    out = np.empty(n)
+    out[order] = r
+    return out
+
+
+def delong_test(y_true, score_a, score_b) -> dict:
+    """Uji DeLong (DeLong dkk., 1988; algoritma cepat Sun & Xu, 2014) untuk dua AUC berkorelasi.
+
+    Kedua skor dihitung pada rekaman yang SAMA. H0: AUC_A = AUC_B. Return: auc_a, auc_b, diff,
+    se, z, p (dua sisi), CI 95% selisih (pendekatan normal).
+    """
+    from scipy.stats import norm
+
+    y = np.asarray(y_true).astype(int)
+    S = np.vstack([np.asarray(score_a, float), np.asarray(score_b, float)])
+    pos, neg = S[:, y == 1], S[:, y == 0]
+    m, n = pos.shape[1], neg.shape[1]
+    k = S.shape[0]
+    tx = np.array([_midrank(pos[i]) for i in range(k)])
+    ty = np.array([_midrank(neg[i]) for i in range(k)])
+    tz = np.array([_midrank(np.concatenate([pos[i], neg[i]])) for i in range(k)])
+    aucs = tz[:, :m].sum(1) / (m * n) - (m + 1) / (2 * n)
+    v01 = (tz[:, :m] - tx) / n          # komponen struktural positif
+    v10 = 1 - (tz[:, m:] - ty) / m      # komponen struktural negatif
+    cov = np.cov(v01) / m + np.cov(v10) / n
+    var = cov[0, 0] + cov[1, 1] - 2 * cov[0, 1]
+    diff = float(aucs[0] - aucs[1])
+    se = float(np.sqrt(max(var, 1e-12)))
+    z = diff / se
+    return {"auc_a": float(aucs[0]), "auc_b": float(aucs[1]), "diff": diff, "se": se, "z": float(z),
+            "p": float(2 * norm.sf(abs(z))), "ci_low": diff - 1.96 * se, "ci_high": diff + 1.96 * se}
+
+
+def subgroup_metrics(y_true, y_score, groups, threshold: float, n_boot: int = 500, min_pos: int = 5,
+                     seed: int | None = None) -> pd.DataFrame:
+    """Metrik per subgrup (fairness): n, n_pos, AUC [CI 95%], sensitivitas, spesifisitas, precision.
+
+    AUC hanya dihitung bila subgrup punya ≥ `min_pos` positif dan ≥ `min_pos` negatif; selain itu NaN.
+    """
+    y = np.asarray(y_true).astype(int)
+    s = np.asarray(y_score, float)
+    g = pd.Series(np.asarray(groups)).astype(str).values
+    rows = []
+    for name in pd.unique(g):
+        mk = g == name
+        yy, ss = y[mk], s[mk]
+        r = {"subgrup": name, "n": int(mk.sum()), "n_pos": int(yy.sum()),
+             "prevalensi": float(yy.mean()) if mk.any() else np.nan}
+        if yy.sum() >= min_pos and (1 - yy).sum() >= min_pos:
+            r["roc_auc"] = roc_auc_score(yy, ss)
+            r["roc_auc_ci_low"], r["roc_auc_ci_high"] = bootstrap_ci(yy, ss, roc_auc_score, n_boot, seed=seed)
+        else:
+            r["roc_auc"] = r["roc_auc_ci_low"] = r["roc_auc_ci_high"] = np.nan
+        tm = threshold_metrics(yy, ss, threshold)
+        r.update({k: tm[k] for k in ["recall_sensitivity", "specificity", "precision"]})
+        if yy.sum() == 0:
+            r["recall_sensitivity"] = np.nan
+        rows.append(r)
+    return pd.DataFrame(rows)

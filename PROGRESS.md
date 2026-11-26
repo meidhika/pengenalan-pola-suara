@@ -8,6 +8,7 @@
 | 3. Ekstraksi fitur & visualisasi | ✅ Selesai | 2026-11-26 |
 | 4. Klasifikasi ML klasik (fitur tabular) | ✅ Selesai | 2026-11-26 |
 | 5. CNN ringan (fitur 2D, Eksperimen A) | ✅ Selesai | 2026-11-26 |
+| 6. Evaluasi komprehensif, perbandingan, analisis | ✅ Selesai | 2026-11-26 |
 
 ---
 
@@ -467,3 +468,67 @@ di Tahap 4 laporkan baseline "durasi saja" dan model tanpa fitur durasi.
 - CNN untuk Eksperimen B didukung (`--experiment B`) tetapi tidak dijalankan (prompt tahap 5 hanya A).
 - Augmentasi level waveform (noise, pitch shift, time stretch ala R2) tidak dikerjakan.
 - Kalibrasi probabilitas CNN rendah (pos_weight + undersampling) → hanya pakai dengan ambang dari val.
+
+
+---
+
+## Tahap 6 — Evaluasi komprehensif, perbandingan, dan analisis (tanpa training ulang)
+
+### File yang dihasilkan
+- `src/evaluate.py` — tambah `delong_test()` (DeLong, algoritma cepat Sun & Xu; dicek vs bootstrap berpasangan) dan
+  `subgroup_metrics()` (n, n_pos, AUC [CI bootstrap 500×] bila ≥ 5 pos & ≥ 5 neg, sens/spes/precision pada ambang val).
+- `src/analysis.py` (baru) — `load_scores()` (gabung skor ML + CNN seed 42), `final_table()`/`fmt_final_table()`,
+  `to_markdown()` (tanpa tabulate), `ml_predict()`/`cnn_predict()` (inferensi model tersimpan pada data eksperimen lain),
+  `seen_uuids()` (manifest train ∪ val), `add_subgroups()` (gender, kelompok umur <25/25–34/35–44/45–54/≥55,
+  respiratory_condition, fever_muscle_pain; kosong → "tidak diisi").
+- `src/plots.py` — `plot_score_distributions`, `plot_error_examples`, `plot_subgroup_forest`, `plot_cross_label`.
+- `scripts/06_evaluate_all.py` — langkah a–f, log `reports/logs/evaluate_all.log` + `evaluate_all_summary.json`
+  (+ `evaluate_all_console.txt`), opsi `--skip-cnn`. Run penuh ±80 s (CPU). Tidak ada `--limit` (tidak ada proses panjang).
+- `notebooks/06_evaluasi_akhir.ipynb` (dieksekusi; menampilkan tabel/figur + contoh `delong_test`), log `nb06_exec.log`.
+- `reports/tables/06_*`: `tabel_final_{A,B}` (.csv numerik, `_format.csv`, .md), `uji_signifikansi_auc` (.csv/.md),
+  `kesepakatan_label_B` (.csv/.md), `uji_silang_label` (.csv/.md), `distribusi_skor_A`, `contoh_fp_fn_A`,
+  `karakteristik_error_A` (.csv/.md), `korelasi_skor_durasi_A`, `subgrup_fairness` (.csv long, .md),
+  `subgrup_selisih_auc`, `perbandingan_literatur` (.csv/.md).
+- `reports/figures/06_*.png` (6): `roc_gabungan_A`, `uji_silang_label`, `distribusi_skor_A`, `contoh_fp_fn_A`,
+  `subgrup_svm_A`, `subgrup_cnn_logmel_A`.
+- `reports/ringkasan_hasil.md` (bahan utama Tahap 7), `reports/daftar_figur_tabel.md` (Gambar 1–41, Tabel 1–18,
+  kolom "Inti" = saran masuk badan laporan).
+
+### Keputusan
+- "Model terbaik" ditandai dua cara: ★ = AUC val tertinggi (kriteria seleksi yang ditetapkan sebelumnya) dan ▲ = AUC
+  test tertinggi (informasi). Untuk A: ★ = CNN (MFCC 2D) seed 42 (val 0,580, test 0,544), ▲ = k-NN (0,580).
+  ML terbaik menurut val tetap SVM (RBF) → dipakai sebagai "ML terbaik" di ROC gabungan, analisis error & subgrup.
+- Uji signifikansi: dua model teratas menurut AUC test + pasangan kunci (SVM vs CNN, SVM vs dummy; B: dua teratas, vs dummy).
+- Uji silang: dari set evaluasi dibuang uuid **manifest train ∪ val** model sumber (yang benar-benar dilihat model;
+  rekaman healthy yang terbuang undersampling tidak pernah dipakai). Versi pertama memakai populasi split penuh
+  (S1 hanya 79 rekaman) → diganti.
+  S1 = test B tanpa uuid A (n = 102, 51 COVID ahli); S2 = test A tanpa uuid B (n = 1.554, 79 COVID);
+  S3 = semua rekaman B yang tak dilihat model A dan punya status biner (n = 251) → prediksi identik dinilai dengan dua label.
+  CNN A ikut diuji di S1/S3 (normalisasi dari statistik train A di checkpoint). CNN B tidak ada (tidak dilatih).
+- Contoh FP/FN = 3 kesalahan paling yakin SVM (skor tertinggi pada healthy / terendah pada COVID-19).
+- Tabel literatur: angka diekstrak dari PDF `references/` (pdftotext, dengan nomor halaman). R0 tidak ada PDF-nya → "lihat paper".
+
+### Hasil utama
+- **Tabel final A (test):** semua AUC 0,544–0,580; PR-AUC 0,081–0,097 (prevalensi 0,067); precision 0,07–0,09.
+- **Signifikansi (DeLong / bootstrap):** k-NN − SVM +0,004 (p 0,87); SVM − CNN log-mel +0,009 (p 0,70);
+  SVM − CNN MFCC +0,032 (p 0,39); **SVM − dummy +0,060 (p 0,12, tidak bermakna)**. B: SVM − RF +0,009 (p 0,62);
+  SVM − dummy +0,339 (p < 0,001).
+- **Kesepakatan label** (manifest B, 572 rekaman dengan status biner): 50,3%, **κ = 0,00**; hanya 43% yang mengaku
+  COVID-19 dinilai COVID-19 oleh ahli.
+- **Uji silang (SVM):** S1: model B 0,896 vs model A 0,673 (ML A 0,61–0,71; CNN log-mel 0,653; CNN MFCC 0,489);
+  S2: model A 0,585 vs model B 0,545 (B semua 0,55–0,58); S3: model A vs label ahli 0,574, vs self-reported 0,541.
+  Catatan: label ahli = penilaian dari mendengar audio yang sama (bukan PCR) → "konsisten akustik" secara konstruksi.
+- **Error:** skor sempit (SVM median healthy 0,242 vs COVID 0,254). FP: median durasi 5,0 s (TN 3,0 s); FN: banyak
+  rekaman sangat pendek (0,8–1,0 s). Spearman skor–durasi: SVM 0,41, CNN log-mel 0,61, CNN MFCC −0,05; durasi saja AUC 0,518.
+- **Subgrup (SVM A):** demam ya 0,507 vs tidak 0,590; kondisi napas ya 0,529 vs tidak 0,586; umur ≥ 55 0,475,
+  35–44 0,631; female 0,585, male 0,565. Prevalensi COVID-19 di subgrup demam 0,23 vs 0,05 → gejala *confounder*.
+  Semua CI subgrup lebar (12–73 positif).
+- **Literatur:** R2/R3 memakai Cambridge COVID-19 Sounds (multimodal; accuracy/F1 91–95%; tanpa AUC; tidak per subjek);
+  R4 memakai data call-centre MedInGroup (RF AUC 0,83 PCR vs 0,79 self-reported). Tidak ada yang memakai COUGHVID.
+
+### TODO (cek manual oleh pengguna)
+- `06_perbandingan_literatur.md`: semua sel bertanda **[TODO: cek manual]** —
+  R0 (PDF tidak ada; isi "lihat paper"), R2 (sumber label; label tugas Tabel 2–5 tidak konsisten),
+  R3 (1.541 file vs ±13.000 sampel), R4 (Tabel 2 vs kalimat "selisih 0,02–0,10" di hlm. 4).
+- Opsional: Eksperimen C (`status_SSL`), kalibrasi probabilitas, fitur per segmen batuk, CNN untuk B.
+
