@@ -527,3 +527,56 @@ def plot_cross_label(df: pd.DataFrame, title: str = ""):
     ax.legend(fontsize=8, title="Model dilatih dengan", title_fontsize=8, loc="upper right")
     fig.tight_layout()
     return fig
+
+
+# ---------------------------------------------------------------------------
+# Tahap 7 — diagram alur penelitian (pipeline slide 10)
+# ---------------------------------------------------------------------------
+def plot_research_flow():
+    """Diagram alur penelitian: akuisisi → preprocessing → fitur → klasifikasi → evaluasi.
+
+    Tiap tahap utama digambar sebagai kotak berwarna dengan rincian langkah di bawahnya.
+    """
+    from matplotlib.patches import FancyBboxPatch
+
+    tahap = [
+        ("1. Akuisisi", "#257de0",
+         ["COUGHVID v3 (34.434 rekaman)", "webm / ogg / wav", "metadata + label ahli",
+          "filter cough_detected ≥ 0,8", "Label A: self-reported", "Label B: diagnosis ahli"]),
+        ("2. Preprocessing", "#00a37a",
+         ["split 70/15/15 per uuid", "ffmpeg → WAV 16 kHz,", "  mono, PCM 16-bit",
+          "trimming (top_db 30)", "segmentasi batuk (RMS)", "reduksi noise + normalisasi"]),
+        ("3. Ekstraksi fitur", "#f47230",
+         ["Tabular (315 fitur):", "  RMS, ZCR, spektral, pitch,", "  MFCC ±Δ/ΔΔ, GFCC",
+          "2D (input CNN):", "  log-mel 64 pita,", "  MFCC-2D 40 koef."]),
+        ("4. Klasifikasi", "#8e44ad",
+         ["ML klasik: LR, SVM RBF,", "  k-NN, RF, XGBoost", "imbalance: class weight / SMOTE",
+          "LightCNN (97.521 param.)", "  + SpecAugment, pos_weight", "tuning CV pada train"]),
+        ("5. Evaluasi", "#c0392b",
+         ["ambang Youden (val)", "test dievaluasi sekali", "ROC-AUC [CI 95%], PR-AUC",
+          "sens., spes., F1", "DeLong, uji silang label", "analisis error & subgrup"]),
+    ]
+    fig, ax = plt.subplots(figsize=(15, 5.2))
+    ax.set_xlim(0, 15)
+    ax.set_ylim(0, 5.2)
+    ax.axis("off")
+    w, gap, x0 = 2.6, 0.45, 0.15
+    for i, (judul, warna, rinci) in enumerate(tahap):
+        x = x0 + i * (w + gap)
+        ax.add_patch(FancyBboxPatch((x, 4.0), w, 0.85, boxstyle="round,pad=0.02,rounding_size=0.12",
+                                    fc=warna, ec="none"))
+        ax.text(x + w / 2, 4.425, judul, ha="center", va="center", fontsize=13, color="white",
+                fontweight="bold")
+        ax.add_patch(FancyBboxPatch((x, 0.35), w, 3.45, boxstyle="round,pad=0.02,rounding_size=0.12",
+                                    fc="#f6f7f9", ec=warna, lw=1.5))
+        for j, baris in enumerate(rinci):
+            ax.text(x + 0.12, 3.5 - j * 0.53, baris, ha="left", va="center", fontsize=9.6,
+                    color="#222222")
+        if i < len(tahap) - 1:
+            ax.annotate("", xy=(x + w + gap - 0.04, 4.425), xytext=(x + w + 0.04, 4.425),
+                        arrowprops=dict(arrowstyle="-|>", lw=2.2, color="#444444", mutation_scale=18))
+    ax.text(7.5, 0.08, "Anti-leakage: split dilakukan sebelum undersampling, SMOTE, augmentasi, scaling, "
+            "dan seleksi fitur (semua di-fit pada train).", ha="center", va="center", fontsize=9.5,
+            style="italic", color="#555555")
+    fig.tight_layout()
+    return fig

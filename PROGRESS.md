@@ -9,6 +9,7 @@
 | 4. Klasifikasi ML klasik (fitur tabular) | ✅ Selesai | 2026-11-26 |
 | 5. CNN ringan (fitur 2D, Eksperimen A) | ✅ Selesai | 2026-11-26 |
 | 6. Evaluasi komprehensif, perbandingan, analisis | ✅ Selesai | 2026-11-26 |
+| 7a. Draf laporan per bab (Markdown) | ✅ Selesai | 2026-11-26 |
 
 ---
 
@@ -532,3 +533,53 @@ di Tahap 4 laporkan baseline "durasi saja" dan model tanpa fitur durasi.
   R3 (1.541 file vs ±13.000 sampel), R4 (Tabel 2 vs kalimat "selisih 0,02–0,10" di hlm. 4).
 - Opsional: Eksperimen C (`status_SSL`), kalibrasi probabilitas, fitur per segmen batuk, CNN untuk B.
 
+
+
+---
+
+## Tahap 7a — Draf laporan per bab (Markdown) — `reports/final/draft/`
+
+### Status bab
+| File | Status |
+|---|---|
+| `reports/figures/07_alur_penelitian.png` (diagram, `scripts/07_diagram_alur.py`) | ✅ |
+| `01_pendahuluan.md` | ✅ |
+| `02_tinjauan_pustaka.md` | ✅ |
+| `03_metodologi.md` | ✅ |
+| `04_hasil_dan_pembahasan.md` | ✅ |
+| `05_kesimpulan.md` | ✅ |
+| `00_abstrak.md` (ID 182 kata + EN 208 kata) | ✅ |
+| `06_daftar_pustaka.md` (IEEE, 38 referensi, dibuat otomatis) | ✅ |
+| `07_lampiran.md` | ✅ |
+
+### File yang dihasilkan
+- `reports/final/draft/00_abstrak.md … 07_lampiran.md` — **versi bernomor** (sitasi [1], [2], …; siap untuk Tahap 7b).
+- `reports/final/draft/_kunci/*.md` — **sumber berkunci** (`[@kunci]`). **Edit di sini**, lalu jalankan
+  `python scripts/07_sitasi.py` → menomori ulang sitasi (urutan kemunculan pertama) + membuat ulang `06_daftar_pustaka.md`.
+- `scripts/07_sitasi.py` (dict `IEEE` = entri daftar pustaka), `scripts/07_diagram_alur.py` +
+  `src/plots.py::plot_research_flow()` → `reports/figures/07_alur_penelitian.png`.
+- `references/references.bib`: penulis lengkap R4 diperbaiki (dari PDF).
+
+### Konvensi draf (untuk Tahap 7b)
+- Penomoran laporan **berbeda** dari `daftar_figur_tabel.md`: badan laporan memakai Gambar 1–23 dan Tabel 1–19
+  (Bab II–IV), lampiran Tabel L1–L4 + daftar gambar tambahan (Lampiran D, tanpa nomor).
+- Gambar: baris `![alt](../../figures/xxx.png)` diikuti baris caption tebal `**Gambar n.** …` (caption di bawah).
+  Tabel: caption tebal `**Tabel n.** …` di atas tabel Markdown; komentar `<!-- sumber: reports/tables/... -->` di
+  bawah tiap tabel menunjuk CSV asal (untuk render ulang dari CSV di 7b).
+- Rumus dalam LaTeX (`$…$`, `$$…$$`) → perlu pandoc (atau konversi OMML) di 7b.
+- Angka di teks/tabel memakai koma desimal (gaya Indonesia), 3 desimal sesuai CSV.
+
+### Keputusan
+- Angka hasil hanya dari `reports/tables/` dan PROGRESS (yang bersumber dari tabel/log). Angka literatur dari PDF
+  `references/` (R1 untuk Laguarta: **akurasi 97,1%**, bukan AUC).
+- Referensi tambahan (teori, algoritma, uji statistik, pustaka librosa/scikit-learn/PyTorch/imblearn/XGBoost/spafe/
+  noisereduce) ditambahkan dari pengetahuan umum → **verifikasi detail bibliografinya** (volume/halaman).
+- Pembagian tugas di Lampiran E adalah usulan (3 anggota) dengan placeholder `[NAMA ANGGOTA]` dan `[NIM]`.
+
+### TODO / cek manual oleh pengguna
+1. Isi `[NAMA ANGGOTA]` dan `[NIM]` (Lampiran E); sesuaikan pembagian tugas/jumlah anggota.
+2. Referensi `sela2026materi` (materi kuliah): lengkapi nama institusi/tahun bila perlu.
+3. Verifikasi entri IEEE non-R0–R4 di `scripts/07_sitasi.py` (terutama spafe/JOSS 2023, noisereduce/Sainburg 2020).
+4. Angka literatur yang di Tahap 6 bertanda [TODO: cek manual] dipakai di Tabel 1 & 19: R2 (label & akurasi
+   batuk saja 93,12%), R3 (jumlah data), R4 (RF 0,83 vs 0,79). R0 tidak ada PDF-nya (hanya fakta dari data kita + R1).
+5. Tahap 7b: konversi ke .docx (sampul, TOC, daftar gambar/tabel, render tabel dari CSV).
