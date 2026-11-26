@@ -1,0 +1,6 @@
+status,COVID-19,healthy_cough,lower_infection,obstructive_disease,upper_infection,All
+(kosong),80,115,84,18,95,392
+COVID-19,161,212,165,56,216,810
+healthy,172,217,172,52,258,871
+symptomatic,236,202,311,88,314,1151
+All,649,746,732,214,883,3224

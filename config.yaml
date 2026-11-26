@@ -1,0 +1,24 @@
+# Konfigurasi proyek PPKB — klasifikasi suara batuk COVID-19 (COUGHVID v3)
+# Semua path relatif terhadap root proyek.
+
+paths:
+  root: "."
+  dataset_zip: "The COUGHVID crowdsourcing dataset.zip"
+  raw: "data/raw"
+  interim: "data/interim"
+  processed: "data/processed"
+  features: "data/features"
+  models: "models"
+  figures: "reports/figures"
+  tables: "reports/tables"
+  logs: "reports/logs"
+  final: "reports/final"
+
+seed: 42
+
+audio:
+  sample_rate: 16000        # Hz, target resampling
+  max_duration_s: 10        # durasi maksimum rekaman (detik)
+
+data:
+  cough_detected_threshold: 0.8   # rekomendasi penulis dataset (Orlandic dkk., 2021)

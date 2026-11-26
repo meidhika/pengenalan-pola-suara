@@ -1,0 +1,21 @@
+Ringkasan ekstraksi COUGHVID — 2026-11-26 16:12:26
+Sumber : D:\Meidhika\Lecturer\project-kuliah\PPKB\The COUGHVID crowdsourcing dataset.zip
+Tujuan : D:\Meidhika\Lecturer\project-kuliah\PPKB\data\raw
+
+[ZIP] The COUGHVID crowdsourcing dataset.zip: 68869 file
+    .json    34434
+    .webm    29348
+    .wav     3309
+    .ogg     1777
+    .csv     1
+
+Statistik: {'skip': 50, 'extracted': 68819}
+
+Isi data/raw/ setelah ekstraksi:
+    .json    34434
+    .webm    29348
+    .wav     3309
+    .ogg     1777
+    .csv     1
+Total file audio (.webm/.ogg/.wav): 34434
+metadata_compiled.csv: ['data\\raw\\coughvid_20211012\\metadata_compiled.csv']
