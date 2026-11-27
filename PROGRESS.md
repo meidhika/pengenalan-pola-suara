@@ -1,5 +1,8 @@
 # PROGRESS — Proyek PPKB (COUGHVID)
 
+> **STATUS PROYEK: ✅ SELESAI (2026-11-27).** Semua tahap 1–8 selesai. Paket pengumpulan ada di `submission/`.
+> Sisa pekerjaan hanya pengisian/cek manual oleh kelompok — lihat **Tahap 8 → Checklist pengumpulan**.
+
 ## Status tahap
 | Tahap | Status | Tanggal |
 |---|---|---|
@@ -10,6 +13,8 @@
 | 5. CNN ringan (fitur 2D, Eksperimen A) | ✅ Selesai | 2026-11-26 |
 | 6. Evaluasi komprehensif, perbandingan, analisis | ✅ Selesai | 2026-11-26 |
 | 7a. Draf laporan per bab (Markdown) | ✅ Selesai | 2026-11-26 |
+| 7b. Laporan Word + PDF | ✅ Selesai | 2026-11-26 |
+| 8. Slide, demo, README, QA, paket pengumpulan | ✅ Selesai | 2026-11-27 |
 
 ---
 
@@ -622,3 +627,65 @@ di Tahap 4 laporkan baseline "durasi saja" dan model tanpa fitur durasi.
 2. Tambahkan nama universitas/logo di sampul bila diwajibkan.
 3. Butir TODO Tahap 7a masih berlaku (verifikasi entri pustaka non-R0–R4, angka literatur bertanda cek manual).
 4. Jika dokumen diedit manual di Word: klik kanan daftar isi/gambar/tabel → *Update Field* → *Update entire table*.
+
+
+---
+
+## Tahap 8 — Slide presentasi, demo, README, QA, dan paket pengumpulan
+
+### File yang dihasilkan
+- `scripts/08_buat_slide.py` → `reports/final/Presentasi_COUGHVID_Kelompok.pptx` (python-pptx, 16:9, **15 slide**,
+  Cambria/Calibri, navy `#102A3C` + oranye/biru = warna kelas COVID-19/healthy di figur). Motif: label tahap
+  pipeline (pill) di tiap slide konten + ilustrasi "gelombang batuk" di slide judul & penutup.
+  Urutan: judul & anggota → latar belakang → rumusan masalah & tujuan → dataset → alur (07_alur_penelitian) →
+  preprocessing (before/after) → representasi suara → fitur & uji statistik → model → hasil A (tabel dari
+  `06_tabel_final_A.csv` + ROC) → Eksp. B / keandalan label → analisis error & subgrup → literatur →
+  kesimpulan & saran → terima kasih/Q&A. **Speaker notes** Bahasa Indonesia tiap slide (97–127 kata ≈ 50–65 s pada
+  ±115 kata/menit; dengan jeda dan menunjuk grafik ±60–90 s). Lolos `validate.py` skill pptx; dicek visual (render
+  PowerPoint) — teks tidak terpotong/bertumpuk.
+- `scripts/predict.py` — demo inferensi 1+ file audio (format apa pun yang didukung ffmpeg) → preprocessing a–e +
+  315 fitur yang sama → P(COVID-19) + label (ambang Youden dari val). Default **SVM Eksperimen A** (ML terbaik menurut
+  AUC val); opsi `--eksperimen B`, `--algo`, `--semua`, `--json`. Disclaimer "bukan alat diagnosis medis" di awal
+  keluaran. File sementara di temp sistem (tidak menulis ke `data/`). Audio senyap/terlalu pendek ditolak (exit 1).
+  **Diverifikasi**: 6 rekaman test (3 COVID, 3 healthy) dari file mentah → skor SVM & RF identik dengan skor test
+  tersimpan (selisih maks 4,7·10⁻⁵ = pembulatan). `app_demo.py` (Gradio) **tidak dibuat** — gradio tidak terpasang
+  dan opsional.
+- `scripts/08_qa_final.py` → `reports/logs/qa_final.md` — **158/158 pemeriksaan lulus** (leakage + konsistensi angka).
+- `README.md` (deskripsi, hasil, struktur, instalasi, urutan 01→06, reproduksi, demo, lisensi CC BY 4.0 + sitasi).
+- `requirements-lock.txt` (`pip freeze`, 154 paket + baris `--extra-index-url` PyTorch CPU agar bisa langsung diinstal).
+- `submission/`: `Laporan_COUGHVID_Kelompok.docx`, `.pdf`, `Presentasi_COUGHVID_Kelompok.pptx`,
+  `Kode_COUGHVID_Kelompok.zip` (5,4 MB, 35 file: src, scripts, notebooks, config.yaml, README, requirements,
+  requirements-lock, references.bib, ringkasan_hasil.md, qa_final.md; **tanpa** data/, models/, .venv).
+  `submission/` dimasukkan ke `.gitignore` (salinan hasil build).
+
+### QA
+1. **Notebook 01–06 dieksekusi ulang** (`nbconvert --execute --inplace`, kernel ppkb): 0 error, total ±3,2 menit
+   (log `reports/logs/nb_final_exec.log`). Semua tabel `reports/tables/` dan figur `reports/figures/` yang ditulis ulang
+   **identik byte-per-byte** dengan versi commit (git tidak mendeteksi perubahan) → hasil reprodusibel.
+2. **Leakage** (otomatis): uuid train/val/test saling lepas (splits & manifest A/B); val/test tidak di-undersample
+   (prevalensi alami); fitur tabular & array 2D = manifest per split; 12 pipeline ML: scaler → SelectKBest → [SMOTE] →
+   clf di dalam satu pipeline imblearn (di-fit hanya pada train; SMOTE tidak berlaku saat predict); ambang dari val;
+   normalisasi CNN di checkpoint = statistik train saja (selisih 0 vs train; 0,06–0,12 vs train+val); augmentasi hanya
+   `SpecDataset(train=True)`; uji silang S1/S2 tanpa uuid train/val model sumber. Code review `04_train_ml.py` /
+   `05_train_cnn.py` mengonfirmasi tuning CV hanya di train.
+3. **Konsistensi angka**: 111 angka kunci dari CSV (tabel final A/B semua model, CI, PR-AUC, sens/spes, p DeLong,
+   kesepakatan label, uji silang, median skor, Spearman, subgrup, jumlah fitur, parameter, populasi) ditemukan di
+   laporan .docx dan/atau slide sesuai harapan. Slide tabel hasil dibaca langsung dari CSV.
+   Minor: `06_perbandingan_literatur.csv` menyebut B = 1.013 rekaman (sebelum preprocessing; 2 dibuang) — laporan & slide
+   memakai 1.011 (470/541) yang benar; CSV dibiarkan.
+
+### Checklist pengumpulan
+- [x] Laporan `.docx` + `.pdf` (64 halaman) — `submission/`
+- [x] Slide `.pptx` (15 slide + speaker notes) — `submission/`
+- [x] Zip kode tanpa data/.venv — `submission/Kode_COUGHVID_Kelompok.zip`
+- [x] README, requirements.txt, requirements-lock.txt
+- [x] Notebook dieksekusi ulang tanpa error; QA leakage & angka lulus
+- [ ] Isi `[NAMA ANGGOTA]` / `[NIM]`: sampul laporan + Tabel L4 (lewat `_kunci/07_lampiran.md` & `sampul()` di
+      `scripts/07b_buat_docx.py` → build ulang), slide 1 (`scripts/08_buat_slide.py`), tabel anggota di README;
+      nama kelompok di speaker notes slide 1 (`[nama kelompok]`)
+- [ ] Nama universitas/logo di sampul & slide judul bila diwajibkan
+- [ ] Verifikasi entri pustaka non-R0–R4 dan angka literatur bertanda [TODO: cek manual] (R2 93,12%, R3 jumlah data,
+      R4 0,83 vs 0,79) — dipakai juga di slide 2 & 13
+- [ ] Setelah mengedit: `python scripts/07b_buat_docx.py`, `python scripts/08_buat_slide.py`,
+      `python scripts/08_qa_final.py`, lalu salin ulang ke `submission/` (dan buat ulang zip)
+- [ ] Latihan presentasi dengan speaker notes (target ±15 menit) dan uji demo `predict.py` di laptop presentasi
