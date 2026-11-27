@@ -206,7 +206,8 @@ def sampul() -> str:
         div("Sampul Tebal", "Enny Itje Sela"),
         div("Sampul Jarak", "&nbsp;"),
         div("Sampul Teks", "Disusun oleh:"),
-        div("Sampul Tebal", "[NAMA ANGGOTA] — [NIM]\\\n[NAMA ANGGOTA] — [NIM]\\\n[NAMA ANGGOTA] — [NIM]"),
+        div("Sampul Tebal", "Meidhika Nawa Sapta — 6250211011\\\nAri Risnanto — 6250211006\\\n"
+                            "Roslilie Simbulan — 6250211001"),
         div("Sampul Jarak", "&nbsp;\n\n&nbsp;\n\n&nbsp;"),
         div("Sampul Tebal", "PROGRAM STUDI MAGISTER TEKNOLOGI INFORMASI"),
         div("Sampul Tebal", "2026"),

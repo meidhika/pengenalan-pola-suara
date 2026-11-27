@@ -131,8 +131,8 @@ pulmonolog), `01_missing_per_kolom.png`, `02_langkah_preprocessing_healthy.png`,
 
 | No. | Nama | NIM | Tugas |
 |---|---|---|---|
-| 1 | [NAMA ANGGOTA] | [NIM] | Akuisisi data, *preprocessing*, ekstraksi fitur (Tahap 1–3) |
-| 2 | [NAMA ANGGOTA] | [NIM] | Klasifikasi ML klasik & CNN (Tahap 4–5) |
-| 3 | [NAMA ANGGOTA] | [NIM] | Evaluasi, analisis, penyusunan laporan & presentasi (Tahap 6–7) |
+| 1 | Meidhika Nawa Sapta | 6250211011 | Akuisisi data, *preprocessing*, ekstraksi fitur (Tahap 1–3) |
+| 2 | Ari Risnanto | 6250211006 | Klasifikasi ML klasik & CNN (Tahap 4–5) |
+| 3 | Roslilie Simbulan | 6250211001 | Evaluasi, analisis, penyusunan laporan & presentasi (Tahap 6–7) |
 
 *Catatan: pembagian tugas di atas adalah usulan dan dapat disesuaikan oleh kelompok.*

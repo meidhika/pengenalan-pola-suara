@@ -260,15 +260,17 @@ text(s, M, 1.35, 8.2, 2.0, "Klasifikasi Suara Batuk untuk Skrining COVID-19", si
      font=F_JUDUL, line_spacing=0.95)
 text(s, M, 3.25, 7.8, 0.9, "Ekstraksi fitur MFCC–GFCC serta perbandingan machine learning klasik dan CNN ringan "
      "pada dataset COUGHVID v3", size=18, color=ES)
+ANGGOTA = [("Meidhika Nawa Sapta", "6250211011"), ("Ari Risnanto", "6250211006"),
+           ("Roslilie Simbulan", "6250211001")]
 anggota = [[("Disusun oleh", {"bold": True, "color": ORANYE, "size": 13})]] + \
-          [[("[NAMA ANGGOTA] — [NIM]", {})] for _ in range(3)]
+          [[(f"{n} — {m}", {})] for n, m in ANGGOTA]
 text(s, M, 4.55, 6, 1.6, anggota, size=16, color=PUTIH, space_after=3)
 text(s, M, 6.45, 9, 0.4, "Dosen pengampu: Enny Itje Sela · Magister Teknologi Informasi · 2026", size=13, color=ES)
 waveform_motif(s, 8.95, 1.6, 3.8, 3.6)
 text(s, 8.95, 5.35, 3.8, 0.4, "rekaman batuk = sinyal nonperiodik", size=12, color=ES, italic=True,
      align=PP_ALIGN.CENTER)
 notes(s, """
-Assalamualaikum dan selamat pagi. Kami dari kelompok [nama kelompok] akan mempresentasikan tugas kasus pengenalan
+Assalamualaikum dan selamat pagi. Kami, Meidhika Nawa Sapta, Ari Risnanto, dan Roslilie Simbulan, akan mempresentasikan tugas kasus pengenalan
 pola suara, yaitu klasifikasi suara batuk untuk skrining COVID-19 menggunakan dataset COUGHVID versi 3.
 Penelitian ini mengikuti lima tahap pipeline pengenalan pola suara dari materi pertemuan delapan: akuisisi,
 preprocessing, ekstraksi fitur, klasifikasi, dan evaluasi. Kami membandingkan model machine learning klasik pada

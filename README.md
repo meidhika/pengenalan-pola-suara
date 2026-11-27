@@ -178,6 +178,6 @@ Referensi utama lain (R1–R4) ada di `references/references.bib` dan Daftar Pus
 
 | Nama | NIM |
 |---|---|
-| [NAMA ANGGOTA] | [NIM] |
-| [NAMA ANGGOTA] | [NIM] |
-| [NAMA ANGGOTA] | [NIM] |
+| Meidhika Nawa Sapta | 6250211011 |
+| Ari Risnanto | 6250211006 |
+| Roslilie Simbulan | 6250211001 |

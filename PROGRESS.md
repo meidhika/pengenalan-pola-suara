@@ -680,9 +680,10 @@ di Tahap 4 laporkan baseline "durasi saja" dan model tanpa fitur durasi.
 - [x] Zip kode tanpa data/.venv — `submission/Kode_COUGHVID_Kelompok.zip`
 - [x] README, requirements.txt, requirements-lock.txt
 - [x] Notebook dieksekusi ulang tanpa error; QA leakage & angka lulus
-- [ ] Isi `[NAMA ANGGOTA]` / `[NIM]`: sampul laporan + Tabel L4 (lewat `_kunci/07_lampiran.md` & `sampul()` di
-      `scripts/07b_buat_docx.py` → build ulang), slide 1 (`scripts/08_buat_slide.py`), tabel anggota di README;
-      nama kelompok di speaker notes slide 1 (`[nama kelompok]`)
+- [x] Nama & NIM anggota diisi (2026-11-27): Meidhika Nawa Sapta (6250211011), Ari Risnanto
+      (6250211006), Roslilie Simbulan (6250211001) — sampul, Tabel L4, slide 1 + notes, README. Laporan, slide,
+      QA (158/158) dan `submission/` dibuat ulang; `predict.py` diuji ulang. Pembagian tugas di Tabel L4 masih
+      usulan (urutan anggota = urutan yang diberikan) — sesuaikan bila perlu.
 - [ ] Nama universitas/logo di sampul & slide judul bila diwajibkan
 - [ ] Verifikasi entri pustaka non-R0–R4 dan angka literatur bertanda [TODO: cek manual] (R2 93,12%, R3 jumlah data,
       R4 0,83 vs 0,79) — dipakai juga di slide 2 & 13
