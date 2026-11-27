@@ -145,6 +145,26 @@ test tersimpan, selisih < 10⁻⁴), lalu menampilkan probabilitas P(COVID-19) d
 validasi. Format apa pun yang dapat didekode ffmpeg (wav, webm, ogg, mp3, m4a, …) dapat dipakai. Probabilitasnya
 tidak terkalibrasi, jadi bandingkan dengan ambang, bukan dengan 0,5. **Bukan alat diagnosis medis.**
 
+### Dashboard Streamlit (unggah file / rekam langsung)
+
+```powershell
+pip install "streamlit>=1.40"          # sekali saja (sudah tercantum di requirements.txt)
+.venv\Scripts\streamlit run app_streamlit.py
+```
+
+Buka `http://localhost:8501`. Suara batuk dapat **diunggah** (wav/webm/ogg/mp3/m4a/flac/opus) atau **direkam
+langsung** lewat mikrofon browser (izinkan akses mikrofon; browser hanya mengizinkan mikrofon pada `localhost`
+atau HTTPS). Dashboard menampilkan:
+
+- prediksi model utama (pilih di sidebar; default SVM Eksperimen A) beserta ambang Youden, dan tabel skor
+  **12 model** (5 ML × Eksperimen A/B + 2 CNN Eksperimen A) dengan ringkasan konsensus;
+- hasil preprocessing (durasi, trim, segmen batuk, audio sebelum/sesudah) dengan waveform;
+- spektrogram STFT, log-mel, spektrum FFT, MFCC, energi & ZCR, Grad-CAM CNN, dan vektor 315 fitur (bisa diunduh);
+- tabel performa data uji dan kurva ROC dari `reports/`.
+
+Logika inferensi ada di `src/inference.py` (preprocessing & fitur identik dengan training; skor CNN dari file
+mentah identik dengan skor test tersimpan, selisih ≤ 6·10⁻⁸).
+
 ## Keterbatasan
 
 Label *self-reported* tanpa PCR; tidak ada ID subjek (split per rekaman); variasi mikrofon dan lingkungan

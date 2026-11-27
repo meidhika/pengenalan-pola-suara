@@ -28,3 +28,4 @@ python-docx>=1.1
 python-pptx>=0.6.23
 pypandoc_binary>=1.13          # pandoc bawaan untuk Tahap 7b (Markdown → docx, rumus → OMML)
 docx2pdf>=0.1.8 ; sys_platform == "win32"   # menarik pywin32 (Word COM: update TOC + ekspor PDF)
+streamlit>=1.40              # dashboard demo (app_streamlit.py; st.audio_input)

@@ -690,3 +690,44 @@ di Tahap 4 laporkan baseline "durasi saja" dan model tanpa fitur durasi.
 - [ ] Setelah mengedit: `python scripts/07b_buat_docx.py`, `python scripts/08_buat_slide.py`,
       `python scripts/08_qa_final.py`, lalu salin ulang ke `submission/` (dan buat ulang zip)
 - [ ] Latihan presentasi dengan speaker notes (target ±15 menit) dan uji demo `predict.py` di laptop presentasi
+
+---
+
+## Tambahan — Dashboard Streamlit (2026-11-27)
+
+### File yang dihasilkan
+- `src/inference.py` — logika inferensi audio di luar dataset: `preprocess_stages` (langkah a–e, mengembalikan sinyal
+  tiap tahap untuk visualisasi), `tabular_features`, `load_ml`/`predict_ml`, `load_cnn`/`cnn_input`/`predict_cnn`
+  (log-mel/MFCC 2D → *time pool* 2 → standardisasi per pita dgn statistik train dari checkpoint → LightCNN, opsional
+  Grad-CAM). `scripts/predict.py` tidak diubah.
+- `app_streamlit.py` (root) — dashboard: input **unggah file** atau **rekam langsung** (`st.audio_input`, 16 kHz);
+  model utama dipilih di sidebar (default SVM A); tabel skor 12 model (5 ML × A/B + CNN log-mel & MFCC 2D A) +
+  konsensus; preprocessing (durasi, trim, segmen, audio sebelum/sesudah, waveform); tab fitur (STFT, log-mel, FFT,
+  MFCC, energi/ZCR, Grad-CAM, vektor 315 fitur + unduh CSV); tab performa (tabel final A/B + ROC) & tab pipeline.
+  Disclaimer "bukan alat diagnosis medis" di atas halaman.
+- `requirements.txt` + `streamlit>=1.40`; README bagian "Dashboard Streamlit". Terpasang streamlit 1.67.0 di `.venv`
+  (hanya menambah paket; versi numpy/pandas/sklearn/torch tidak berubah). `requirements-lock.txt` belum diperbarui.
+
+### Verifikasi
+- Skor CNN dari file mentah via `src/inference.py` = skor test tersimpan di checkpoint (3 COVID + 3 healthy;
+  selisih maks 0 untuk log-mel, 6·10⁻⁸ untuk MFCC 2D). ML memakai fungsi yang sama dengan `predict.py` (sudah diverifikasi Tahap 8).
+- `streamlit.testing.AppTest`: jalur unggah (.webm dataset), jalur rekam (WAV 44,1 kHz disimulasikan) → tanpa exception,
+  12 skor tampil; audio senyap → ditolak dengan pesan error. Server `streamlit run` start normal (health ok).
+- Waktu analisis ±20–35 s pada pemanggilan pertama (memuat 12 model + pyin f0); audio yang sama di-cache.
+
+### Cara menjalankan
+`.venv\Scripts\streamlit run app_streamlit.py` → http://localhost:8501 (mikrofon hanya diizinkan di localhost/HTTPS).
+
+### TODO
+- Uji rekam mikrofon langsung di laptop presentasi (izin mikrofon browser).
+- Bila ingin dimasukkan ke paket pengumpulan: tambahkan `app_streamlit.py` & `src/inference.py` ke zip kode dan
+  perbarui `requirements-lock.txt`.
+- (2026-11-27, revisi) Tombol **"🗑️ Hapus & mulai baru"** di samping pemutar audio: menaikkan `session_state["id_input"]`
+  → key widget unggah/rekam berganti → widget kosong dan semua hasil hilang. Ganti sumber (unggah ↔ rekam) juga
+  otomatis mengosongkan. Diuji dengan AppTest (8 metrik + 4 tabel → 0 setelah klik, tanpa exception).
+- (2026-11-27, revisi) Penjelasan **perbedaan Eksperimen A vs B** (fungsi `penjelasan_ab`, tabel `TABEL_AB`; angka dari
+  `02_jumlah_per_split_*`, `06_tabel_final_*`, `06_kesepakatan_label_B`): *expander* di bawah "2. Hasil prediksi",
+  bagian di tab "Tentang pipeline", dan *tooltip* di sidebar.
+  **Bug diperbaiki:** `st.stop()` di tab Uji menghentikan seluruh script sehingga tab Performa & Tentang kosong saat
+  belum ada audio → isi tab Uji dibungkus `halaman_uji()` dengan `return`. Diuji (AppTest): tanpa audio, dengan audio,
+  setelah hapus — tanpa exception, tab lain selalu terisi.
